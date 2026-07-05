@@ -2391,19 +2391,19 @@ export default function App() {
           <ScrollRevealBlock paragraphs={[
             {
               text: "The only enemy you face is your uncontrolled mind, not people, not failure, not even fear. Just you on autopilot. Because when the mind runs wild, it turns shadows into monsters and doubts into truths. You start fighting things that don’t exist conversations that never happened, futures that haven't arrived.",
-              className: "text-[20px] font-['Special_Elite',_monospace] leading-[1.3] tracking-wide text-elevate-paper md:text-[28px] lg:text-[36px]"
+              className: "text-[16px] font-['Special_Elite',_monospace] leading-[1.4] tracking-wide text-elevate-paper md:text-[20px] lg:text-[24px]"
             },
             {
               text: "An untrained mind is a brilliant liar. It mimics your voice, wears your thoughts, and convinces you to stay small.",
-              className: "text-[20px] font-['Special_Elite',_monospace] leading-[1.3] tracking-wide text-elevate-paper/80 md:text-[28px] lg:text-[36px]"
+              className: "text-[16px] font-['Special_Elite',_monospace] leading-[1.4] tracking-wide text-elevate-paper/80 md:text-[20px] lg:text-[24px]"
             },
             {
               text: "But when you take control, real control, everything shifts. You stop reacting you start choosing. You stop panicking you start planning. The world doesn’t get easier you get stronger.",
-              className: "text-[20px] font-['Special_Elite',_monospace] leading-[1.3] tracking-wide text-elevate-paper/80 md:text-[28px] lg:text-[36px]"
+              className: "text-[16px] font-['Special_Elite',_monospace] leading-[1.4] tracking-wide text-elevate-paper/80 md:text-[20px] lg:text-[24px]"
             },
             {
               text: "Train the mind, or it trains you. That’s not self-help that’s strategy.",
-              className: "text-[20px] font-['Special_Elite',_monospace] font-bold leading-[1.3] tracking-wide text-elevate-primary md:text-[28px] lg:text-[36px]"
+              className: "text-[16px] font-['Special_Elite',_monospace] font-bold leading-[1.4] tracking-wide text-elevate-primary md:text-[20px] lg:text-[24px]"
             }
           ]} />
         </div>
