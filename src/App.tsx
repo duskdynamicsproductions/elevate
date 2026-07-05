@@ -2439,25 +2439,7 @@ export default function App() {
 
       {/* Orange separator */}
       <div className="h-1 w-full bg-elevate-orange" />
-      {/* ══════════════════════════════════════════
-          CTA BANNER
-      ══════════════════════════════════════════ */}
-      <section className="bg-elevate-black px-6 py-8 md:px-12 lg:px-20 lg:py-14 gsap-snap-section">
-        <Reveal direction="scale">
-          <div className="mx-auto flex max-w-6xl items-center justify-between gap-8 overflow-hidden rounded-2xl bg-elevate-orange px-8 py-10 md:px-14 md:py-14">
-            <p className="max-w-xl text-2xl font-black uppercase leading-tight tracking-tight text-white md:text-3xl lg:text-4xl">
-              Ready when you are. Download the alpha.
-            </p>
-            <Link to="/download"
-              className="inline-flex shrink-0 items-center justify-center rounded-full bg-elevate-black px-6 py-4 text-xs font-bold uppercase tracking-wider text-elevate-orange transition-transform hover:scale-105 md:h-24 md:w-24 md:px-0 md:py-0 md:text-sm">
-              Let's train
-            </Link>
-          </div>
-        </Reveal>
-      </section>
 
-      {/* Orange separator */}
-      <div className="h-1 w-full bg-elevate-orange" />
       {/* ══════════════════════════════════════════
           MANIFESTO
       ══════════════════════════════════════════ */}
