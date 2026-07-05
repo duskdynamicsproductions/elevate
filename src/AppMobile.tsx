@@ -2286,46 +2286,7 @@ export default function App() {
       {/* Orange separator */}
       <div className="h-1 w-full bg-elevate-orange" />
 
-      {/* ══════════════════════════════════════════
-          FEATURES — Horizontal Scroll
-      ══════════════════════════════════════════ */}
-      <HorizontalFeatures />
 
-      {/* Orange separator */}
-      <div className="h-1 w-full bg-elevate-orange" />
-
-      {/* ══════════════════════════════════════════
-          DIGITAL DETOX STATS
-      ══════════════════════════════════════════ */}
-      <section className="bg-elevate-black px-6 pt-12 pb-6 md:px-12 md:pb-8 lg:px-20 lg:pt-20 lg:pb-10 gsap-snap-section min-h-svh flex flex-col justify-center">
-        <div className="mx-auto max-w-7xl w-full">
-          <Reveal direction="up">
-            <p className="mb-4 text-xs font-semibold tracking-[0.3em] text-elevate-orange uppercase">Digital Detox</p>
-          </Reveal>
-          <Reveal direction="up" delay={80}>
-            <h2 className="mb-8 max-w-3xl text-4xl font-black leading-[1.0] tracking-tight text-elevate-paper md:text-5xl lg:text-6xl lg:mb-12">
-              The numbers don't lie.<br />Face them daily.
-            </h2>
-          </Reveal>
-
-          <InteractiveDetox />
-
-          <Reveal direction="up" delay={300}>
-            <div className="mt-6 flex flex-col items-start gap-4 bg-elevate-paper/[0.02] p-5 sm:flex-row sm:items-center sm:justify-between md:mt-8 lg:p-6">
-              <p className="max-w-lg text-base font-semibold leading-relaxed text-elevate-paper/35">
-                <span className="text-elevate-paper">Confronting data creates change.</span> Elevate surfaces the uncomfortable truth so you can make a better decision tomorrow.
-              </p>
-              <a href="#focus"
-                className="inline-flex shrink-0 items-center gap-2 rounded-full border border-elevate-paper/20 px-6 py-3 text-sm font-semibold text-elevate-paper transition-all hover:bg-elevate-paper hover:text-elevate-black">
-                Start your detox →
-              </a>
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* Orange separator */}
-      <div className="h-1 w-full bg-elevate-orange" />
       {/* ══════════════════════════════════════════
           KINETIC QUOTE
       ══════════════════════════════════════════ */}
