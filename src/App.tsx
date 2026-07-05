@@ -403,7 +403,7 @@ const SOCIAL_ICONS_DATA = [
 
 function SocialSVG({ id }: { id: string }) {
   // Using the provided user icons from the public directory
-  return <img src={`/social-icons/${id}`} alt="Social Icon" style={{ width: 96, height: 96, display: 'block' }} />;
+  return <img src={`/social-icons/${id}`} alt="Social Icon" style={{ width: 76, height: 76, display: 'block' }} />;
 }
 
 /* Realistic trash bin built entirely with SVG gradients, depth and highlights */
