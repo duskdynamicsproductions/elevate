@@ -749,6 +749,30 @@ function InteractiveDetox() {
 /* ══════════════════════════════════════════════════════════
    APP
 ══════════════════════════════════════════════════════════ */
+function KineticText({ text, className = '' }: { text: string; className?: string }) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      const words = gsap.utils.toArray('.kinetic-word');
+      gsap.fromTo(words, 
+        { opacity: 0, y: 30, rotationX: -30 }, 
+        { opacity: 1, y: 0, rotationX: 0, duration: 1, stagger: 0.05, ease: 'back.out(1.4)', 
+          scrollTrigger: { trigger: containerRef.current, start: 'top 80%' }
+        }
+      );
+    }, containerRef);
+    return () => ctx.revert();
+  }, []);
+  
+  return (
+    <div ref={containerRef} className={`flex flex-wrap gap-x-[0.3em] gap-y-2 ${className}`}>
+      {text.split(' ').map((word, i) => (
+        <span key={i} className="kinetic-word inline-block origin-bottom will-change-transform">{word}</span>
+      ))}
+    </div>
+  );
+}
+
 export default function App() {
   const heroRef = useRef<HTMLElement>(null);
 
