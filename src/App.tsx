@@ -2452,14 +2452,14 @@ export default function App() {
               <Reveal direction="left" delay={100} className="flex flex-wrap gap-x-3 md:gap-x-5">
                 <span className="glitch-text" data-text="noise.">noise.</span>
               </Reveal>
-              <Reveal direction="left" delay={200} className="mt-4 flex flex-wrap gap-x-3 md:mt-8 md:gap-x-5">Do the</Reveal>
-              <Reveal direction="left" delay={300} className="flex flex-wrap gap-x-3 text-[#FF0000] md:gap-x-5">work.</Reveal>
+              <Reveal direction="left" delay={200} className="mt-4 flex flex-wrap gap-x-3 md:mt-8 md:gap-x-5">Start the</Reveal>
+              <Reveal direction="left" delay={300} className="flex flex-wrap gap-x-3 text-[#FF0000] md:gap-x-5">Journey.</Reveal>
             </h2>
           </div>
 
           {/* Right: Phone Mockup */}
           <Reveal direction="up" delay={200} className="flex-shrink-0">
-            <div className="relative w-[220px] md:w-[260px] lg:w-[300px]">
+            <div className="relative w-[280px] md:w-[340px] lg:w-[400px]">
               {/* Phone shell */}
               <div className="relative rounded-[40px] border-[8px] border-elevate-paper/10 bg-[#111] shadow-2xl overflow-hidden" style={{ aspectRatio: '9/19.5' }}>
                 {/* Notch */}
@@ -2471,8 +2471,6 @@ export default function App() {
                   className="w-full h-full object-cover"
                 />
               </div>
-              {/* Glow underneath */}
-              <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 w-3/4 h-10 rounded-full bg-elevate-orange/20 blur-xl" />
             </div>
           </Reveal>
         </div>
