@@ -1962,7 +1962,7 @@ function useReveal<T extends HTMLElement>(options?: IntersectionObserverInit) {
 ══════════════════════════════════════════════════════════ */
 function Reveal({ children, className = '', direction = 'up', delay = 0 }: {
   children: React.ReactNode; className?: string;
-  direction?: 'up' | 'left' | 'right' | 'scale'; delay?: number;
+  direction?: 'up' | 'left' | 'right' | 'scale' | 'fade'; delay?: number;
 }) {
   const { ref, revealed } = useReveal<HTMLDivElement>();
   const dirClasses = {
@@ -1970,6 +1970,7 @@ function Reveal({ children, className = '', direction = 'up', delay = 0 }: {
     left: revealed ? 'translate-x-0 opacity-100' : '-translate-x-24 opacity-0',
     right: revealed ? 'translate-x-0 opacity-100' : 'translate-x-24 opacity-0',
     scale: revealed ? 'scale-100 opacity-100' : 'scale-90 opacity-0',
+    fade: revealed ? 'opacity-100' : 'opacity-0',
   };
   return (
     <div ref={ref} className={`transition-all duration-700 ${dirClasses[direction]} ${className}`}
@@ -2460,7 +2461,7 @@ export default function App() {
               <Reveal direction="left" delay={200} className="mt-4 flex flex-wrap gap-x-3 md:mt-8 md:gap-x-5">Start the</Reveal>
               <Reveal direction="left" delay={300} className="flex flex-wrap gap-x-3 text-[#B30000] md:gap-x-5">Journey.</Reveal>
             </h2>
-            <Reveal direction="up" delay={400} className="mt-10 md:mt-14">
+            <Reveal direction="fade" delay={400} className="mt-10 md:mt-14">
               <Link to="/download"
                 className="group inline-flex items-center gap-3 rounded-full bg-elevate-orange px-8 py-3.5 text-sm font-bold uppercase tracking-wider text-white transition-all hover:bg-elevate-orange-light hover:shadow-lg md:px-10 md:py-4">
                 Download alpha
