@@ -308,7 +308,6 @@ export function PrivacyPage() {
       title="Privacy Policy."
       updated="July 5, 2026"
       sections={sections}
-      contactExtra="Public policy URL: duskdynamicsproductions.github.io/Elevate/privacy_policy.html"
     />
   );
 }
