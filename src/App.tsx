@@ -8,8 +8,6 @@ gsap.registerPlugin(ScrollTrigger);
 /* ══════════════════════════════════════════════════════════
    CONSTANTS
 ══════════════════════════════════════════════════════════ */
-const downloadUrl =
-  'https://drive.google.com/file/d/1hnh-xATdmLxxX_yeLb8CDgZqwnKHjG0o/view?usp=sharing';
 
 const navLinks = [
   { label: 'Story', href: '#story' },
@@ -1904,14 +1902,14 @@ function HoverFloodItem({ text, index, exercises }: { text: string; index: numbe
   return (
     <div
       ref={ref}
-      className={`group relative overflow-hidden border-t border-elevate-paper/10 py-3 md:py-4 transition-all duration-700 ${revealed ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+      className={`group relative overflow-hidden flex-1 flex flex-col justify-center border-t border-elevate-paper/10 py-6 md:py-8 transition-all duration-700 ${revealed ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
       style={{ transitionDelay: `${index * 60}ms` }}
     >
       {/* Flood background */}
       <div className="absolute inset-0 bg-elevate-orange origin-left scale-x-0 transition-transform duration-500 ease-out group-hover:scale-x-100" />
 
       <div className="relative flex items-center justify-between">
-        <h3 className="text-[28px] font-black leading-none tracking-tight text-elevate-paper/15 transition-colors duration-300 group-hover:text-[#0C0B0B] md:text-[48px] lg:text-[64px] xl:text-[72px]">
+        <h3 className="text-[48px] font-black leading-none tracking-tight text-elevate-paper/15 transition-colors duration-300 group-hover:text-[#0C0B0B] md:text-[64px] lg:text-[80px] xl:text-[96px]">
           {text}
         </h3>
         <div className="flex flex-col items-end gap-1 pr-2 text-right md:gap-1.5 md:pr-6">
@@ -2311,10 +2309,10 @@ export default function App() {
               Terms &amp; Conditions
             </Link>
           </nav>
-          <a href={downloadUrl} target="_blank" rel="noreferrer"
+          <Link to="/download"
             className="rounded-full border border-elevate-paper/20 px-5 py-2.5 text-xs font-bold tracking-wider uppercase text-elevate-paper transition-all hover:bg-elevate-paper hover:text-elevate-black">
             Download
-          </a>
+          </Link>
         </header>
 
         {/* Hero content */}
@@ -2374,10 +2372,10 @@ export default function App() {
               <p className="max-w-lg text-base font-semibold leading-relaxed text-elevate-paper/35">
                 <span className="text-elevate-paper">Confronting data creates change.</span> Elevate surfaces the uncomfortable truth so you can make a better decision tomorrow.
               </p>
-              <a href={downloadUrl} target="_blank" rel="noreferrer"
+              <Link to="/download"
                 className="inline-flex shrink-0 items-center gap-2 rounded-full border border-elevate-paper/20 px-6 py-3 text-sm font-semibold text-elevate-paper transition-all hover:bg-elevate-paper hover:text-elevate-black">
                 Start your detox →
-              </a>
+              </Link>
             </div>
           </Reveal>
         </div>
@@ -2411,6 +2409,8 @@ export default function App() {
         </div>
       </section>
 
+      {/* Orange separator */}
+      <div className="h-1 w-full bg-elevate-orange" />
       {/* ══════════════════════════════════════════
           WORKOUT TEMPLATES — Hover Flood
       ══════════════════════════════════════════ */}
@@ -2420,10 +2420,19 @@ export default function App() {
             <SpinningStar className="size-4 text-elevate-orange" />
             <p className="text-xs font-semibold tracking-[0.3em] text-elevate-orange uppercase">Workout Templates</p>
           </Reveal>
-          <div className="flex flex-col">
-            {workoutTemplates.map((template, i) => (
-              <HoverFloodItem key={template.name} text={template.name} index={i} exercises={template.exercises} />
-            ))}
+          <div className="flex flex-col md:flex-row md:gap-8 lg:gap-12">
+            <div className="flex-1 flex flex-col">
+              {workoutTemplates.slice(0, 3).map((template, i) => (
+                <HoverFloodItem key={template.name} text={template.name} index={i} exercises={template.exercises} />
+              ))}
+            </div>
+            {/* Vertical Separator */}
+            <div className="hidden md:block w-[1px] bg-elevate-paper/10" />
+            <div className="flex-1 flex flex-col">
+              {workoutTemplates.slice(3, 6).map((template, i) => (
+                <HoverFloodItem key={template.name} text={template.name} index={i + 3} exercises={template.exercises} />
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -2439,10 +2448,10 @@ export default function App() {
             <p className="max-w-xl text-2xl font-black uppercase leading-tight tracking-tight text-white md:text-3xl lg:text-4xl">
               Ready when you are. Download the alpha.
             </p>
-            <a href={downloadUrl} target="_blank" rel="noreferrer"
+            <Link to="/download"
               className="inline-flex shrink-0 items-center justify-center rounded-full bg-elevate-black px-6 py-4 text-xs font-bold uppercase tracking-wider text-elevate-orange transition-transform hover:scale-105 md:h-24 md:w-24 md:px-0 md:py-0 md:text-sm">
               Let's train
-            </a>
+            </Link>
           </div>
         </Reveal>
       </section>
@@ -2511,11 +2520,11 @@ export default function App() {
             </p>
           </Reveal>
           <Reveal direction="scale" delay={300}>
-            <a href={downloadUrl} target="_blank" rel="noreferrer"
+            <Link to="/download"
               className="group inline-flex items-center gap-3 rounded-full bg-elevate-orange px-9 py-4 text-sm font-bold uppercase tracking-wider text-white transition-all hover:bg-elevate-orange-light hover:shadow-lg md:px-10 md:py-5">
               Download alpha
               <span className="inline-block transition-transform group-hover:translate-x-1">→</span>
-            </a>
+            </Link>
           </Reveal>
         </div>
       </section>
