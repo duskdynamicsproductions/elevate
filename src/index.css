@@ -10,28 +10,28 @@
 
 @font-face {
   font-family: 'GS';
-  src: local('GS Regular'), local('GS-Regular'), url('./gsregular.ttf') format('truetype'), url('gsregular.ttf') format('truetype');
+  src: local('GS Regular'), local('GS-Regular'), url('/gsregular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'GS';
-  src: local('GS Italic'), local('GS-Italic'), url('./gsitallic.ttf') format('truetype'), url('gsitallic.ttf') format('truetype');
+  src: local('GS Italic'), local('GS-Italic'), url('/gsitallic.ttf') format('truetype');
   font-weight: 400;
   font-style: italic;
   font-display: swap;
 }
 @font-face {
   font-family: 'GS';
-  src: local('GS Medium'), local('GS-Medium'), url('./gsmedium.ttf') format('truetype'), url('gsmedium.ttf') format('truetype');
+  src: local('GS Medium'), local('GS-Medium'), url('/gsmedium.ttf') format('truetype');
   font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'GS';
-  src: local('GS Bold'), local('GS-Bold'), url('./gsbold.ttf') format('truetype'), url('gsbold.ttf') format('truetype');
+  src: local('GS Bold'), local('GS-Bold'), url('/gsbold.ttf') format('truetype');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
