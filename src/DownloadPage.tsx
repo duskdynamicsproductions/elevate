@@ -38,8 +38,7 @@ export function DownloadPage() {
             Release 22082026<br/>coming soon
           </h1>
           <p className="mb-12 text-base leading-relaxed text-elevate-paper/50 md:text-xl max-w-xl mx-auto animate-fade-in" style={{ animationDelay: '100ms' }}>
-            Releasing soon on play store<br />
-            stay tuned
+            Coming to play store soon..
           </p>
         </div>
       </main>
