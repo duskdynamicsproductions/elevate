@@ -2453,7 +2453,7 @@ export default function App() {
                 <span className="glitch-text" data-text="noise.">noise.</span>
               </Reveal>
               <Reveal direction="left" delay={200} className="mt-4 flex flex-wrap gap-x-3 md:mt-8 md:gap-x-5">Start the</Reveal>
-              <Reveal direction="left" delay={300} className="flex flex-wrap gap-x-3 text-[#FF0000] md:gap-x-5">Journey.</Reveal>
+              <Reveal direction="left" delay={300} className="flex flex-wrap gap-x-3 text-[#B30000] md:gap-x-5">Journey.</Reveal>
             </h2>
           </div>
 
