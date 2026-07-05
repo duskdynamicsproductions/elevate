@@ -178,14 +178,14 @@ function LegalLayout({
               </Link>
             </div>
 
-            <footer className="mt-auto flex flex-col items-start gap-6 border-t border-elevate-paper/10 pt-8 md:flex-row md:items-center md:justify-between">
-              <div className="flex items-center gap-2">
-                <SpinningStar className="size-4 text-elevate-orange" />
-                <span className="text-sm font-black tracking-tight">Elevate</span>
+            <footer className="mt-auto flex w-full flex-col items-start justify-between gap-10 border-t border-elevate-paper/10 pt-8 md:flex-row md:items-center">
+              <div className="flex items-center gap-3">
+                <SpinningStar className="size-6 text-elevate-orange" />
+                <span className="text-3xl font-black tracking-tight">Elevate</span>
               </div>
-              <div className="flex gap-6">
-                <Link to="/privacy_policy" className="text-xs font-semibold tracking-wider uppercase text-elevate-paper/30 hover:text-elevate-paper transition-colors">Privacy</Link>
-                <Link to="/terms" className="text-xs font-semibold tracking-wider uppercase text-elevate-paper/30 hover:text-elevate-paper transition-colors">Terms</Link>
+              <div className="flex flex-wrap items-center justify-center gap-8">
+                <Link to="/privacy_policy" className="text-xs font-semibold tracking-[0.15em] uppercase text-elevate-paper/30 transition-colors hover:text-elevate-paper">Privacy</Link>
+                <Link to="/terms" className="text-xs font-semibold tracking-[0.15em] uppercase text-elevate-paper/30 transition-colors hover:text-elevate-paper">Terms</Link>
               </div>
               <p className="text-xs text-elevate-paper/20">© 2026 Elevate. All rights reserved.</p>
             </footer>
