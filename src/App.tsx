@@ -2451,7 +2451,7 @@ export default function App() {
       <section id="focus" className="relative overflow-hidden bg-elevate-black px-6 py-28 md:px-12 lg:px-20 lg:py-44 gsap-snap-section min-h-svh flex flex-col justify-center">
         <div className="mx-auto w-full max-w-7xl flex flex-col md:flex-row items-center justify-between gap-12 lg:gap-20">
           {/* Left: Text */}
-          <div className="flex-1">
+          <div className="flex-1 flex flex-col items-start -translate-y-6 md:-translate-y-12">
             <h2 className="flex flex-col text-[48px] font-black leading-[1.0] tracking-tight text-elevate-paper md:text-[80px] lg:text-[100px]">
               <Reveal direction="left" className="flex flex-wrap gap-x-3 md:gap-x-5">Cut the</Reveal>
               <Reveal direction="left" delay={100} className="flex flex-wrap gap-x-3 md:gap-x-5">
@@ -2460,6 +2460,13 @@ export default function App() {
               <Reveal direction="left" delay={200} className="mt-4 flex flex-wrap gap-x-3 md:mt-8 md:gap-x-5">Start the</Reveal>
               <Reveal direction="left" delay={300} className="flex flex-wrap gap-x-3 text-[#B30000] md:gap-x-5">Journey.</Reveal>
             </h2>
+            <Reveal direction="up" delay={400} className="mt-10 md:mt-14">
+              <Link to="/download"
+                className="group inline-flex items-center gap-3 rounded-full bg-elevate-orange px-8 py-3.5 text-sm font-bold uppercase tracking-wider text-white transition-all hover:bg-elevate-orange-light hover:shadow-lg md:px-10 md:py-4">
+                Download alpha
+                <span className="inline-block transition-transform group-hover:translate-x-1">→</span>
+              </Link>
+            </Reveal>
           </div>
 
           {/* Right: Phone Mockup */}
