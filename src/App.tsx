@@ -2570,6 +2570,7 @@ export default function App() {
             <span className="text-3xl font-black tracking-tight">Elevate</span>
           </div>
           <div className="flex flex-wrap items-center justify-center gap-8">
+            <a href="https://www.instagram.com/the.duskdynamics/" target="_blank" rel="noreferrer" className="text-xs font-semibold tracking-[0.15em] uppercase text-elevate-paper/30 transition-colors hover:text-elevate-paper">Follow us on Instagram</a>
             <Link to="/privacy_policy" className="text-xs font-semibold tracking-[0.15em] uppercase text-elevate-paper/30 transition-colors hover:text-elevate-paper">Privacy</Link>
             <Link to="/terms" className="text-xs font-semibold tracking-[0.15em] uppercase text-elevate-paper/30 transition-colors hover:text-elevate-paper">Terms</Link>
           </div>
