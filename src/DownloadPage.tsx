@@ -43,6 +43,18 @@ export function DownloadPage() {
         </div>
       </main>
 
+      <footer className="mt-auto flex w-full flex-col items-start justify-between gap-10 border-t border-elevate-paper/10 px-6 py-8 md:flex-row md:items-center md:px-12 lg:px-20">
+        <div className="flex items-center gap-3">
+          <SpinningStar className="size-6 text-elevate-orange" />
+          <span className="text-3xl font-black tracking-tight">Elevate</span>
+        </div>
+        <div className="flex flex-wrap items-center justify-center gap-8">
+          <Link to="/privacy_policy" className="text-xs font-semibold tracking-[0.15em] uppercase text-elevate-paper/30 transition-colors hover:text-elevate-paper">Privacy</Link>
+          <Link to="/terms" className="text-xs font-semibold tracking-[0.15em] uppercase text-elevate-paper/30 transition-colors hover:text-elevate-paper">Terms</Link>
+        </div>
+        <p className="text-xs text-elevate-paper/20">© 2026 Elevate. All rights reserved.</p>
+      </footer>
+
     </div>
   );
 }
