@@ -39,24 +39,9 @@ export function DownloadPage() {
             Ready to <br/>Elevate?
           </h1>
           <p className="mb-12 text-base leading-relaxed text-elevate-paper/50 md:text-xl max-w-xl mx-auto animate-fade-in" style={{ animationDelay: '100ms' }}>
-            Download the latest alpha build for Android and start tracking your workouts, focus, and discipline.
+            Releasing soon on play store<br />
+            stay tuned
           </p>
-
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 animate-slide-up" style={{ animationDelay: '200ms' }}>
-            <a href={downloadUrl} target="_blank" rel="noreferrer"
-              className="group inline-flex items-center gap-3 rounded-full bg-elevate-orange px-9 py-4 text-sm font-bold uppercase tracking-wider text-white transition-all hover:bg-elevate-orange-light hover:shadow-lg md:px-12 md:py-5 w-full sm:w-auto justify-center">
-              Download APK
-              <span className="inline-block transition-transform group-hover:translate-y-1">↓</span>
-            </a>
-            
-            <button disabled className="group inline-flex items-center gap-3 rounded-full border border-elevate-paper/10 bg-transparent px-9 py-4 text-sm font-bold uppercase tracking-wider text-elevate-paper/30 cursor-not-allowed md:px-12 md:py-5 w-full sm:w-auto justify-center">
-              iOS (Coming Soon)
-            </button>
-          </div>
-          
-          <div className="mt-16 text-xs font-semibold tracking-[0.2em] text-elevate-paper/20 uppercase">
-            Build 04042026 Alpha · Size: ~35MB
-          </div>
         </div>
       </main>
 
