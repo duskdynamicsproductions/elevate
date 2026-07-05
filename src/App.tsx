@@ -2444,15 +2444,37 @@ export default function App() {
           MANIFESTO
       ══════════════════════════════════════════ */}
       <section id="focus" className="relative overflow-hidden bg-elevate-black px-6 py-28 md:px-12 lg:px-20 lg:py-44 gsap-snap-section min-h-svh flex flex-col justify-center">
-        <div className="mr-auto w-full max-w-7xl">
-          <h2 className="flex flex-col text-[48px] font-black leading-[1.0] tracking-tight text-elevate-paper md:text-[80px] lg:text-[100px]">
-            <Reveal direction="left" className="flex flex-wrap gap-x-3 md:gap-x-5">Cut the</Reveal>
-            <Reveal direction="left" delay={100} className="flex flex-wrap gap-x-3 md:gap-x-5">
-              <span className="glitch-text" data-text="noise.">noise.</span>
-            </Reveal>
-            <Reveal direction="left" delay={200} className="mt-4 flex flex-wrap gap-x-3 md:mt-8 md:gap-x-5">Do the</Reveal>
-            <Reveal direction="left" delay={300} className="flex flex-wrap gap-x-3 text-[#FF0000] md:gap-x-5">work.</Reveal>
-          </h2>
+        <div className="mx-auto w-full max-w-7xl flex flex-col md:flex-row items-center justify-between gap-12 lg:gap-20">
+          {/* Left: Text */}
+          <div className="flex-1">
+            <h2 className="flex flex-col text-[48px] font-black leading-[1.0] tracking-tight text-elevate-paper md:text-[80px] lg:text-[100px]">
+              <Reveal direction="left" className="flex flex-wrap gap-x-3 md:gap-x-5">Cut the</Reveal>
+              <Reveal direction="left" delay={100} className="flex flex-wrap gap-x-3 md:gap-x-5">
+                <span className="glitch-text" data-text="noise.">noise.</span>
+              </Reveal>
+              <Reveal direction="left" delay={200} className="mt-4 flex flex-wrap gap-x-3 md:mt-8 md:gap-x-5">Do the</Reveal>
+              <Reveal direction="left" delay={300} className="flex flex-wrap gap-x-3 text-[#FF0000] md:gap-x-5">work.</Reveal>
+            </h2>
+          </div>
+
+          {/* Right: Phone Mockup */}
+          <Reveal direction="up" delay={200} className="flex-shrink-0">
+            <div className="relative w-[220px] md:w-[260px] lg:w-[300px]">
+              {/* Phone shell */}
+              <div className="relative rounded-[40px] border-[8px] border-elevate-paper/10 bg-[#111] shadow-2xl overflow-hidden" style={{ aspectRatio: '9/19.5' }}>
+                {/* Notch */}
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-6 bg-[#111] rounded-b-2xl z-10" />
+                {/* Screen: GIF */}
+                <img
+                  src="/intro.gif"
+                  alt="Elevate App Intro"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              {/* Glow underneath */}
+              <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 w-3/4 h-10 rounded-full bg-elevate-orange/20 blur-xl" />
+            </div>
+          </Reveal>
         </div>
 
       </section>
