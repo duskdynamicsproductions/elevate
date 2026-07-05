@@ -2548,7 +2548,9 @@ export default function App() {
             <SpinningStar className="size-6 text-elevate-orange" />
             <span className="text-3xl font-black tracking-tight">Elevate</span>
           </div>
-          <div className="flex flex-wrap items-center justify-center gap-8">
+          <div className="flex flex-wrap items-center justify-center gap-6 md:gap-8">
+            <a href="https://www.instagram.com/not_brihit/" target="_blank" rel="noreferrer" className="text-xs font-semibold tracking-[0.15em] uppercase text-elevate-paper/30 transition-colors hover:text-elevate-paper">Brihit Nath</a>
+            <a href="https://www.instagram.com/the.duskdynamics/" target="_blank" rel="noreferrer" className="text-xs font-semibold tracking-[0.15em] uppercase text-elevate-paper/30 transition-colors hover:text-elevate-paper">Duskdynamics</a>
             <Link to="/privacy_policy" className="text-xs font-semibold tracking-[0.15em] uppercase text-elevate-paper/30 transition-colors hover:text-elevate-paper">Privacy</Link>
             <Link to="/terms" className="text-xs font-semibold tracking-[0.15em] uppercase text-elevate-paper/30 transition-colors hover:text-elevate-paper">Terms</Link>
           </div>
