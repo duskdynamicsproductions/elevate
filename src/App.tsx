@@ -2565,14 +2565,11 @@ export default function App() {
       </div>
       <footer className="bg-elevate-black px-6 py-14 text-elevate-paper md:px-12 lg:px-20 gsap-snap-section">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-10 md:flex-row">
-          <div className="flex items-center gap-2.5">
-            <SpinningStar className="size-4 text-elevate-orange" />
-            <span className="text-lg font-black tracking-tight">Elevate</span>
+          <div className="flex items-center gap-3">
+            <SpinningStar className="size-6 text-elevate-orange" />
+            <span className="text-3xl font-black tracking-tight">Elevate</span>
           </div>
           <div className="flex flex-wrap items-center justify-center gap-8">
-            {navLinks.map((link) => (
-              <a key={link.label} href={link.href} className="text-xs font-semibold tracking-[0.15em] uppercase text-elevate-paper/30 transition-colors hover:text-elevate-paper">{link.label}</a>
-            ))}
             <Link to="/privacy_policy" className="text-xs font-semibold tracking-[0.15em] uppercase text-elevate-paper/30 transition-colors hover:text-elevate-paper">Privacy</Link>
             <Link to="/terms" className="text-xs font-semibold tracking-[0.15em] uppercase text-elevate-paper/30 transition-colors hover:text-elevate-paper">Terms</Link>
           </div>
