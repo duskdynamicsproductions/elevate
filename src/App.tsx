@@ -2377,10 +2377,10 @@ export default function App() {
               <p className="max-w-lg text-base font-semibold leading-relaxed text-elevate-paper/35">
                 <span className="text-elevate-paper">Confronting data creates change.</span> Elevate surfaces the uncomfortable truth so you can make a better decision tomorrow.
               </p>
-              <Link to="/download"
+              <a href="#focus"
                 className="inline-flex shrink-0 items-center gap-2 rounded-full border border-elevate-paper/20 px-6 py-3 text-sm font-semibold text-elevate-paper transition-all hover:bg-elevate-paper hover:text-elevate-black">
                 Start your detox →
-              </Link>
+              </a>
             </div>
           </Reveal>
         </div>
