@@ -2309,10 +2309,10 @@ export default function App() {
               Terms &amp; Conditions
             </Link>
           </nav>
-          <Link to="/download"
+          <a href="#focus"
             className="rounded-full border border-elevate-paper/20 px-5 py-2.5 text-xs font-bold tracking-wider uppercase text-elevate-paper transition-all hover:bg-elevate-paper hover:text-elevate-black">
             Download
-          </Link>
+          </a>
         </header>
 
         {/* Hero content */}
