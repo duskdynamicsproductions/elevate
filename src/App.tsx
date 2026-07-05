@@ -2564,7 +2564,7 @@ export default function App() {
         <div className="h-1 w-full bg-elevate-orange" />
       </div>
       <footer className="bg-elevate-black px-6 py-14 text-elevate-paper md:px-12 lg:px-20 gsap-snap-section">
-        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-10 md:flex-row">
+        <div className="flex w-full flex-col items-start justify-between gap-10 md:flex-row md:items-center">
           <div className="flex items-center gap-3">
             <SpinningStar className="size-6 text-elevate-orange" />
             <span className="text-3xl font-black tracking-tight">Elevate</span>
