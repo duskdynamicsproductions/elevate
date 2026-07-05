@@ -2175,7 +2175,7 @@ function InteractiveDetox() {
                   : 'pointer-events-none translate-y-8 opacity-0 z-0'
               }`}
             >
-              <p className="mb-12 text-xs font-semibold uppercase tracking-[0.25em] text-elevate-paper/40 md:mb-20 lg:mb-28">
+              <p className="pt-4 mb-12 text-xs font-semibold uppercase tracking-[0.25em] text-elevate-paper/40 md:mb-20 lg:mb-28">
                 {stat.title}
               </p>
               
