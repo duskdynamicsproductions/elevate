@@ -1807,47 +1807,13 @@ function PhysicalAnalyticsAnimation() {
 }
 
 function HorizontalFeatures() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const trackRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const container = containerRef.current;
-    const track = trackRef.current;
-    if (!container || !track) return;
-
-    const totalWidth = track.scrollWidth - window.innerWidth;
-
-    const ctx = gsap.context(() => {
-      gsap.to(track, {
-        x: -totalWidth,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: container,
-          start: 'top top',
-          end: () => `+=${totalWidth}`,
-          scrub: 1,
-          pin: true,
-          anticipatePin: 1,
-          snap: {
-            snapTo: 1 / (features.length - 1),
-            duration: { min: 0.2, max: 0.6 },
-            ease: "power2.inOut"
-          }
-        },
-      });
-    });
-
-    return () => ctx.revert();
-  }, []);
-
   return (
-    <div ref={containerRef} className="relative overflow-hidden bg-elevate-black gsap-snap-section" id="story">
-      <div ref={trackRef} className="flex" style={{ width: `${features.length * 100}vw` }}>
+    <div className="relative overflow-hidden bg-elevate-black w-full" id="story">
+      <div className="flex flex-col w-full">
         {features.map((feat, i) => (
           <div
             key={feat.num}
-            className="relative flex h-screen w-screen flex-col justify-between px-8 py-16 md:px-16 lg:px-24"
-            style={{ borderRight: '1px solid rgba(253,252,250,0.06)' }}
+            className="relative flex min-h-[90svh] w-full flex-col justify-end px-6 py-16 border-b border-white/[0.04]"
           >
             {/* APP BLOCKED EXPLOSION */}
             {feat.num === '01' && <AppBlockedAnimation />}
@@ -1861,33 +1827,21 @@ function HorizontalFeatures() {
             {/* WORKOUT PLANNING */}
             {feat.num === '05' && <WorkoutPlanningAnimation />}
             {/* PHYSICAL ANALYTICS */}
-            {/* PHYSICAL ANALYTICS */}
             {feat.num === '06' && <PhysicalAnalyticsAnimation />}
             
-            {/* Empty spacer to maintain vertical centering with justify-between */}
-            <div className="relative z-10" />
-
-            {/* Center: title */}
-            <div className="relative z-10">
-              <span className="block mb-2 select-none text-[15vw] md:text-[10vw] font-black leading-none text-elevate-paper/[0.08]">{feat.num}</span>
-              <h3 className="text-[10vw] font-black leading-none tracking-tight text-elevate-paper md:text-[7vw]">
+            {/* Text Overlay Section - Absolute or relative depending on animation space */}
+            <div className="relative z-10 w-full mt-auto pointer-events-none">
+              <span className="block mb-1 select-none text-5xl font-black leading-none text-elevate-paper/[0.08]">{feat.num}</span>
+              <h3 className="text-4xl font-black uppercase leading-[1.1] tracking-tight text-elevate-paper mb-4">
                 {feat.title}
               </h3>
-            </div>
-
-            {/* Bottom: desc + orange line */}
-            <div className="relative z-10">
-              <div className="mb-6 h-px w-16 bg-elevate-orange" />
-              <p className="max-w-sm text-base leading-relaxed text-elevate-paper/45 md:text-lg">{feat.desc}</p>
+              <div className="mb-4 h-px w-12 bg-elevate-orange" />
+              <p className="w-full max-w-sm text-base leading-relaxed text-elevate-paper/60">
+                {feat.desc}
+              </p>
             </div>
           </div>
         ))}
-      </div>
-
-      {/* Scroll hint */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-3 text-xs font-semibold tracking-[0.2em] text-elevate-paper/30 uppercase">
-        <span>Scroll</span>
-        <span className="text-elevate-orange">→</span>
       </div>
     </div>
   );
