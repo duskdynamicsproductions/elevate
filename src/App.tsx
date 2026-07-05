@@ -2519,31 +2519,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════
-          FINAL CTA
-      ══════════════════════════════════════════ */}
-      <section id="planner" className="bg-elevate-black px-6 py-24 md:px-12 lg:px-20 lg:py-36 gsap-snap-section min-h-svh flex flex-col justify-center">
-        <div className="mx-auto flex max-w-4xl flex-col items-center text-center">
-          <Reveal direction="up">
-            <p className="mb-6 text-xs font-semibold tracking-[0.3em] text-elevate-orange uppercase">Build 04042026 Alpha</p>
-          </Reveal>
-          <Reveal direction="up" delay={100}>
-            <h2 className="mb-8 max-w-3xl text-5xl font-black leading-[1.0] tracking-tight text-elevate-paper md:text-7xl lg:text-8xl">Stay accountable.</h2>
-          </Reveal>
-          <Reveal direction="up" delay={200}>
-            <p className="mb-12 max-w-lg text-base leading-relaxed text-elevate-paper/35">
-              Join the alpha and start your journey to a more focused, disciplined you.
-            </p>
-          </Reveal>
-          <Reveal direction="scale" delay={300}>
-            <Link to="/download"
-              className="group inline-flex items-center gap-3 rounded-full bg-elevate-orange px-9 py-4 text-sm font-bold uppercase tracking-wider text-white transition-all hover:bg-elevate-orange-light hover:shadow-lg md:px-10 md:py-5">
-              Download alpha
-              <span className="inline-block transition-transform group-hover:translate-x-1">→</span>
-            </Link>
-          </Reveal>
-        </div>
-      </section>
+
 
       {/* ══════════════════════════════════════════
           ABOUT / PURPOSE (For Google OAuth Verification)
