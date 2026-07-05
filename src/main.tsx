@@ -7,10 +7,12 @@ import { DownloadPage } from './DownloadPage';
 import CustomCursor from './CustomCursor';
 import './index.css';
 
+const isTouchDevice = typeof window !== 'undefined' && ('ontouchstart' in window || navigator.maxTouchPoints > 0);
+
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <BrowserRouter>
-      <CustomCursor />
+      {!isTouchDevice && <CustomCursor />}
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/download" element={<DownloadPage />} />
