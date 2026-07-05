@@ -8,7 +8,8 @@ export default function App() {
 
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
+      const hasMobileUA = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      setIsMobile(window.innerWidth <= 1024 || hasMobileUA);
     };
     
     // Initial check
