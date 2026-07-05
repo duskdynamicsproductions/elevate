@@ -2540,15 +2540,15 @@ export default function App() {
       <section className="bg-elevate-black px-6 py-24 md:px-12 lg:px-20 lg:py-32 gsap-snap-section min-h-svh flex flex-col justify-center">
         <div className="mx-auto max-w-6xl">
           <Reveal direction="up">
-            <p className="mb-4 text-xs font-semibold tracking-[0.3em] text-elevate-orange uppercase">About Our App</p>
+            <p className="mb-4 text-xs font-semibold tracking-[0.3em] text-elevate-black uppercase">About Our App</p>
           </Reveal>
           <Reveal direction="up" delay={80}>
-            <h2 className="mb-8 max-w-4xl text-3xl font-black leading-[1.1] tracking-tight text-elevate-paper md:text-5xl lg:text-6xl">
+            <h2 className="mb-8 max-w-4xl text-3xl font-black leading-[1.1] tracking-tight text-elevate-black md:text-5xl lg:text-6xl">
               Elevate is a comprehensive fitness and workout planning platform.
             </h2>
           </Reveal>
           <Reveal direction="up" delay={200}>
-            <p className="max-w-4xl text-lg leading-relaxed text-elevate-paper/70 md:text-xl lg:text-2xl">
+            <p className="max-w-4xl text-lg leading-relaxed text-elevate-black md:text-xl lg:text-2xl">
               The core purpose of our application is to help users track their training, monitor physical analytics, and stay focused during workouts. We require account creation and authentication (such as Google Sign-In) so users can securely store their personalized workout data, progress metrics, and training history, allowing them to seamlessly access their fitness journey across all devices.
             </p>
           </Reveal>
