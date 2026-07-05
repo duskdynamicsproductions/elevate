@@ -251,37 +251,136 @@ function RollingNumber({ value, color = '#FF6200', className = '' }: { value: st
 
 /* ══════════════════════════════════════════════════════════
    KINETIC WORD REVEAL (scroll-triggered word by word)
+═══════════════════════════�/* ══════════════════════════════════════════════════════════
+   TRASH ANIMATION — brand SVGs + realistic transparent bin
 ══════════════════════════════════════════════════════════ */
-function KineticText({ text, className = '' }: { text: string; className?: string }) {
+const SOCIAL_ICONS_DATA = [
+  { id: 'ig', x: -140 }, { id: 'tt', x: -85 }, { id: 'yt', x: -28 },
+  { id: 'tw', x: 28 },   { id: 'fb', x: 85 },  { id: 'sc', x: 140 },
+  { id: 'rd', x: 0 },
+];
+
+function SocialSVG({ id }: { id: string }) {
+  if (id === 'ig') return (
+    <svg viewBox="0 0 48 48" width="56" height="56"><defs><radialGradient id="igg" cx="30%" cy="107%" r="150%"><stop offset="0%" stopColor="#fdf497"/><stop offset="45%" stopColor="#fd5949"/><stop offset="60%" stopColor="#d6249f"/><stop offset="90%" stopColor="#285AEB"/></radialGradient></defs><rect x="2" y="2" width="44" height="44" rx="12" fill="url(#igg)"/><circle cx="24" cy="24" r="11" fill="none" stroke="white" strokeWidth="3.5"/><circle cx="35" cy="13" r="3" fill="white"/></svg>
+  );
+  if (id === 'tt') return (
+    <svg viewBox="0 0 48 48" width="52" height="52"><rect width="48" height="48" rx="12" fill="#010101"/><path d="M36 18a8 8 0 0 1-8-8h-6v24a4 4 0 1 1-4-4v-6a10 10 0 1 0 10 10V20a14 14 0 0 0 8 2v-4z" fill="white"/></svg>
+  );
+  if (id === 'yt') return (
+    <svg viewBox="0 0 48 48" width="58" height="58"><path d="M44 14s-.5-3.5-2-5c-2-2-4.2-2-5.2-2.1C31 6.4 24 6.4 24 6.4s-7 0-12.8.5c-1 .1-3.2.1-5.2 2.1-1.5 1.5-2 5-2 5S3.5 18 3.5 22v3.7c0 4 .5 8 .5 8s.5 3.5 2 5c2 2 4.6 1.9 5.8 2.1C15.5 41.2 24 41.3 24 41.3s7 0 12.8-.6c1-.1 3.2-.1 5.2-2.1 1.5-1.5 2-5 2-5s.5-4 .5-8V22c0-4-.5-8-.5-8z" fill="#FF0000"/><polygon points="20,30 30.5,24 20,18" fill="white"/></svg>
+  );
+  if (id === 'tw') return (
+    <svg viewBox="0 0 48 48" width="52" height="52"><rect width="48" height="48" rx="12" fill="#000"/><path d="M36.5 7h6.6L29.5 22.5 45 41h-13.3L22 29.8 10 41H3.4l14.7-16.8L3 7h13.6l9 11.8L36.5 7zm-2.3 30.4h3.7L14.2 10.7h-4L34.2 37.4z" fill="white"/></svg>
+  );
+  if (id === 'fb') return (
+    <svg viewBox="0 0 48 48" width="54" height="54"><rect width="48" height="48" rx="12" fill="#1877F2"/><path d="M33 7h-5a10 10 0 0 0-10 10v5h-5v7h5v16h7V29h5l1-7h-6v-5a3 3 0 0 1 3-3h3V7z" fill="white"/></svg>
+  );
+  if (id === 'sc') return (
+    <svg viewBox="0 0 48 48" width="50" height="50"><rect width="48" height="48" rx="12" fill="#FFFC00"/><path d="M24 8c-5.5 0-9 4-9 9v3c-1 .2-2 .5-2 .5s.8.8.8 1.8c0 .6-.4 1.1-1 1.4.5 1 1.6 1.6 3 1.6 1 2 3 3.2 5 3.2h2c2 0 4-1.2 5-3.2 1.4 0 2.5-.6 3-1.6-.6-.3-1-.8-1-1.4 0-1 .8-1.8.8-1.8s-1-.3-2-.5v-3c0-5-3.5-9-9-9z" fill="#222"/></svg>
+  );
+  if (id === 'rd') return (
+    <svg viewBox="0 0 48 48" width="54" height="54"><circle cx="24" cy="24" r="24" fill="#FF4500"/><path d="M40 24a4 4 0 0 0-6.8-2.9A18 18 0 0 0 24 18l1.8-7 5.1 1.2a2.7 2.7 0 1 0 .5-2.1L25 8.8 23.1 16A18 18 0 0 0 13 19.1 4 4 0 0 0 8 24a4 4 0 0 0 .9 2.5 6 6 0 0 0-.1.9c0 5 5.8 9 13 9s13-4 13-9a6 6 0 0 0-.1-.9A4 4 0 0 0 40 24zm-21 2a2.2 2.2 0 1 1 4.4 0 2.2 2.2 0 0 1-4.4 0zm11.5 5.7A7.5 7.5 0 0 1 24 33.5a7.5 7.5 0 0 1-6.5-1.8.6.6 0 0 1 .8-.8 6.4 6.4 0 0 0 11.4 0 .6.6 0 0 1 .8.8zM30.2 28a2.2 2.2 0 1 1 0-4.4 2.2 2.2 0 0 1 0 4.4z" fill="white"/></svg>
+  );
+  return null;
+}
+
+function TrashAnimation() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const words = text.split(' ');
+  const trashBodyRef = useRef<HTMLDivElement>(null);
+  const iconRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
-    const el = containerRef.current;
-    if (!el) return;
-    const spans = el.querySelectorAll('.kinetic-word');
-    gsap.set(spans, { opacity: 0.1 });
-    ScrollTrigger.create({
-      trigger: el,
-      start: 'top 80%',
-      end: 'bottom 30%',
-      scrub: 1,
-      onUpdate: (self) => {
-        const progress = self.progress;
-        spans.forEach((span, i) => {
-          const wordProgress = Math.max(0, Math.min(1, (progress * spans.length) - i + 0.5));
-          gsap.set(span, { opacity: 0.1 + wordProgress * 0.9 });
+    const ctx = gsap.context(() => {
+      const bin = trashBodyRef.current;
+      const icons = iconRefs.current.filter(Boolean) as HTMLElement[];
+
+      const runLoop = () => {
+        icons.forEach((icon) => {
+          gsap.set(icon, {
+            y: gsap.utils.random(-700, -350),
+            rotation: gsap.utils.random(-180, 180),
+            scale: gsap.utils.random(0.85, 1.15),
+            opacity: 1,
+          });
         });
-      },
-    });
-    return () => ScrollTrigger.getAll().forEach(t => t.kill());
+
+        const tl = gsap.timeline({
+          onComplete: () => {
+            gsap.to(bin, {
+              keyframes: [
+                { x: -10, duration: 0.06 }, { x: 10, duration: 0.06 },
+                { x: -6,  duration: 0.06 }, { x: 6,  duration: 0.06 },
+                { x: 0,   duration: 0.06 },
+              ],
+              onComplete: () => {
+                gsap.to(icons, {
+                  opacity: 0, scale: 0.4, duration: 0.45, stagger: 0.07, ease: 'power2.in',
+                  onComplete: () => setTimeout(runLoop, 500),
+                });
+              }
+            });
+          }
+        });
+
+        icons.forEach((icon, i) => {
+          const delay = gsap.utils.random(0, 1.0);
+          const dur   = gsap.utils.random(0.7, 1.3);
+          const landY = 300 + (i % 4) * 12 + Math.sin(i * 1.3) * 8;
+          tl.to(icon, {
+            y: landY, rotation: gsap.utils.random(-22, 22),
+            duration: dur, ease: 'bounce.out',
+          }, delay);
+        });
+      };
+
+      runLoop();
+    }, containerRef);
+
+    return () => ctx.revert();
   }, []);
 
   return (
-    <div ref={containerRef} className={className}>
-      {words.map((word, i) => (
-        <span key={i} className="kinetic-word inline-block mr-[0.25em]">{word}</span>
+    <div
+      ref={containerRef}
+      className="absolute inset-0 pointer-events-none select-none overflow-hidden"
+      style={{ zIndex: 1 }}
+    >
+      {/* Falling brand icons */}
+      {SOCIAL_ICONS_DATA.map((icon, i) => (
+        <div
+          key={icon.id}
+          ref={el => { iconRefs.current[i] = el; }}
+          style={{
+            position: 'absolute', top: 0,
+            left: `calc(50% + ${icon.x}px - 28px)`,
+            filter: 'drop-shadow(0 8px 28px rgba(0,0,0,0.7))',
+            willChange: 'transform', zIndex: 4,
+          }}
+        >
+          <SocialSVG id={icon.id} />
+        </div>
       ))}
+
+      {/* Transparent 3D bin */}
+      <div
+        ref={trashBodyRef}
+        style={{ position: 'absolute', bottom: 40, left: '50%', transform: 'translateX(-50%)', width: 300, zIndex: 3 }}
+      >
+        {/* Handle */}
+        <div style={{ width: 52, height: 14, margin: '0 auto', borderRadius: '6px 6px 0 0', background: 'rgba(255,255,255,0.07)', border: '1.5px solid rgba(255,255,255,0.2)', borderBottom: 'none' }}/>
+        {/* Lid */}
+        <div style={{ width: '115%', marginLeft: '-7.5%', height: 28, background: 'linear-gradient(135deg,rgba(255,255,255,0.10) 0%,rgba(255,255,255,0.03) 100%)', border: '1.5px solid rgba(255,255,255,0.22)', borderRadius: '10px 10px 0 0', backdropFilter: 'blur(4px)', boxShadow: 'inset 0 2px 0 rgba(255,255,255,0.18),0 4px 16px rgba(0,0,0,0.5)' }}/>
+        {/* Body */}
+        <div style={{ width: '100%', height: 340, background: 'linear-gradient(160deg,rgba(255,255,255,0.055) 0%,rgba(255,255,255,0.018) 100%)', border: '1.5px solid rgba(255,255,255,0.14)', borderTop: 'none', borderRadius: '0 0 22px 22px', backdropFilter: 'blur(10px)', position: 'relative', overflow: 'hidden', boxShadow: 'inset 3px 0 20px rgba(255,255,255,0.025),inset -3px 0 20px rgba(255,255,255,0.025),0 16px 60px rgba(0,0,0,0.6)' }}>
+          <div style={{ position:'absolute',left:0,top:0,bottom:0,width:2.5,background:'linear-gradient(to bottom,rgba(255,255,255,0.28),rgba(255,255,255,0.05) 50%,transparent)' }}/>
+          <div style={{ position:'absolute',right:0,top:0,bottom:0,width:2.5,background:'linear-gradient(to bottom,rgba(255,255,255,0.12),transparent)' }}/>
+          {[75, 150, 225].map(x => <div key={x} style={{ position:'absolute',left:x,top:0,bottom:0,width:1.5,background:'rgba(255,255,255,0.06)' }}/>)}
+          <div style={{ position:'absolute',bottom:0,left:0,right:0,height:70,background:'linear-gradient(to top,rgba(0,0,0,0.4),transparent)' }}/>
+        </div>
+        {/* Base */}
+        <div style={{ width: '90%', margin: '0 auto', height: 14, background: 'rgba(255,255,255,0.05)', border: '1.5px solid rgba(255,255,255,0.1)', borderTop: 'none', borderRadius: '0 0 10px 10px' }}/>
+      </div>
     </div>
   );
 }
@@ -328,22 +427,25 @@ function HorizontalFeatures() {
             style={{ borderRight: '1px solid rgba(253,252,250,0.06)' }}
           >
             {/* Ghost number */}
-            <span className="pointer-events-none absolute right-8 top-8 select-none text-[25vw] font-black leading-none text-elevate-paper/[0.03]">{feat.num}</span>
+            <span className="pointer-events-none absolute right-8 top-8 select-none text-[25vw] font-black leading-none text-elevate-paper/[0.03] z-0">{feat.num}</span>
+
+            {/* Trash Animation on first slide */}
+            {feat.num === '01' && <TrashAnimation />}
 
             {/* Top: number label */}
-            <div>
+            <div className="relative z-10">
               <p className="text-xs font-semibold tracking-[0.3em] text-elevate-paper/30 uppercase">{feat.num} / 06</p>
             </div>
 
             {/* Center: title */}
-            <div>
+            <div className="relative z-10">
               <h3 className="text-[10vw] font-black leading-none tracking-tight text-elevate-paper md:text-[7vw]">
                 {feat.title}
               </h3>
             </div>
 
             {/* Bottom: desc + orange line */}
-            <div>
+            <div className="relative z-10">
               <div className="mb-6 h-px w-16 bg-elevate-orange" />
               <p className="max-w-sm text-base leading-relaxed text-elevate-paper/45 md:text-lg">{feat.desc}</p>
             </div>
