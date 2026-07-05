@@ -34,9 +34,8 @@ export function DownloadPage() {
       {/* ── Main Content ── */}
       <main className="flex-1 flex flex-col justify-center items-center px-6 md:px-12 lg:px-20 pt-24 pb-12">
         <div className="max-w-3xl w-full text-center">
-          <p className="mb-6 text-xs font-semibold tracking-[0.3em] text-elevate-orange uppercase animate-fade-in">Alpha Release</p>
           <h1 className="mb-8 text-5xl font-black leading-[0.95] tracking-tight md:text-7xl lg:text-8xl animate-slide-up">
-            Ready to <br/>Elevate?
+            Release 22082026<br/>coming soon
           </h1>
           <p className="mb-12 text-base leading-relaxed text-elevate-paper/50 md:text-xl max-w-xl mx-auto animate-fade-in" style={{ animationDelay: '100ms' }}>
             Releasing soon on play store<br />
