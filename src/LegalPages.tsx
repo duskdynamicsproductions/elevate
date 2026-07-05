@@ -1,5 +1,9 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 function SpinningStar({ className = '' }: { className?: string }) {
   return (
@@ -26,130 +30,169 @@ function LegalLayout({
 }: {
   badge: string;
   title: string;
-  subtitle: string;
+  subtitle?: string;
   updated: string;
   sections: SectionItem[];
   contactExtra?: string;
 }) {
-  useEffect(() => { window.scrollTo(0, 0); }, []);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    const container = containerRef.current;
+    const track = trackRef.current;
+    if (!container || !track) return;
+
+    // Only apply horizontal scroll on md+ screens
+    if (window.innerWidth < 768) return;
+
+    const totalWidth = track.scrollWidth - window.innerWidth;
+    if (totalWidth <= 0) return;
+
+    const ctx = gsap.context(() => {
+      gsap.to(track, {
+        x: -totalWidth,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: container,
+          start: 'top top',
+          end: () => `+=${totalWidth}`,
+          scrub: 1,
+          pin: true,
+          anticipatePin: 1,
+        },
+      });
+    });
+
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <div className="min-h-screen bg-elevate-black font-display text-elevate-paper">
-
-      {/* ── Nav ── */}
-      <header className="flex w-full items-center justify-between px-6 py-6 md:px-12 lg:px-20">
-        <Link to="/" className="flex items-center gap-2 transition-opacity hover:opacity-50">
+    <div className="bg-elevate-black font-display text-elevate-paper selection:bg-elevate-orange selection:text-white overflow-x-hidden">
+      
+      <header className="absolute left-0 top-0 z-50 flex w-full items-center justify-between px-6 py-6 md:px-12 lg:px-20 pointer-events-none">
+        <Link to="/" className="pointer-events-auto flex items-center gap-2 transition-opacity hover:opacity-50">
           <SpinningStar className="size-4 text-elevate-orange" />
           <span className="text-sm font-bold tracking-widest uppercase">Elevate</span>
         </Link>
-        <Link
-          to="/"
-          className="rounded-full border border-elevate-paper/20 px-5 py-2.5 text-xs font-bold tracking-wider uppercase transition-all hover:bg-elevate-paper hover:text-elevate-black"
-        >
-          ← Back
-        </Link>
+
+        {/* Centered Nav */}
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+          <Link
+            to="/"
+            className="pointer-events-auto text-xs font-semibold tracking-[0.2em] uppercase text-elevate-paper/40 transition-colors hover:text-elevate-paper"
+          >
+            HOME
+          </Link>
+        </div>
       </header>
 
-      {/* ── Hero ── */}
-      <section className="border-b border-elevate-paper/[0.06] px-6 py-20 md:px-12 lg:px-20 lg:py-28">
-        <div className="mx-auto max-w-4xl">
+      {/* ── Full Screen Hero ── */}
+      <section className="relative flex h-svh min-h-[700px] w-full flex-col justify-center px-6 md:px-12 lg:px-20 bg-elevate-black border-b border-elevate-paper/[0.06]">
+        <div className="max-w-4xl pt-24 md:pt-0">
           <p className="mb-5 text-xs font-semibold tracking-[0.3em] text-elevate-orange uppercase">{badge}</p>
           <h1 className="mb-6 text-5xl font-black leading-[0.92] tracking-tight md:text-7xl lg:text-[100px]">
             {title}
           </h1>
-          <p className="mb-6 max-w-2xl text-base leading-relaxed text-elevate-paper/40 md:text-lg">{subtitle}</p>
+          {subtitle && (
+            <p className="mb-8 max-w-2xl text-base leading-relaxed text-elevate-paper/40 md:text-lg">{subtitle}</p>
+          )}
           <p className="text-xs font-semibold tracking-widest text-elevate-paper/20 uppercase">Last updated: {updated}</p>
+        </div>
+
+        {/* Scroll indicator */}
+        <div className="absolute bottom-12 left-6 md:left-12 lg:left-20 flex items-center gap-3 text-xs font-semibold tracking-[0.2em] text-elevate-paper/30 uppercase">
+          <span>Scroll</span>
+          <span className="animate-bounce text-elevate-orange">↓</span>
         </div>
       </section>
 
-      {/* ── Sections ── */}
-      <main className="px-6 py-16 md:px-12 lg:px-20 lg:py-24">
-        <div className="mx-auto max-w-4xl">
+      {/* ── Horizontal Scroll Section ── */}
+      <div ref={containerRef} className="relative w-full overflow-hidden bg-elevate-black">
+        <main ref={trackRef} className="flex flex-col md:flex-row md:w-max">
+          
+          {/* Sections */}
           {sections.map((s, i) => (
             <div
               key={i}
-              className={s.highlight
-                ? 'mb-8 rounded-2xl border border-elevate-paper/10 bg-elevate-paper/[0.03] p-8 md:p-10'
-                : 'border-t border-elevate-paper/[0.06] py-10'}
+              className="relative flex h-auto flex-col justify-center border-b border-elevate-paper/[0.06] px-6 py-16 md:h-screen md:w-screen md:border-b-0 md:border-r md:border-elevate-paper/10 md:px-12 lg:px-20 overflow-hidden group"
             >
-              {/* Section label */}
-              <p className="mb-4 text-xs font-semibold tracking-[0.25em] text-elevate-orange uppercase">
-                {String(i + 1).padStart(2, '0')} — {s.title}
-              </p>
+              {/* Ghost number */}
+              <span className="pointer-events-none absolute right-6 top-8 select-none text-[25vw] font-black leading-none text-elevate-paper/[0.02] md:right-12 md:top-12 md:text-[20vw] transition-colors group-hover:text-elevate-paper/[0.04]">
+                {String(i + 1).padStart(2, '0')}
+              </span>
 
-              {/* Body text */}
-              {s.body && (
-                <p className="text-sm leading-relaxed text-elevate-paper/50 md:text-base">{s.body}</p>
-              )}
-
-              {/* List */}
-              {s.list && (
-                <ul className="mt-3 space-y-3">
-                  {s.list.map((item, j) => (
-                    <li key={j} className="flex items-start gap-3 text-sm leading-relaxed text-elevate-paper/50 md:text-base">
-                      <span className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-elevate-orange" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              )}
+              <div className="z-10 max-w-3xl">
+                <h2 className="mb-8 text-3xl font-black leading-[0.9] tracking-tight text-elevate-orange uppercase md:text-5xl lg:text-[4vw]">
+                  {s.title}
+                </h2>
+                {s.body && (
+                  <p className="mb-6 text-sm leading-relaxed text-elevate-paper/50 md:text-xl lg:text-2xl">{s.body}</p>
+                )}
+                {s.list && (
+                  <ul className="mt-6 space-y-4 md:space-y-6">
+                    {s.list.map((item, j) => (
+                      <li key={j} className="flex items-start gap-4 text-sm leading-relaxed text-elevate-paper/50 md:text-lg lg:text-xl">
+                        <span className="mt-[10px] h-1.5 w-1.5 shrink-0 rounded-full bg-elevate-orange" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
             </div>
           ))}
 
-          {/* ── Contact card ── */}
-          <div className="mt-6 rounded-2xl bg-elevate-orange px-8 py-10 md:px-10 md:py-12">
-            <p className="mb-1 text-xs font-semibold tracking-[0.2em] uppercase text-white/60">Get in touch</p>
-            <h3 className="mb-6 text-2xl font-black text-white md:text-3xl">Questions? Reach out directly.</h3>
-            <div className="space-y-2 text-sm text-white/70">
-              <p>Developer / Controller: <span className="font-bold text-white">Brihit Nath</span></p>
-              <p>
-                Privacy & Support:&nbsp;
-                <a href="mailto:theduskdynamicsproductions@gmail.com" className="font-bold text-white underline underline-offset-2">
-                  theduskdynamicsproductions@gmail.com
-                </a>
-              </p>
-              <p>
-                Grievance contact:&nbsp;
-                <a href="mailto:brihitnath@gmail.com" className="font-bold text-white underline underline-offset-2">
-                  brihitnath@gmail.com
-                </a>
-              </p>
-              {contactExtra && <p className="mt-3 text-white/50">{contactExtra}</p>}
+          {/* Contact Card & Footer Slide */}
+          <div className="relative flex h-auto flex-col justify-center px-6 py-16 md:h-screen md:w-screen md:px-12 lg:px-20">
+            
+            <div className="max-w-3xl rounded-2xl bg-elevate-orange px-8 py-10 md:px-12 md:py-16">
+              <p className="mb-2 text-xs font-semibold tracking-[0.2em] uppercase text-white/60">Get in touch</p>
+              <h3 className="mb-8 text-3xl font-black text-white md:text-5xl lg:text-6xl">Questions? Reach out directly.</h3>
+              <div className="space-y-3 text-sm md:text-base text-white/80">
+                <p>Developer / Controller: <span className="font-bold text-white">Brihit Nath</span></p>
+                <p>
+                  Privacy & Support:&nbsp;
+                  <a href="mailto:theduskdynamicsproductions@gmail.com" className="font-bold text-white underline underline-offset-2 hover:text-elevate-black transition-colors">
+                    theduskdynamicsproductions@gmail.com
+                  </a>
+                </p>
+                <p>
+                  Grievance contact:&nbsp;
+                  <a href="mailto:brihitnath@gmail.com" className="font-bold text-white underline underline-offset-2 hover:text-elevate-black transition-colors">
+                    brihitnath@gmail.com
+                  </a>
+                </p>
+                {contactExtra && <p className="mt-4 text-white/50">{contactExtra}</p>}
+              </div>
             </div>
+
+            {/* Cross-links */}
+            <div className="mt-12 mb-16 flex gap-4">
+              <Link to="/privacy_policy" className="rounded-full border border-elevate-paper/15 px-6 py-3 text-xs font-bold tracking-wider uppercase text-elevate-paper/40 transition-all hover:border-elevate-paper hover:text-elevate-paper">
+                Privacy Policy
+              </Link>
+              <Link to="/terms" className="rounded-full border border-elevate-paper/15 px-6 py-3 text-xs font-bold tracking-wider uppercase text-elevate-paper/40 transition-all hover:border-elevate-paper hover:text-elevate-paper">
+                Terms of Use
+              </Link>
+            </div>
+
+            <footer className="mt-auto flex flex-col items-start gap-6 border-t border-elevate-paper/10 pt-8 md:flex-row md:items-center md:justify-between">
+              <div className="flex items-center gap-2">
+                <SpinningStar className="size-4 text-elevate-orange" />
+                <span className="text-sm font-black tracking-tight">Elevate</span>
+              </div>
+              <div className="flex gap-6">
+                <Link to="/privacy_policy" className="text-xs font-semibold tracking-wider uppercase text-elevate-paper/30 hover:text-elevate-paper transition-colors">Privacy</Link>
+                <Link to="/terms" className="text-xs font-semibold tracking-wider uppercase text-elevate-paper/30 hover:text-elevate-paper transition-colors">Terms</Link>
+              </div>
+              <p className="text-xs text-elevate-paper/20">© 2026 Elevate. All rights reserved.</p>
+            </footer>
           </div>
 
-          {/* ── Cross-links ── */}
-          <div className="mt-8 flex gap-4">
-            <Link
-              to="/privacy_policy"
-              className="rounded-full border border-elevate-paper/15 px-5 py-2.5 text-xs font-bold tracking-wider uppercase text-elevate-paper/40 transition-all hover:border-elevate-paper/40 hover:text-elevate-paper"
-            >
-              Privacy Policy
-            </Link>
-            <Link
-              to="/terms"
-              className="rounded-full border border-elevate-paper/15 px-5 py-2.5 text-xs font-bold tracking-wider uppercase text-elevate-paper/40 transition-all hover:border-elevate-paper/40 hover:text-elevate-paper"
-            >
-              Terms of Use
-            </Link>
-          </div>
-        </div>
-      </main>
-
-      {/* ── Footer ── */}
-      <footer className="border-t border-elevate-paper/10 px-6 py-10 md:px-12 lg:px-20">
-        <div className="mx-auto flex max-w-4xl flex-col items-center justify-between gap-6 md:flex-row">
-          <div className="flex items-center gap-2">
-            <SpinningStar className="size-3.5 text-elevate-orange" />
-            <span className="text-sm font-black tracking-tight">Elevate</span>
-          </div>
-          <div className="flex gap-6">
-            <Link to="/privacy_policy" className="text-xs font-semibold tracking-wider uppercase text-elevate-paper/30 hover:text-elevate-paper transition-colors">Privacy</Link>
-            <Link to="/terms" className="text-xs font-semibold tracking-wider uppercase text-elevate-paper/30 hover:text-elevate-paper transition-colors">Terms</Link>
-          </div>
-          <p className="text-xs text-elevate-paper/20">© 2026 Elevate. All rights reserved.</p>
-        </div>
-      </footer>
+        </main>
+      </div>
     </div>
   );
 }
@@ -168,21 +211,21 @@ export function PrivacyPage() {
     {
       title: 'Data you provide or create',
       list: [
-        'Account details — email address, sign-in provider, account status, and Firebase user ID.',
-        'Profile details — name, age, height, weight, goal bodyweight, preferences, and settings.',
-        'Workout and fitness data — sessions, exercises, sets, reps, weights, timers, templates, workout history, goals, and progress analytics.',
-        'Focus and wellness data — focus sessions, app-limit history, selected blocked apps, selected monitored apps, discipline score, and related activity.',
-        'Backup settings — automatic backup status, scheduled backup time, time zone, last backup day, and backup source.',
+        'Account details: email address, sign-in provider, account status, and Firebase user ID.',
+        'Profile details: name, age, height, weight, goal bodyweight, preferences, and settings.',
+        'Workout and fitness data: sessions, exercises, sets, reps, weights, timers, templates, workout history, goals, and progress analytics.',
+        'Focus and wellness data: focus sessions, app-limit history, selected blocked apps, selected monitored apps, discipline score, and related activity.',
+        'Backup settings: automatic backup status, scheduled backup time, time zone, last backup day, and backup source.',
       ],
     },
     {
       title: 'Data from optional permissions',
       body: 'Elevate uses sensitive Android permissions only after you enable the related feature.',
       list: [
-        'Usage Access — used for app-limit, focus, and discipline features.',
-        'Accessibility — used to redirect you away from apps you selected to block during focus or app-limit flows.',
-        'Installed app information — used to show apps you can choose to block or monitor.',
-        'Google Drive access — used to create or restore your backup file after you approve Drive access.',
+        'Usage Access: used for app-limit, focus, and discipline features.',
+        'Accessibility: used to redirect you away from apps you selected to block during focus or app-limit flows.',
+        'Installed app information: used to show apps you can choose to block or monitor.',
+        'Google Drive access: used to create or restore your backup file after you approve Drive access.',
       ],
     },
     {
@@ -213,7 +256,27 @@ export function PrivacyPage() {
     },
     {
       title: 'Retention & deletion',
-      body: 'Elevate keeps data while it is needed to provide the app, maintain your account, support backup/restore, protect the service, or meet legal obligations. You can request deletion in the app from Privacy & Terms → Delete Account & Data. Google Drive backup files may need to be deleted separately from your Google Drive.',
+      body: 'Elevate keeps data while it is needed to provide the app, maintain your account, support backup/restore, protect the service, or meet legal obligations. You can request deletion in the app from Privacy & Terms → Delete Account & Data.',
+    },
+    {
+      title: 'Account & data deletion - what gets deleted',
+      list: [
+        'Firebase Auth account record, where deletion can be verified.',
+        'Account-linked Firebase Realtime Database data.',
+        'Support records that are not required for security, abuse prevention, legal compliance, or request handling.',
+        'Local app data on the device after the in-app deletion flow succeeds.',
+      ],
+    },
+    {
+      title: 'Account & data deletion - what may need separate action',
+      list: [
+        'Google Drive backup files created by Elevate may need to be deleted from your Google Drive.',
+        'Limited records may be retained only where required for security, abuse prevention, legal compliance, or request handling.',
+      ],
+    },
+    {
+      title: 'Deletion request without the app',
+      body: 'If you no longer have the app installed, send a request from the email address linked to your Elevate account to theduskdynamicsproductions@gmail.com with subject: Elevate account deletion request. Include your account email and what action you need (deletion, correction, consent withdrawal, or grievance). Elevate will respond within a reasonable period not exceeding 90 days.',
     },
     {
       title: 'Your rights',
@@ -238,8 +301,7 @@ export function PrivacyPage() {
     <LegalLayout
       badge="Legal · Privacy"
       title="Privacy Policy."
-      subtitle="We believe transparency builds trust. Here is exactly what Elevate collects, why we collect it, and how you stay in control."
-      updated="June 1, 2026"
+      updated="July 5, 2026"
       sections={sections}
       contactExtra="Public policy URL: duskdynamicsproductions.github.io/Elevate/privacy_policy.html"
     />
@@ -278,7 +340,27 @@ export function TermsPage() {
     },
     {
       title: 'Account deletion & data requests',
-      body: 'You can request deletion in the app from Privacy & Terms → Delete Account & Data. You can also contact theduskdynamicsproductions@gmail.com for deletion, privacy, or grievance requests. Google Drive backup files may need separate deletion from your Google Drive.',
+      body: 'You can request deletion in the app from Privacy & Terms → Delete Account & Data. You can also contact theduskdynamicsproductions@gmail.com for deletion, privacy, or grievance requests.',
+    },
+    {
+      title: 'What gets deleted',
+      list: [
+        'Firebase Auth account record, where deletion can be verified.',
+        'Account-linked Firebase Realtime Database data.',
+        'Support records not required for security, abuse prevention, legal compliance, or request handling.',
+        'Local app data on the device after the in-app deletion flow succeeds.',
+      ],
+    },
+    {
+      title: 'What may need separate action',
+      list: [
+        'Google Drive backup files created by Elevate may need to be deleted from your Google Drive.',
+        'Limited records may be retained only where required for security, abuse prevention, legal compliance, or request handling.',
+      ],
+    },
+    {
+      title: 'Response timeline',
+      body: 'Elevate will respond within a reasonable period not exceeding 90 days unless a shorter legal deadline applies. You may be asked to verify account ownership before deletion.',
     },
     {
       title: 'Availability & limits',
@@ -286,7 +368,7 @@ export function TermsPage() {
     },
     {
       title: 'No guaranteed outcomes',
-      body: 'Elevate can help you track effort, consistency, workouts, focus, and wellness habits — but it does not guarantee fat loss, muscle gain, recovery, pain relief, productivity, mental-health outcomes, backup success, or discipline outcomes.',
+      body: 'Elevate can help you track effort, consistency, workouts, focus, and wellness habits - but it does not guarantee fat loss, muscle gain, recovery, pain relief, productivity, mental-health outcomes, backup success, or discipline outcomes.',
     },
     {
       title: 'Commercial features',
@@ -306,8 +388,7 @@ export function TermsPage() {
     <LegalLayout
       badge="Legal · Terms"
       title="Terms of Use."
-      subtitle="Plain-language terms for using Elevate. No legalese — just what you need to know to use the app responsibly."
-      updated="June 1, 2026"
+      updated="July 5, 2026"
       sections={sections}
     />
   );

@@ -76,6 +76,12 @@ select {
   animation-play-state: paused;
 }
 
+/* ── MeshWord — let scattered chars fly freely ── */
+.mw-c {
+  display: inline-block;
+  will-change: transform, opacity, filter;
+}
+
 /* ── Smooth selection ── */
 ::selection {
   background: #FF6200;

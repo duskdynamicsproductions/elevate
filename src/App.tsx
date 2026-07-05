@@ -28,7 +28,7 @@ const features = [
   {
     num: '02',
     title: 'App limits',
-    desc: 'Set hard daily time caps on any app — Instagram, YouTube, Twitter. When the limit hits, the app locks. No snooze, no excuses.',
+    desc: 'Set hard daily time caps on any app - Instagram, YouTube, Twitter. When the limit hits, the app locks. No snooze, no excuses.',
   },
   {
     num: '03',
@@ -94,62 +94,159 @@ function CustomCursor() {
   );
 }
 
+
+
 /* ══════════════════════════════════════════════════════════
-   FLOATING SCROLL BALL
+   MESH WORD — scatter/assemble with glitch, random order
 ══════════════════════════════════════════════════════════ */
-function FloatingBall() {
-  const ballRef = useRef<HTMLDivElement>(null);
+const GLITCH_POOL = '!<>-_\\/[]{}=+*^?#~@$%&ABCDEFabcdef01234';
 
+function MeshWord({ words }: { words: string[] }) {
+  const [index, setIndex] = useState(0);
+  const [chars, setChars]  = useState<string[]>(() => words[0].split(''));
+  const containerRef       = useRef<HTMLSpanElement>(null);
+  const busyRef            = useRef(false);
+  const isFirstMount       = useRef(true);
+
+  // IN: random order so it never sweeps left→right
   useEffect(() => {
-    const ball = ballRef.current;
-    if (!ball) return;
+    if (isFirstMount.current) { isFirstMount.current = false; return; }
+    const container = containerRef.current;
+    if (!container) return;
+    const spans = Array.from(container.querySelectorAll<HTMLElement>('.mw-c'));
+    const word  = words[index];
+    // shuffle indices
+    const order = [...spans.keys()].sort(() => Math.random() - 0.5);
 
-    const onScroll = () => {
-      const scrollY = window.scrollY;
-      const maxScroll = document.body.scrollHeight - window.innerHeight;
-      const progress = Math.min(scrollY / maxScroll, 1);
-      // Sine-wave X path + linear Y descent
-      const xOffset = Math.sin(progress * Math.PI * 4) * 120;
-      const yPos = progress * (window.innerHeight * 0.85);
-      gsap.to(ball, { x: xOffset, y: yPos, duration: 0.4, ease: 'power2.out' });
-    };
+    order.forEach((charIdx, orderIdx) => {
+      const span = spans[charIdx];
+      if (!span) return;
+      gsap.set(span, {
+        x: (Math.random() - 0.5) * 700, y: (Math.random() - 0.5) * 340,
+        rotation: (Math.random() - 0.5) * 200, scale: Math.random() * 0.15 + 0.05,
+        opacity: 0, filter: 'blur(28px)',
+      });
+      // glitch scramble during assembly
+      let tick = 0;
+      const maxTicks = 8 + orderIdx * 2;
+      const scr = setInterval(() => {
+        if (tick < maxTicks) {
+          span.textContent = GLITCH_POOL[Math.floor(Math.random() * GLITCH_POOL.length)];
+          tick++;
+        } else {
+          span.textContent = word[charIdx] ?? '';
+          clearInterval(scr);
+        }
+      }, 36);
+      gsap.to(span, {
+        x: 0, y: 0, rotation: 0, scale: 1, opacity: 1, filter: 'blur(0px)',
+        duration: 0.85, delay: orderIdx * 0.07, ease: 'power4.out',
+        onComplete: orderIdx === order.length - 1
+          ? () => { busyRef.current = false; } : undefined,
+      });
+    });
+  }, [index]); // eslint-disable-line
 
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+  // OUT: random order so exit is equally unpredictable
+  useEffect(() => {
+    const id = setInterval(() => {
+      if (busyRef.current) return;
+      busyRef.current = true;
+      const container = containerRef.current;
+      if (!container) return;
+      const spans   = Array.from(container.querySelectorAll<HTMLElement>('.mw-c'));
+      const nextIdx = (index + 1) % words.length;
+      const order   = [...spans.keys()].sort(() => Math.random() - 0.5);
+      let done = 0;
+
+      order.forEach((charIdx, orderIdx) => {
+        const span = spans[charIdx];
+        if (!span) return;
+        // glitch on exit
+        let tick = 0;
+        const scr = setInterval(() => {
+          if (tick < 7) { span.textContent = GLITCH_POOL[Math.floor(Math.random() * GLITCH_POOL.length)]; tick++; }
+          else clearInterval(scr);
+        }, 38);
+        gsap.to(span, {
+          x: (Math.random() - 0.5) * 600, y: (Math.random() - 0.5) * 300,
+          rotation: (Math.random() - 0.5) * 200, scale: Math.random() * 0.1 + 0.03,
+          opacity: 0, filter: 'blur(22px)',
+          duration: 0.55, delay: orderIdx * 0.05, ease: 'power3.in',
+          onComplete: () => {
+            done++;
+            if (done === spans.length) {
+              setIndex(nextIdx);
+              setChars(words[nextIdx].split(''));
+            }
+          },
+        });
+      });
+    }, 3200);
+    return () => clearInterval(id);
+  }, [index, words]);
 
   return (
-    <div
-      ref={ballRef}
-      className="pointer-events-none fixed left-1/2 top-[8vh] z-40 -translate-x-1/2"
-      style={{ willChange: 'transform' }}
-    >
-      <div className="h-5 w-5 rounded-full border-2 border-elevate-paper/30 bg-transparent" />
-    </div>
+    <span ref={containerRef} className="inline-flex relative" aria-live="polite">
+      {chars.map((ch, i) => (
+        <span key={i} className="mw-c inline-block will-change-transform"
+          style={{ transformOrigin: 'center center' }}>{ch}</span>
+      ))}
+    </span>
   );
 }
 
 /* ══════════════════════════════════════════════════════════
-   SLOT WORD
+   ROLLING NUMBER — slot-machine digit reveal
 ══════════════════════════════════════════════════════════ */
-function SlotWord({ words }: { words: string[] }) {
-  const [index, setIndex] = useState(0);
-  const wordRef = useRef<HTMLSpanElement>(null);
+const DIGITS = ['0','1','2','3','4','5','6','7','8','9'];
 
+function RollingDigit({ target, delay, color }: { target: string; delay: number; color: string }) {
+  const colRef = useRef<HTMLDivElement>(null);
+  const targetIndex = DIGITS.indexOf(target);
   useEffect(() => {
-    const interval = setInterval(() => {
-      gsap.to(wordRef.current, {
-        opacity: 0, duration: 0.3, ease: 'power2.in',
-        onComplete: () => {
-          setIndex((prev) => (prev + 1) % words.length);
-          gsap.fromTo(wordRef.current, { opacity: 0 }, { opacity: 1, duration: 0.5, ease: 'power2.out' });
-        },
-      });
-    }, 2800);
-    return () => clearInterval(interval);
-  }, [words]);
+    const el = colRef.current;
+    if (!el || targetIndex < 0) return;
+    const extraSpins = 2;
+    const totalItems = DIGITS.length * extraSpins + targetIndex;
+    const itemH = el.offsetHeight / DIGITS.length;
+    gsap.set(el, { y: 0 });
+    gsap.to(el, { y: -itemH * totalItems, duration: 1.4 + delay * 0.3, delay: delay * 0.08, ease: 'power4.out' });
+  }, [target, delay, targetIndex]);
+  const strip: string[] = [];
+  for (let s = 0; s < 3; s++) strip.push(...DIGITS);
+  return (
+    <div className="relative overflow-hidden" style={{ height: '1.05em', lineHeight: '1.05em' }}>
+      <div ref={colRef} className="flex flex-col" style={{ color }}>
+        {strip.map((d, i) => <span key={i} className="block" style={{ height: '1.05em', lineHeight: '1.05em' }}>{d}</span>)}
+      </div>
+    </div>
+  );
+}
 
-  return <span ref={wordRef} className="inline will-change-auto">{words[index]}</span>;
+function RollingNumber({ value, color = '#FF6200', className = '' }: { value: string; color?: string; className?: string }) {
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const [fired, setFired] = useState(false);
+  const digits = value.split('');
+  useEffect(() => {
+    const el = wrapRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([e]) => { if (e.isIntersecting) { setFired(true); obs.unobserve(el); } },
+      { threshold: 0.5 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+  return (
+    <div ref={wrapRef} className={`flex items-end font-black leading-none tracking-tight ${className}`}>
+      {digits.map((d, i) =>
+        /[0-9]/.test(d)
+          ? (fired ? <RollingDigit key={i} target={d} delay={i} color={color} /> : <span key={i} style={{ color, opacity: 0 }}>{d}</span>)
+          : <span key={i} style={{ color }}>{d}</span>
+      )}
+    </div>
+  );
 }
 
 /* ══════════════════════════════════════════════════════════
@@ -351,22 +448,7 @@ function Reveal({ children, className = '', direction = 'up', delay = 0 }: {
   );
 }
 
-/* ══════════════════════════════════════════════════════════
-   MARQUEE STRIP
-══════════════════════════════════════════════════════════ */
-function MarqueeStrip() {
-  return (
-    <div className="overflow-hidden whitespace-nowrap bg-elevate-orange py-4 md:py-6">
-      <div className="animate-marquee inline-block">
-        {Array.from({ length: 8 }).map((_, i) => (
-          <span key={i} className="mx-8 text-sm font-bold uppercase tracking-[0.2em] text-white/90 md:text-base">
-            Focus harder&nbsp;•&nbsp;Train smarter&nbsp;•&nbsp;Stay accountable&nbsp;•&nbsp;
-          </span>
-        ))}
-      </div>
-    </div>
-  );
-}
+
 
 /* ══════════════════════════════════════════════════════════
    VELOCITY MARQUEE
@@ -465,6 +547,103 @@ function JumboAccordion() {
   );
 }
 
+const detoxStats = [
+  {
+    id: 1,
+    label: 'Reels scrolled',
+    title: "TODAY'S DAMAGE",
+    value: '247',
+    color: '#FF6200',
+    desc: "Each reel averages 18 sec. That's 1.2 hours of your life gone.",
+  },
+  {
+    id: 2,
+    label: 'App limits set',
+    title: 'HARD CAPS ACTIVE',
+    value: '5',
+    color: '#1ED760',
+    desc: 'Instagram at 20 min. YouTube at 30 min. Reddit blocked entirely.',
+  },
+  {
+    id: 3,
+    label: 'Days - Sexual detox',
+    title: 'CURRENT STREAK',
+    value: '14',
+    color: '#3B82F6',
+    desc: 'Milestones at 7, 14, 30, 90 days. Urge surfing prompts built-in.',
+  },
+];
+
+function InteractiveDetox() {
+  const [activeIdx, setActiveIdx] = useState(0);
+
+  return (
+    <div
+      className="mt-12 flex w-full flex-col overflow-hidden rounded-3xl border border-elevate-paper/[0.08] transition-colors duration-700 md:flex-row"
+      style={{ backgroundColor: `${detoxStats[activeIdx].color}08` }}
+    >
+      {/* ── Left side: Hover list ── */}
+      <div className="flex w-full flex-col justify-center border-b border-elevate-paper/[0.08] p-8 md:w-[45%] md:border-b-0 md:border-r md:p-12 lg:p-16">
+        {detoxStats.map((stat, i) => (
+          <div
+            key={stat.id}
+            onMouseEnter={() => setActiveIdx(i)}
+            onClick={() => setActiveIdx(i)}
+            className="group cursor-pointer py-4 md:py-6"
+          >
+            <h3
+              className="text-4xl font-black uppercase leading-[0.85] tracking-tighter transition-all duration-300 md:text-5xl lg:text-7xl xl:text-[80px]"
+              style={
+                activeIdx === i
+                  ? { color: stat.color, WebkitTextStroke: '0px transparent' }
+                  : { color: 'transparent', WebkitTextStroke: '1px rgba(253,252,250,0.2)' }
+              }
+            >
+              {stat.label}
+            </h3>
+          </div>
+        ))}
+      </div>
+
+      {/* ── Right side: Truth reveal ── */}
+      <div className="relative flex min-h-[400px] w-full flex-col justify-center p-8 md:min-h-0 md:w-[55%] md:p-12 lg:p-16">
+        {detoxStats.map((stat, i) => {
+          const isActive = activeIdx === i;
+          return (
+            <div
+              key={stat.id}
+              className={`absolute inset-0 flex flex-col justify-center p-8 transition-all duration-500 md:p-12 lg:p-16 ${
+                isActive
+                  ? 'pointer-events-auto translate-y-0 opacity-100 z-10'
+                  : 'pointer-events-none translate-y-8 opacity-0 z-0'
+              }`}
+            >
+              <p className="mb-4 text-xs font-semibold uppercase tracking-[0.25em] text-elevate-paper/40">
+                {stat.title}
+              </p>
+              
+              {/* Only render RollingNumber when active so it re-animates on switch */}
+              <div className="mb-6 h-[100px] md:h-[150px] lg:h-[180px]">
+                {isActive && (
+                  <RollingNumber
+                    value={stat.value}
+                    color={stat.color}
+                    className="text-[100px] leading-none tracking-tighter md:text-[140px] lg:text-[180px]"
+                  />
+                )}
+              </div>
+
+              <p className="max-w-sm text-base leading-relaxed text-elevate-paper/60 md:text-xl lg:max-w-md">
+                {stat.desc}
+              </p>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 /* ══════════════════════════════════════════════════════════
    APP
 ══════════════════════════════════════════════════════════ */
@@ -484,7 +663,7 @@ export default function App() {
   return (
     <div className="relative font-display bg-elevate-black">
       <CustomCursor />
-      <FloatingBall />
+
 
       {/* ══════════════════════════════════════════
           HERO — Dark Editorial
@@ -500,11 +679,12 @@ export default function App() {
             <span className="text-sm font-bold tracking-widest uppercase text-elevate-paper">Elevate</span>
           </a>
           <nav className="hidden items-center gap-10 md:flex">
-            {navLinks.map((link) => (
-              <a key={link.label} href={link.href} className="text-xs font-semibold tracking-[0.2em] uppercase text-elevate-paper/40 transition-colors hover:text-elevate-paper">
-                {link.label}
-              </a>
-            ))}
+            <Link to="/privacy_policy" className="text-xs font-semibold tracking-[0.2em] uppercase text-elevate-paper/40 transition-colors hover:text-elevate-paper">
+              Privacy Policy
+            </Link>
+            <Link to="/terms" className="text-xs font-semibold tracking-[0.2em] uppercase text-elevate-paper/40 transition-colors hover:text-elevate-paper">
+              Terms &amp; Conditions
+            </Link>
           </nav>
           <a href={downloadUrl} target="_blank" rel="noreferrer"
             className="rounded-full border border-elevate-paper/20 px-5 py-2.5 text-xs font-bold tracking-wider uppercase text-elevate-paper transition-all hover:bg-elevate-paper hover:text-elevate-black">
@@ -514,31 +694,19 @@ export default function App() {
 
         {/* Hero content */}
         <div className="flex flex-1 flex-col items-start justify-end px-6 pb-16 md:px-12 lg:px-20 lg:pb-28">
-          {/* Eyebrow */}
-          <p className="hero-sub mb-6 text-xs font-semibold tracking-[0.3em] text-elevate-orange uppercase">
-            Focus · Train · Detox
-          </p>
-
           {/* Massive headline */}
           <h1 className="flex flex-col gap-0 text-[68px] font-black leading-[0.88] tracking-[-0.03em] md:text-[110px] lg:text-[150px] xl:text-[190px]">
             <span className="hero-word block text-elevate-paper">Focus</span>
             <span className="hero-word block text-elevate-paper/80">
-              <SlotWord words={heroWords} />
+              <MeshWord words={heroWords} />
             </span>
             <span className="hero-word block text-elevate-paper">Train</span>
             <span className="hero-word block text-elevate-paper/80">smarter.</span>
           </h1>
-
-          {/* Bottom row */}
-          <div className="hero-sub mt-12 flex w-full items-end justify-between">
-            <p className="max-w-xs text-sm leading-relaxed text-elevate-paper/35">
-              Elevate combines distraction blocking, workout planning, and physical analytics into one system.
-            </p>
-            <a href={downloadUrl} target="_blank" rel="noreferrer"
-              className="group relative inline-flex aspect-square h-20 w-20 items-center justify-center rounded-full border border-elevate-paper/20 text-elevate-orange transition-all hover:bg-elevate-orange hover:border-elevate-orange md:h-24 md:w-24">
-              <span className="text-center text-[10px] font-bold leading-tight tracking-wider uppercase group-hover:text-elevate-black">Alpha↓</span>
-            </a>
-          </div>
+          
+          <p className="mt-6 md:mt-10 whitespace-nowrap text-sm md:text-base font-['Space_Mono',monospace] font-bold uppercase tracking-widest text-elevate-orange">
+            "The lion will achieve everything he sets his sights on or he will perish in the pursuit of it."
+          </p>
         </div>
 
         {/* Scroll indicator */}
@@ -547,10 +715,10 @@ export default function App() {
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════
-          MARQUEE
-      ══════════════════════════════════════════ */}
-      <MarqueeStrip />
+
+
+      {/* Orange separator */}
+      <div className="h-1 w-full bg-elevate-orange" />
 
       {/* ══════════════════════════════════════════
           FEATURES — Horizontal Scroll
@@ -571,32 +739,7 @@ export default function App() {
             </h2>
           </Reveal>
 
-          <div className="grid grid-cols-1 gap-px bg-elevate-paper/5 sm:grid-cols-3">
-            <Reveal direction="up" delay={0} className="bg-elevate-black p-10 lg:p-14">
-              <p className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-elevate-paper/25">Today's damage</p>
-              <p className="mb-1 text-[64px] font-black leading-none tracking-tight text-elevate-orange lg:text-[90px]">247</p>
-              <p className="text-base font-semibold text-elevate-paper/60">Reels scrolled</p>
-              <p className="mt-4 text-sm leading-relaxed text-elevate-paper/25">
-                Each reel averages 18 sec. That's 1.2 hours of your life gone.
-              </p>
-            </Reveal>
-            <Reveal direction="up" delay={100} className="bg-elevate-black p-10 lg:p-14">
-              <p className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-elevate-paper/25">Hard caps active</p>
-              <p className="mb-1 text-[64px] font-black leading-none tracking-tight text-elevate-green lg:text-[90px]">5</p>
-              <p className="text-base font-semibold text-elevate-paper/60">App limits set</p>
-              <p className="mt-4 text-sm leading-relaxed text-elevate-paper/25">
-                Instagram at 20 min. YouTube at 30 min. Reddit blocked entirely.
-              </p>
-            </Reveal>
-            <Reveal direction="up" delay={200} className="bg-elevate-black p-10 lg:p-14">
-              <p className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-elevate-paper/25">Current streak</p>
-              <p className="mb-1 text-[64px] font-black leading-none tracking-tight text-elevate-blue-light lg:text-[90px]">14</p>
-              <p className="text-base font-semibold text-elevate-paper/60">Days — Sexual detox</p>
-              <p className="mt-4 text-sm leading-relaxed text-elevate-paper/25">
-                Milestones at 7, 14, 30, 90 days. Urge surfing prompts built-in.
-              </p>
-            </Reveal>
-          </div>
+          <InteractiveDetox />
 
           <Reveal direction="up" delay={300}>
             <div className="mt-px flex flex-col items-start gap-6 bg-elevate-paper/[0.02] p-10 sm:flex-row sm:items-center sm:justify-between lg:p-14">
