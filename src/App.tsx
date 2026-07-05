@@ -1943,7 +1943,12 @@ function useReveal<T extends HTMLElement>(options?: IntersectionObserverInit) {
     const el = ref.current;
     if (!el) return;
     const observer = new IntersectionObserver(
-      ([entry]) => { setRevealed(entry.isIntersecting); },
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setRevealed(true);
+          observer.disconnect();
+        }
+      },
       { threshold: 0.1, ...options }
     );
     observer.observe(el);
