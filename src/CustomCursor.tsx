@@ -1,12 +1,24 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 
 export default function CustomCursor() {
   const dotRef = useRef<HTMLDivElement>(null);
 
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      const hasMobileUA = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      setIsMobile(window.innerWidth <= 1024 || hasMobileUA);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   useEffect(() => {
     const dot = dotRef.current;
-    if (!dot) return;
+    if (!dot || isMobile) return;
 
     let mouseX = 0, mouseY = 0;
 
@@ -37,6 +49,8 @@ export default function CustomCursor() {
       obs.disconnect();
     };
   }, []);
+
+  if (isMobile) return null;
 
   return (
     <div ref={dotRef}
