@@ -61,12 +61,31 @@ function LegalLayout({
           scrub: 1,
           pin: true,
           anticipatePin: 1,
+          snap: {
+            snapTo: 1 / sections.length,
+            duration: { min: 0.2, max: 0.5 },
+            ease: 'power2.inOut'
+          },
         },
+      });
+
+      // Vertical section snapping
+      gsap.utils.toArray('.gsap-snap-section').forEach((section: any) => {
+        ScrollTrigger.create({
+          trigger: section,
+          start: "top top",
+          end: "bottom bottom",
+          snap: {
+            snapTo: [0, 1],
+            duration: { min: 0.2, max: 0.6 },
+            ease: "power2.inOut"
+          }
+        });
       });
     });
 
     return () => ctx.revert();
-  }, []);
+  }, [sections.length]);
 
   return (
     <div className="bg-elevate-black font-display text-elevate-paper selection:bg-elevate-orange selection:text-white overflow-x-hidden">
@@ -89,7 +108,7 @@ function LegalLayout({
       </header>
 
       {/* ── Full Screen Hero ── */}
-      <section className="relative flex h-svh min-h-[700px] w-full flex-col justify-center px-6 md:px-12 lg:px-20 bg-elevate-black border-b border-elevate-paper/[0.06]">
+      <section className="relative flex h-svh min-h-[700px] w-full flex-col justify-center px-6 md:px-12 lg:px-20 bg-elevate-black border-b border-elevate-paper/[0.06] gsap-snap-section">
         <div className="max-w-4xl pt-24 md:pt-0">
           <p className="mb-5 text-xs font-semibold tracking-[0.3em] text-elevate-orange uppercase">{badge}</p>
           <h1 className="mb-6 text-5xl font-black leading-[0.92] tracking-tight md:text-7xl lg:text-[100px]">
@@ -109,7 +128,7 @@ function LegalLayout({
       </section>
 
       {/* ── Horizontal Scroll Section ── */}
-      <div ref={containerRef} className="relative w-full overflow-hidden bg-elevate-black">
+      <div ref={containerRef} className="relative w-full overflow-hidden bg-elevate-black gsap-snap-section">
         <main ref={trackRef} className="flex flex-col md:flex-row md:w-max">
           
           {/* Sections */}
