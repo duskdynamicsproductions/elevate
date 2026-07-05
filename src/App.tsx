@@ -2532,7 +2532,18 @@ export default function App() {
         </div>
       </section>
 
-
+      {/* ══════════════════════════════════════════
+          SOCIAL SECTION
+      ══════════════════════════════════════════ */}
+      <section className="bg-elevate-black px-6 py-20 text-center gsap-snap-section flex flex-col justify-center items-center">
+        <Reveal direction="up">
+          <a href="https://www.instagram.com/the.duskdynamics/" target="_blank" rel="noreferrer" className="group inline-block">
+            <span className="glitch-text text-xl md:text-3xl lg:text-4xl font-black uppercase tracking-[0.25em] text-elevate-paper/60 transition-opacity group-hover:opacity-100" data-text="FOLLOW US ON INSTAGRAM">
+              FOLLOW US ON INSTAGRAM
+            </span>
+          </a>
+        </Reveal>
+      </section>
 
       {/* ══════════════════════════════════════════
           ABOUT / PURPOSE (For Google OAuth Verification)
@@ -2570,7 +2581,6 @@ export default function App() {
             <span className="text-3xl font-black tracking-tight">Elevate</span>
           </div>
           <div className="flex flex-wrap items-center justify-center gap-8">
-            <a href="https://www.instagram.com/the.duskdynamics/" target="_blank" rel="noreferrer" className="text-xs font-semibold tracking-[0.15em] uppercase text-elevate-paper/30 transition-colors hover:text-elevate-paper">Follow us on Instagram</a>
             <Link to="/privacy_policy" className="text-xs font-semibold tracking-[0.15em] uppercase text-elevate-paper/30 transition-colors hover:text-elevate-paper">Privacy</Link>
             <Link to="/terms" className="text-xs font-semibold tracking-[0.15em] uppercase text-elevate-paper/30 transition-colors hover:text-elevate-paper">Terms</Link>
           </div>
