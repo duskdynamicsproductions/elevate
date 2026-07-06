@@ -2308,19 +2308,21 @@ export default function App() {
       {/* ══════════════════════════════════════════
           FEATURES — Native Mobile Horizontal Swipe
       ══════════════════════════════════════════ */}
-      <div className="relative bg-elevate-black flex flex-col h-[100dvh] snap-start" id="story">
-        {/* Section header */}
-        <div className="px-6 pt-12 pb-4 shrink-0">
-          <p className="text-xs font-semibold tracking-[0.3em] text-elevate-orange uppercase mb-2">Features</p>
-          <div className="mt-3 flex items-center gap-2 text-xs text-elevate-paper/30 font-semibold tracking-widest uppercase">
-            <span>Scroll</span>
-            <span className="text-elevate-orange">→</span>
+      <div className="relative bg-elevate-black h-[100dvh] snap-start" id="story">
+        {/* Section header overlay */}
+        <div className="absolute top-0 left-0 w-full px-6 pt-12 pb-4 z-20 pointer-events-none">
+          <div className="pointer-events-auto">
+            <p className="text-xs font-semibold tracking-[0.3em] text-elevate-orange uppercase mb-2">Features</p>
+            <div className="mt-3 flex items-center gap-2 text-xs text-elevate-paper/30 font-semibold tracking-widest uppercase">
+              <span>Scroll</span>
+              <span className="text-elevate-orange">→</span>
+            </div>
           </div>
         </div>
 
         {/* Horizontal scroll track — 100vw cards, native CSS snap */}
         <div
-          className="flex overflow-x-auto flex-1"
+          className="flex overflow-x-auto h-full"
           style={{
             scrollSnapType: 'x proximity',
             WebkitOverflowScrolling: 'touch',
