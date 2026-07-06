@@ -890,7 +890,7 @@ function ReelsScrolledAnimation() {
   }, []);
 
   return (
-    <div className="absolute top-0 left-0 right-0 bottom-[285px] overflow-hidden pointer-events-none flex items-center justify-center" style={{ zIndex: 15 }}>
+    <div className="absolute top-0 left-0 right-0 bottom-[285px] overflow-hidden pointer-events-none flex items-center justify-center pt-8" style={{ zIndex: 15 }}>
       
       {/* Mobile Phone Mockup */}
       <div className="relative w-[330px] h-[680px] rounded-[3.5rem] border-[10px] border-[#0d0d12] bg-[#050508] shadow-[0_60px_120px_rgba(0,0,0,1)] overflow-hidden" style={{ transform: 'scale(0.6)', transformOrigin: 'center center' }}>
@@ -1015,7 +1015,7 @@ function NsfwDetoxAnimation() {
   }, []);
 
   return (
-    <div className="absolute top-0 left-0 right-0 bottom-[285px] overflow-hidden pointer-events-none flex items-center justify-center" style={{ zIndex: 15 }}>
+    <div className="absolute top-0 left-0 right-0 bottom-[285px] overflow-hidden pointer-events-none flex items-center justify-center pt-8" style={{ zIndex: 15 }}>
       {/* Mobile Phone Mockup */}
       <div className="relative w-[330px] h-[680px] rounded-[3.5rem] border-[10px] border-[#0d0d12] bg-[#050508] shadow-[0_60px_120px_rgba(0,0,0,1)] overflow-hidden" ref={screenRef} style={{ transform: 'scale(0.6)', transformOrigin: 'center center' }}>
         
@@ -1245,7 +1245,7 @@ function WorkoutPlanningAnimation() {
   }, []);
 
   return (
-    <div className="absolute top-0 left-0 right-0 bottom-[285px] overflow-hidden pointer-events-none flex items-center justify-center" style={{ zIndex: 15 }}>
+    <div className="absolute top-0 left-0 right-0 bottom-[285px] overflow-hidden pointer-events-none flex items-center justify-center pt-8" style={{ zIndex: 15 }}>
       {/* Mobile Phone Mockup */}
       <div 
         ref={containerRef}
@@ -1578,7 +1578,7 @@ function PhysicalAnalyticsAnimation() {
   }, []);
 
   return (
-    <div className="absolute top-0 left-0 right-0 bottom-[285px] overflow-hidden pointer-events-none flex items-center justify-center" style={{ zIndex: 15 }}>
+    <div className="absolute top-0 left-0 right-0 bottom-[285px] overflow-hidden pointer-events-none flex items-center justify-center pt-8" style={{ zIndex: 15 }}>
       {/* Mobile Phone Mockup - REMOVED font-sans */}
       <div 
         ref={containerRef}
