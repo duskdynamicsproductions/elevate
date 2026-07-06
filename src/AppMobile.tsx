@@ -2431,7 +2431,7 @@ export default function App() {
       <section id="focus" className="relative overflow-hidden bg-elevate-black px-6 py-28 md:px-12 lg:px-20 lg:py-44 gsap-snap-section min-h-svh flex flex-col justify-center snap-start">
         <div className="mx-auto w-full max-w-7xl flex flex-col md:flex-row items-center justify-between gap-12 lg:gap-20">
           {/* Left: Text */}
-          <div className="flex-1 flex flex-col items-start -translate-y-6 md:-translate-y-12">
+          <div className="flex-1 flex flex-col items-start -translate-y-6 md:-translate-y-12 order-2 md:order-1">
             <h2 className="flex flex-col text-[48px] font-black leading-[1.0] tracking-tight text-elevate-paper md:text-[80px] lg:text-[100px]">
               <Reveal direction="left" className="flex flex-wrap gap-x-3 md:gap-x-5">Cut the</Reveal>
               <Reveal direction="left" delay={100} className="flex flex-wrap gap-x-3 md:gap-x-5">
@@ -2450,8 +2450,8 @@ export default function App() {
           </div>
 
           {/* Right: Phone Mockup */}
-          <Reveal direction="up" delay={200} className="flex-shrink-0 -translate-y-8 md:-translate-y-16">
-            <div className="relative w-[260px] md:w-[310px] lg:w-[360px]">
+          <Reveal direction="up" delay={200} className="flex-shrink-0 -translate-y-8 md:-translate-y-16 order-1 md:order-2">
+            <div className="relative w-[280px] md:w-[310px] lg:w-[360px]">
               {/* Phone shell */}
               <div className="relative rounded-[40px] border-[8px] border-elevate-paper/10 bg-[#111] shadow-[0_35px_60px_-15px_rgba(0,0,0,0.9)] overflow-hidden" style={{ aspectRatio: '9/19.5' }}>
                 {/* Notch */}
