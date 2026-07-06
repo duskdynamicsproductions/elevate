@@ -2428,21 +2428,21 @@ export default function App() {
       {/* ══════════════════════════════════════════
           MANIFESTO
       ══════════════════════════════════════════ */}
-      <section id="focus" className="relative overflow-hidden bg-elevate-black px-6 py-28 md:px-12 lg:px-20 lg:py-44 gsap-snap-section min-h-[100dvh] flex flex-col justify-center snap-start">
-        <div className="mx-auto w-full max-w-7xl flex flex-col md:flex-row items-center justify-between gap-12 lg:gap-20">
+      <section id="focus" className="relative overflow-hidden bg-elevate-black px-6 py-12 md:px-12 lg:px-20 lg:py-44 gsap-snap-section min-h-[100dvh] flex flex-col justify-center snap-start">
+        <div className="mx-auto w-full max-w-7xl flex flex-col md:flex-row items-center justify-between gap-6 md:gap-12 lg:gap-20">
           {/* Left: Text */}
-          <div className="flex-1 flex flex-col items-start -translate-y-6 md:-translate-y-12 order-2 md:order-1">
-            <h2 className="flex flex-col text-[48px] font-black leading-[1.0] tracking-tight text-elevate-paper md:text-[80px] lg:text-[100px]">
+          <div className="flex-1 flex flex-col items-center md:items-start text-center md:text-left md:-translate-y-12 order-2 md:order-1">
+            <h2 className="flex flex-col text-[32px] font-black leading-[1.0] tracking-tight text-elevate-paper md:text-[80px] lg:text-[100px] items-center md:items-start">
               <Reveal direction="left" className="flex flex-wrap gap-x-3 md:gap-x-5">Cut the</Reveal>
               <Reveal direction="left" delay={100} className="flex flex-wrap gap-x-3 md:gap-x-5">
                 <span className="glitch-text" data-text="noise.">noise.</span>
               </Reveal>
-              <Reveal direction="left" delay={200} className="mt-4 flex flex-wrap gap-x-3 md:mt-8 md:gap-x-5">Start the</Reveal>
+              <Reveal direction="left" delay={200} className="mt-2 md:mt-8 flex flex-wrap gap-x-3 md:gap-x-5">Start the</Reveal>
               <Reveal direction="left" delay={300} className="flex flex-wrap gap-x-3 text-[#B30000] md:gap-x-5">Journey.</Reveal>
             </h2>
-            <Reveal direction="fade" delay={400} className="mt-10 md:mt-14">
+            <Reveal direction="fade" delay={400} className="mt-6 md:mt-14">
               <Link to="/download"
-                className="group inline-flex items-center gap-3 rounded-full bg-elevate-orange px-8 py-3.5 text-sm font-bold uppercase tracking-wider text-white transition-all hover:bg-elevate-orange-light hover:shadow-lg md:px-10 md:py-4">
+                className="group inline-flex items-center gap-3 rounded-full bg-elevate-orange px-8 py-3 text-sm font-bold uppercase tracking-wider text-white transition-all hover:bg-elevate-orange-light hover:shadow-lg md:px-10 md:py-4">
                 Download alpha
                 <span className="inline-block transition-transform group-hover:translate-x-1">→</span>
               </Link>
@@ -2450,8 +2450,8 @@ export default function App() {
           </div>
 
           {/* Right: Phone Mockup */}
-          <Reveal direction="up" delay={200} className="flex-shrink-0 -translate-y-8 md:-translate-y-16 order-1 md:order-2">
-            <div className="relative w-[280px] md:w-[310px] lg:w-[360px]">
+          <Reveal direction="up" delay={200} className="flex-shrink-0 md:-translate-y-16 order-1 md:order-2">
+            <div className="relative w-[200px] md:w-[310px] lg:w-[360px]">
               {/* Phone shell */}
               <div className="relative rounded-[40px] border-[8px] border-elevate-paper/10 bg-[#111] shadow-[0_35px_60px_-15px_rgba(0,0,0,0.9)] overflow-hidden" style={{ aspectRatio: '9/19.5' }}>
                 {/* Notch */}
