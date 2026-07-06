@@ -401,9 +401,9 @@ const SOCIAL_ICONS_DATA = [
   { id: 'Platform=WhatsApp, Color=Original.png', color: '#25D366' }
 ];
 
-function SocialSVG({ id }: { id: string }) {
+function SocialSVG({ id, size = 76 }: { id: string; size?: number }) {
   // Using the provided user icons from the public directory
-  return <img src={`/social-icons/${id}`} alt="Social Icon" style={{ width: 76, height: 76, display: 'block' }} />;
+  return <img src={`/social-icons/${id}`} alt="Social Icon" style={{ width: size, height: size, display: 'block', objectFit: 'contain' }} />;
 }
 
 /* Realistic trash bin built entirely with SVG gradients, depth and highlights */
@@ -803,10 +803,8 @@ function AppLimitSpawner({ delayOffset = 0, index = 0 }: { delayOffset?: number;
       style={{ top: `${pos.top}%`, right: `${pos.right}%`, willChange: 'transform, opacity' }}
     >
       <div className="flex items-center gap-2 mb-2">
-        <div className="shrink-0 flex items-center justify-center w-8 h-8">
-          <div style={{ transform: 'scale(0.45)', transformOrigin: 'center' }}>
-            <SocialSVG id={currentApp.id} />
-          </div>
+        <div className="shrink-0 flex items-center justify-center">
+          <SocialSVG id={currentApp.id} size={28} />
         </div>
         <div>
           <p className="text-[11px] font-semibold text-white leading-tight">App used &gt; {currentApp.used} mins</p>
@@ -895,7 +893,7 @@ function ReelsScrolledAnimation() {
     <div className="absolute inset-0 pointer-events-none flex items-center justify-center" style={{ zIndex: 15 }}>
       
       {/* Mobile Phone Mockup */}
-      <div className="relative w-[330px] h-[680px] rounded-[3.5rem] border-[10px] border-[#0d0d12] bg-[#050508] shadow-[0_60px_120px_rgba(0,0,0,1)] overflow-hidden" style={{ transform: 'scale(0.5)', transformOrigin: 'center center', marginTop: '-4rem' }}>
+      <div className="relative w-[330px] h-[680px] rounded-[3.5rem] border-[10px] border-[#0d0d12] bg-[#050508] shadow-[0_60px_120px_rgba(0,0,0,1)] overflow-hidden" style={{ transform: 'scale(0.7)', transformOrigin: 'center bottom', marginBottom: '1rem' }}>
         
         {/* Dynamic Island / Notch */}
         <div className="absolute top-2 left-1/2 -translate-x-1/2 w-[90px] h-[26px] bg-[#0d0d12] rounded-full z-30 shadow-sm" />
@@ -1019,7 +1017,7 @@ function NsfwDetoxAnimation() {
   return (
     <div className="absolute inset-0 pointer-events-none flex items-center justify-center" style={{ zIndex: 15 }}>
       {/* Mobile Phone Mockup */}
-      <div className="relative w-[330px] h-[680px] rounded-[3.5rem] border-[10px] border-[#0d0d12] bg-[#050508] shadow-[0_60px_120px_rgba(0,0,0,1)] overflow-hidden" ref={screenRef} style={{ transform: 'scale(0.5)', transformOrigin: 'center center', marginTop: '-4rem' }}>
+      <div className="relative w-[330px] h-[680px] rounded-[3.5rem] border-[10px] border-[#0d0d12] bg-[#050508] shadow-[0_60px_120px_rgba(0,0,0,1)] overflow-hidden" ref={screenRef} style={{ transform: 'scale(0.7)', transformOrigin: 'center bottom', marginBottom: '1rem' }}>
         
         {/* Dynamic Island / Notch */}
         <div className="absolute top-2 left-1/2 -translate-x-1/2 w-[90px] h-[26px] bg-[#0d0d12] rounded-full z-30 shadow-sm" />
@@ -1252,7 +1250,7 @@ function WorkoutPlanningAnimation() {
       <div 
         ref={containerRef}
         className="relative w-[330px] h-[680px] rounded-[3.5rem] border-[10px] border-[#0d0d12] bg-[#050505] shadow-[0_60px_120px_rgba(0,0,0,1)] overflow-hidden"
-        style={{ transform: 'scale(0.5)', transformOrigin: 'center center', marginTop: '-4rem' }}
+        style={{ transform: 'scale(0.7)', transformOrigin: 'center bottom', marginBottom: '1rem' }}
       >
         <div className="absolute top-2 left-1/2 -translate-x-1/2 w-[90px] h-[26px] bg-[#0d0d12] rounded-full z-50 shadow-sm" />
 
@@ -1585,7 +1583,7 @@ function PhysicalAnalyticsAnimation() {
       <div 
         ref={containerRef}
         className="relative w-[330px] h-[680px] rounded-[3.5rem] border-[10px] border-[#0d0d12] bg-[#050505] shadow-[0_60px_120px_rgba(0,0,0,1)] overflow-hidden"
-        style={{ transform: 'scale(0.5)', transformOrigin: 'center center', marginTop: '-4rem' }}
+        style={{ transform: 'scale(0.7)', transformOrigin: 'center bottom', marginBottom: '1rem' }}
       >
         <div className="absolute top-2 left-1/2 -translate-x-1/2 w-[90px] h-[26px] bg-[#0d0d12] rounded-full z-50 shadow-sm" />
 
