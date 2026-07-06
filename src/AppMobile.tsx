@@ -2305,7 +2305,6 @@ export default function App() {
         {/* Section header */}
         <div className="px-6 pt-12 pb-4 shrink-0">
           <p className="text-xs font-semibold tracking-[0.3em] text-elevate-orange uppercase mb-2">Features</p>
-          <h2 className="text-3xl font-black uppercase leading-[1.1] tracking-tight text-elevate-paper">Scroll to explore</h2>
           <div className="mt-3 flex items-center gap-2 text-xs text-elevate-paper/30 font-semibold tracking-widest uppercase">
             <span>Scroll</span>
             <span className="text-elevate-orange">→</span>
