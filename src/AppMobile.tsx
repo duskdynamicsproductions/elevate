@@ -1953,8 +1953,7 @@ function VelocityMarquee() {
   useEffect(() => {
     let req: number;
     const tick = () => {
-      const scroller = document.getElementById('mobile-scroller');
-      const scrollY = scroller ? scroller.scrollTop : window.scrollY;
+      const scrollY = window.scrollY;
       velocityRef.current = scrollY - lastScrollY.current;
       lastScrollY.current = scrollY;
       
@@ -2187,7 +2186,6 @@ function ScrollRevealBlock({ paragraphs }: { paragraphs: {text: string, classNam
           ease: 'none',
           scrollTrigger: {
             trigger: containerRef.current,
-            scroller: document.getElementById('mobile-scroller') || window,
             start: 'top 80%',
           }
         }
@@ -2231,8 +2229,18 @@ export default function App() {
     };
   }, []);
 
+    // Apply snapping to the document root to avoid mobile browser crashing bugs with inner scroll containers
+  useEffect(() => {
+    document.documentElement.classList.add('mobile-snap');
+    document.body.classList.add('mobile-snap');
+    return () => {
+      document.documentElement.classList.remove('mobile-snap');
+      document.body.classList.remove('mobile-snap');
+    };
+  }, []);
+
   return (
-    <div id="mobile-scroller" className="fixed inset-0 font-display bg-elevate-black overflow-x-hidden overflow-y-auto snap-y snap-mandatory scroll-smooth" style={{ WebkitOverflowScrolling: 'touch' }}>
+    <div className="relative font-display bg-elevate-black overflow-x-hidden max-w-full">
 
 
 

@@ -151,3 +151,4 @@ select {
   90% { clip-path: inset(90% 0 2% 0); transform: translate(10px, 8px) skewX(30deg); opacity: 1; }
   100% { clip-path: inset(10% 0 60% 0); transform: translate(6px, -2px) skewX(0deg); opacity: 1; }
 }
+.mobile-snap { scroll-snap-type: y mandatory; scroll-behavior: smooth; } 
