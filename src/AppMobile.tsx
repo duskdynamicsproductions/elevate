@@ -2429,10 +2429,10 @@ export default function App() {
           MANIFESTO
       ══════════════════════════════════════════ */}
       <section id="focus" className="relative overflow-hidden bg-elevate-black px-6 py-12 md:px-12 lg:px-20 lg:py-44 gsap-snap-section min-h-[100dvh] flex flex-col justify-center snap-start">
-        <div className="mx-auto w-full max-w-7xl flex flex-col md:flex-row items-center justify-between gap-6 md:gap-12 lg:gap-20">
+        <div className="mx-auto w-full max-w-7xl flex flex-col md:flex-row items-start md:items-center justify-between gap-6 md:gap-12 lg:gap-20">
           {/* Left: Text */}
-          <div className="flex-1 flex flex-col items-center md:items-start text-center md:text-left md:-translate-y-12 order-2 md:order-1">
-            <h2 className="flex flex-col text-[32px] font-black leading-[1.0] tracking-tight text-elevate-paper md:text-[80px] lg:text-[100px] items-center md:items-start">
+          <div className="flex-1 flex flex-col items-start md:-translate-y-12 order-2 md:order-1">
+            <h2 className="flex flex-col text-[32px] font-black leading-[1.0] tracking-tight text-elevate-paper md:text-[80px] lg:text-[100px] items-start">
               <Reveal direction="left" className="flex flex-wrap gap-x-3 md:gap-x-5">Cut the</Reveal>
               <Reveal direction="left" delay={100} className="flex flex-wrap gap-x-3 md:gap-x-5">
                 <span className="glitch-text" data-text="noise.">noise.</span>
