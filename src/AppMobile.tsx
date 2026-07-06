@@ -890,10 +890,10 @@ function ReelsScrolledAnimation() {
   }, []);
 
   return (
-    <div className="absolute top-0 left-0 right-0 bottom-[285px] overflow-hidden pointer-events-none flex items-center justify-center pt-8" style={{ zIndex: 15 }}>
+    <div className="absolute top-0 left-0 right-0 bottom-[270px] pointer-events-none flex items-center justify-center pt-4" style={{ zIndex: 15 }}>
       
       {/* Mobile Phone Mockup */}
-      <div className="relative w-[330px] h-[680px] rounded-[3.5rem] border-[10px] border-[#0d0d12] bg-[#050508] shadow-[0_60px_120px_rgba(0,0,0,1)] overflow-hidden" style={{ transform: 'scale(0.6)', transformOrigin: 'center center' }}>
+      <div className="relative w-[330px] h-[680px] rounded-[3.5rem] border-[10px] border-[#0d0d12] bg-[#050508] shadow-[0_60px_120px_rgba(0,0,0,1)] overflow-hidden" style={{ transform: 'scale(0.55)', transformOrigin: 'center center' }}>
         
         {/* Dynamic Island / Notch */}
         <div className="absolute top-2 left-1/2 -translate-x-1/2 w-[90px] h-[26px] bg-[#0d0d12] rounded-full z-30 shadow-sm" />
@@ -1015,9 +1015,9 @@ function NsfwDetoxAnimation() {
   }, []);
 
   return (
-    <div className="absolute top-0 left-0 right-0 bottom-[285px] overflow-hidden pointer-events-none flex items-center justify-center pt-8" style={{ zIndex: 15 }}>
+    <div className="absolute top-0 left-0 right-0 bottom-[270px] pointer-events-none flex items-center justify-center pt-4" style={{ zIndex: 15 }}>
       {/* Mobile Phone Mockup */}
-      <div className="relative w-[330px] h-[680px] rounded-[3.5rem] border-[10px] border-[#0d0d12] bg-[#050508] shadow-[0_60px_120px_rgba(0,0,0,1)] overflow-hidden" ref={screenRef} style={{ transform: 'scale(0.6)', transformOrigin: 'center center' }}>
+      <div className="relative w-[330px] h-[680px] rounded-[3.5rem] border-[10px] border-[#0d0d12] bg-[#050508] shadow-[0_60px_120px_rgba(0,0,0,1)] overflow-hidden" ref={screenRef} style={{ transform: 'scale(0.55)', transformOrigin: 'center center' }}>
         
         {/* Dynamic Island / Notch */}
         <div className="absolute top-2 left-1/2 -translate-x-1/2 w-[90px] h-[26px] bg-[#0d0d12] rounded-full z-30 shadow-sm" />
@@ -1245,12 +1245,12 @@ function WorkoutPlanningAnimation() {
   }, []);
 
   return (
-    <div className="absolute top-0 left-0 right-0 bottom-[285px] overflow-hidden pointer-events-none flex items-center justify-center pt-8" style={{ zIndex: 15 }}>
+    <div className="absolute top-0 left-0 right-0 bottom-[270px] pointer-events-none flex items-center justify-center pt-4" style={{ zIndex: 15 }}>
       {/* Mobile Phone Mockup */}
       <div 
         ref={containerRef}
         className="relative w-[330px] h-[680px] rounded-[3.5rem] border-[10px] border-[#0d0d12] bg-[#050505] shadow-[0_60px_120px_rgba(0,0,0,1)] overflow-hidden"
-        style={{ transform: 'scale(0.6)', transformOrigin: 'center center' }}
+        style={{ transform: 'scale(0.55)', transformOrigin: 'center center' }}
       >
         <div className="absolute top-2 left-1/2 -translate-x-1/2 w-[90px] h-[26px] bg-[#0d0d12] rounded-full z-50 shadow-sm" />
 
@@ -1578,12 +1578,12 @@ function PhysicalAnalyticsAnimation() {
   }, []);
 
   return (
-    <div className="absolute top-0 left-0 right-0 bottom-[285px] overflow-hidden pointer-events-none flex items-center justify-center pt-8" style={{ zIndex: 15 }}>
+    <div className="absolute top-0 left-0 right-0 bottom-[270px] pointer-events-none flex items-center justify-center pt-4" style={{ zIndex: 15 }}>
       {/* Mobile Phone Mockup - REMOVED font-sans */}
       <div 
         ref={containerRef}
         className="relative w-[330px] h-[680px] rounded-[3.5rem] border-[10px] border-[#0d0d12] bg-[#050505] shadow-[0_60px_120px_rgba(0,0,0,1)] overflow-hidden"
-        style={{ transform: 'scale(0.6)', transformOrigin: 'center center' }}
+        style={{ transform: 'scale(0.55)', transformOrigin: 'center center' }}
       >
         <div className="absolute top-2 left-1/2 -translate-x-1/2 w-[90px] h-[26px] bg-[#0d0d12] rounded-full z-50 shadow-sm" />
 
