@@ -896,7 +896,7 @@ function ReelsScrolledAnimation() {
     <div className="absolute inset-0 pointer-events-none flex items-center justify-center" style={{ zIndex: 15 }}>
       
       {/* Mobile Phone Mockup */}
-      <div className="relative w-[330px] h-[680px] rounded-[3.5rem] border-[10px] border-[#0d0d12] bg-[#050508] shadow-[0_60px_120px_rgba(0,0,0,1)] overflow-hidden" style={{ transform: 'scale(min(0.55, calc(50vw / 330)))', transformOrigin: 'center center', marginTop: '-4rem' }}>
+      <div className="relative w-[330px] h-[680px] rounded-[3.5rem] border-[10px] border-[#0d0d12] bg-[#050508] shadow-[0_60px_120px_rgba(0,0,0,1)] overflow-hidden" style={{ transform: 'scale(0.5)', transformOrigin: 'center center', marginTop: '-4rem' }}>
         
         {/* Dynamic Island / Notch */}
         <div className="absolute top-2 left-1/2 -translate-x-1/2 w-[90px] h-[26px] bg-[#0d0d12] rounded-full z-30 shadow-sm" />
@@ -1020,7 +1020,7 @@ function NsfwDetoxAnimation() {
   return (
     <div className="absolute inset-0 pointer-events-none flex items-center justify-center" style={{ zIndex: 15 }}>
       {/* Mobile Phone Mockup */}
-      <div className="relative w-[330px] h-[680px] rounded-[3.5rem] border-[10px] border-[#0d0d12] bg-[#050508] shadow-[0_60px_120px_rgba(0,0,0,1)] overflow-hidden" ref={screenRef} style={{ transform: 'scale(min(0.55, calc(50vw / 330)))', transformOrigin: 'center center', marginTop: '-4rem' }}>
+      <div className="relative w-[330px] h-[680px] rounded-[3.5rem] border-[10px] border-[#0d0d12] bg-[#050508] shadow-[0_60px_120px_rgba(0,0,0,1)] overflow-hidden" ref={screenRef} style={{ transform: 'scale(0.5)', transformOrigin: 'center center', marginTop: '-4rem' }}>
         
         {/* Dynamic Island / Notch */}
         <div className="absolute top-2 left-1/2 -translate-x-1/2 w-[90px] h-[26px] bg-[#0d0d12] rounded-full z-30 shadow-sm" />
@@ -1253,7 +1253,7 @@ function WorkoutPlanningAnimation() {
       <div 
         ref={containerRef}
         className="relative w-[330px] h-[680px] rounded-[3.5rem] border-[10px] border-[#0d0d12] bg-[#050505] shadow-[0_60px_120px_rgba(0,0,0,1)] overflow-hidden"
-        style={{ transform: 'scale(min(0.55, calc(50vw / 330)))', transformOrigin: 'center center', marginTop: '-4rem' }}
+        style={{ transform: 'scale(0.5)', transformOrigin: 'center center', marginTop: '-4rem' }}
       >
         <div className="absolute top-2 left-1/2 -translate-x-1/2 w-[90px] h-[26px] bg-[#0d0d12] rounded-full z-50 shadow-sm" />
 
@@ -1586,7 +1586,7 @@ function PhysicalAnalyticsAnimation() {
       <div 
         ref={containerRef}
         className="relative w-[330px] h-[680px] rounded-[3.5rem] border-[10px] border-[#0d0d12] bg-[#050505] shadow-[0_60px_120px_rgba(0,0,0,1)] overflow-hidden"
-        style={{ transform: 'scale(min(0.55, calc(50vw / 330)))', transformOrigin: 'center center', marginTop: '-4rem' }}
+        style={{ transform: 'scale(0.5)', transformOrigin: 'center center', marginTop: '-4rem' }}
       >
         <div className="absolute top-2 left-1/2 -translate-x-1/2 w-[90px] h-[26px] bg-[#0d0d12] rounded-full z-50 shadow-sm" />
 
