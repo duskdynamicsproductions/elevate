@@ -2240,7 +2240,7 @@ export default function App() {
   }, []);
 
   return (
-    <div className="relative font-display bg-elevate-black overflow-x-hidden max-w-full">
+    <div className="relative font-display bg-elevate-black max-w-full">
 
 
 

@@ -152,3 +152,4 @@ select {
   100% { clip-path: inset(10% 0 60% 0); transform: translate(6px, -2px) skewX(0deg); opacity: 1; }
 }
 .mobile-snap { scroll-snap-type: y mandatory; scroll-behavior: smooth; } 
+.mobile-snap, .mobile-snap body { overflow-x: visible !important; } 
