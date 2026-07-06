@@ -1866,25 +1866,25 @@ function HoverFloodItem({ text, index, exercises }: { text: string; index: numbe
   return (
     <div
       ref={ref}
-      className={`group relative overflow-hidden flex-1 flex flex-col justify-center border-t border-elevate-paper/10 py-2 md:py-8 transition-all duration-700 ${revealed ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+      className={`group relative overflow-hidden flex-1 flex flex-col justify-center border-t border-elevate-paper/10 py-[1.5vh] md:py-8 transition-all duration-700 ${revealed ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
       style={{ transitionDelay: `${index * 60}ms` }}
     >
       {/* Flood background */}
       <div className="absolute inset-0 bg-elevate-orange origin-left scale-x-0 transition-transform duration-500 ease-out group-hover:scale-x-100" />
 
       <div className="relative flex items-center justify-between">
-        <h3 className="text-[28px] font-black leading-none tracking-tight text-elevate-paper/15 transition-colors duration-300 group-hover:text-[#0C0B0B] md:text-[64px] lg:text-[80px] xl:text-[96px]">
+        <h3 className="text-[6.5vw] font-black leading-none tracking-tight text-elevate-paper/15 transition-colors duration-300 group-hover:text-[#0C0B0B] md:text-[64px] lg:text-[80px] xl:text-[96px]">
           {text}
         </h3>
-        <div className="flex flex-col items-end gap-1 pr-2 text-right md:gap-1.5 md:pr-6">
-          <span className="mb-1 shrink-0 text-sm font-black tracking-[0.2em] text-elevate-paper/20 transition-colors duration-300 group-hover:text-[#0C0B0B]">
+        <div className="flex flex-col items-end gap-0.5 pr-2 text-right md:gap-1.5 md:pr-6">
+          <span className="mb-0.5 shrink-0 text-[3.5vw] md:text-sm font-black tracking-[0.2em] text-elevate-paper/20 transition-colors duration-300 group-hover:text-[#0C0B0B]">
             {String(index + 1).padStart(2, '0')}
           </span>
           <div className="flex flex-col items-end">
             {exercises.map((ex, i) => (
               <span 
                 key={i} 
-                className="translate-x-4 text-[11px] font-semibold uppercase tracking-[0.1em] text-[#0C0B0B]/80 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100"
+                className="translate-x-4 text-[2.5vw] md:text-[11px] font-semibold uppercase tracking-[0.1em] text-[#0C0B0B]/80 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100 leading-tight"
                 style={{ transitionDelay: `${i * 30}ms` }}
               >
                 {ex}
