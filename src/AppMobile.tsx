@@ -2316,7 +2316,7 @@ export default function App() {
         <div
           className="flex overflow-x-auto flex-1"
           style={{
-            scrollSnapType: 'x mandatory',
+            scrollSnapType: 'x proximity',
             WebkitOverflowScrolling: 'touch',
             scrollbarWidth: 'none',
             msOverflowStyle: 'none',
