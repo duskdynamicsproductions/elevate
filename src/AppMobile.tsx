@@ -711,7 +711,9 @@ function AppBlockedAnimation() {
               ref={el => { svgRefs.current[i] = el; }}
               style={{ filter: `drop-shadow(0 0 14px ${icon.color}99)` }}
             >
-              <SocialSVG id={icon.id} />
+              <div style={{ transform: 'scale(0.65)', transformOrigin: 'center' }}>
+                <SocialSVG id={icon.id} />
+              </div>
             </div>
           </div>
         ))}
@@ -720,10 +722,12 @@ function AppBlockedAnimation() {
       {/* Trash bin — right side, z-index below icons */}
       <div
         ref={binRef}
-        className="absolute right-12 bottom-24"
+        className="absolute right-8 bottom-32"
         style={{ zIndex: 20, willChange: 'transform' }}
       >
-        <TrashBinSVG open={binOpen} />
+        <div style={{ transform: 'scale(0.65)', transformOrigin: 'bottom right' }}>
+          <TrashBinSVG open={binOpen} />
+        </div>
       </div>
     </div>
   );
@@ -756,10 +760,10 @@ function AppLimitSpawner({ delayOffset = 0, index = 0 }: { delayOffset?: number;
       const randomApp = apps[offset + Math.floor(Math.random() * halfSize)];
       
       // Separate vertical zones to prevent overlapping
-      // Zone 0: top 15% to 35%
-      // Zone 1: top 55% to 70%
-      const top = index === 0 ? 15 + Math.random() * 20 : 55 + Math.random() * 15; 
-      const right = 2 + Math.random() * 20; // Keep closer to the right edge
+      // Zone 0: top 10% to 25%
+      // Zone 1: top 30% to 45% (to stay above the text overlay)
+      const top = index === 0 ? 10 + Math.random() * 15 : 30 + Math.random() * 15; 
+      const right = 2 + Math.random() * 10; // Keep closer to the right edge
       
       setCurrentApp(randomApp);
       setPos({ top, right });
@@ -796,7 +800,7 @@ function AppLimitSpawner({ delayOffset = 0, index = 0 }: { delayOffset?: number;
   return (
     <div 
       ref={cardRef}
-      className="pointer-events-auto absolute w-[380px] rounded-3xl border border-white/5 bg-[#0d0d12]/95 backdrop-blur-2xl p-5 shadow-[0_50px_100px_rgba(0,0,0,0.95)] opacity-0"
+      className="pointer-events-auto absolute w-[85vw] max-w-[280px] rounded-3xl border border-white/5 bg-[#0d0d12]/95 backdrop-blur-2xl p-4 shadow-[0_50px_100px_rgba(0,0,0,0.95)] opacity-0"
       style={{ top: `${pos.top}%`, right: `${pos.right}%`, willChange: 'transform, opacity' }}
     >
       <div className="flex items-center gap-3 mb-3">
@@ -892,7 +896,7 @@ function ReelsScrolledAnimation() {
     <div className="absolute inset-0 pointer-events-none flex items-center justify-center" style={{ zIndex: 15 }}>
       
       {/* Mobile Phone Mockup */}
-      <div className="relative w-[330px] h-[680px] rounded-[3.5rem] border-[10px] border-[#0d0d12] bg-[#050508] shadow-[0_60px_120px_rgba(0,0,0,1)] overflow-hidden" style={{ transform: 'scale(min(0.72, calc(68vw / 330)))', transformOrigin: 'center top', marginTop: '1.5rem' }}>
+      <div className="relative w-[330px] h-[680px] rounded-[3.5rem] border-[10px] border-[#0d0d12] bg-[#050508] shadow-[0_60px_120px_rgba(0,0,0,1)] overflow-hidden" style={{ transform: 'scale(min(0.62, calc(58vw / 330)))', transformOrigin: 'center top', marginTop: '-2rem' }}>
         
         {/* Dynamic Island / Notch */}
         <div className="absolute top-2 left-1/2 -translate-x-1/2 w-[90px] h-[26px] bg-[#0d0d12] rounded-full z-30 shadow-sm" />
@@ -1016,7 +1020,7 @@ function NsfwDetoxAnimation() {
   return (
     <div className="absolute inset-0 pointer-events-none flex items-center justify-center" style={{ zIndex: 15 }}>
       {/* Mobile Phone Mockup */}
-      <div className="relative w-[330px] h-[680px] rounded-[3.5rem] border-[10px] border-[#0d0d12] bg-[#050508] shadow-[0_60px_120px_rgba(0,0,0,1)] overflow-hidden" ref={screenRef} style={{ transform: 'scale(min(0.72, calc(68vw / 330)))', transformOrigin: 'center top', marginTop: '1.5rem' }}>
+      <div className="relative w-[330px] h-[680px] rounded-[3.5rem] border-[10px] border-[#0d0d12] bg-[#050508] shadow-[0_60px_120px_rgba(0,0,0,1)] overflow-hidden" ref={screenRef} style={{ transform: 'scale(min(0.62, calc(58vw / 330)))', transformOrigin: 'center top', marginTop: '-2rem' }}>
         
         {/* Dynamic Island / Notch */}
         <div className="absolute top-2 left-1/2 -translate-x-1/2 w-[90px] h-[26px] bg-[#0d0d12] rounded-full z-30 shadow-sm" />
@@ -1249,7 +1253,7 @@ function WorkoutPlanningAnimation() {
       <div 
         ref={containerRef}
         className="relative w-[330px] h-[680px] rounded-[3.5rem] border-[10px] border-[#0d0d12] bg-[#050505] shadow-[0_60px_120px_rgba(0,0,0,1)] overflow-hidden"
-        style={{ transform: 'scale(min(0.72, calc(68vw / 330)))', transformOrigin: 'center top', marginTop: '1.5rem' }}
+        style={{ transform: 'scale(min(0.62, calc(58vw / 330)))', transformOrigin: 'center top', marginTop: '-2rem' }}
       >
         <div className="absolute top-2 left-1/2 -translate-x-1/2 w-[90px] h-[26px] bg-[#0d0d12] rounded-full z-50 shadow-sm" />
 
@@ -1582,7 +1586,7 @@ function PhysicalAnalyticsAnimation() {
       <div 
         ref={containerRef}
         className="relative w-[330px] h-[680px] rounded-[3.5rem] border-[10px] border-[#0d0d12] bg-[#050505] shadow-[0_60px_120px_rgba(0,0,0,1)] overflow-hidden"
-        style={{ transform: 'scale(min(0.72, calc(68vw / 330)))', transformOrigin: 'center top', marginTop: '1.5rem' }}
+        style={{ transform: 'scale(min(0.62, calc(58vw / 330)))', transformOrigin: 'center top', marginTop: '-2rem' }}
       >
         <div className="absolute top-2 left-1/2 -translate-x-1/2 w-[90px] h-[26px] bg-[#0d0d12] rounded-full z-50 shadow-sm" />
 
