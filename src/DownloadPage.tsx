@@ -32,7 +32,7 @@ export function DownloadPage() {
       </header>
 
       {/* ── Main Content ── */}
-      <main className="flex-1 flex flex-col justify-center items-start px-6 md:px-12 lg:px-20 pt-24 pb-12">
+      <main className="flex flex-col justify-center items-start px-6 md:px-12 lg:px-20 pt-24 pb-12 min-h-[100dvh]">
         <div className="max-w-3xl w-full text-left">
           <h1 className="mb-16 text-5xl font-black leading-[0.95] tracking-tight md:text-7xl lg:text-8xl animate-slide-up">
             Release 22082026<br/>coming soon
