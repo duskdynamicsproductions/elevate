@@ -2187,7 +2187,7 @@ function ScrollRevealBlock({ paragraphs }: { paragraphs: {text: string, classNam
           ease: 'none',
           scrollTrigger: {
             trigger: containerRef.current,
-            scroller: '#mobile-scroller',
+            scroller: document.getElementById('mobile-scroller') || window,
             start: 'top 80%',
           }
         }
