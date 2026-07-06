@@ -1819,7 +1819,7 @@ function HorizontalFeatures() {
         {features.map((feat, i) => (
           <div
             key={feat.num}
-            className="relative flex min-h-[90svh] w-full flex-col justify-end px-6 py-16 border-b border-white/[0.04] snap-start"
+            className="relative flex min-h-[90svh] w-full flex-col justify-end px-6 py-16 border-b border-white/[0.04]"
           >
             {/* APP BLOCKED EXPLOSION */}
             {feat.num === '01' && <AppBlockedAnimation />}
@@ -2233,7 +2233,7 @@ export default function App() {
   }, []);
 
   return (
-    <div className="relative font-display bg-elevate-black overflow-x-hidden max-w-full h-[100dvh] overflow-y-auto snap-y snap-mandatory scroll-smooth">
+    <div className="relative font-display bg-elevate-black overflow-x-hidden max-w-full">
 
 
 
@@ -2242,7 +2242,7 @@ export default function App() {
       ══════════════════════════════════════════ */}
       <section
         ref={heroRef}
-        className="relative flex h-svh min-h-[700px] w-full flex-col bg-elevate-black text-elevate-paper gsap-snap-section snap-start"
+        className="relative flex h-svh min-h-[700px] w-full flex-col bg-elevate-black text-elevate-paper gsap-snap-section"
       >
         {/* Nav */}
         <header className="hero-nav flex w-full items-center justify-between px-6 py-6 md:px-12 lg:px-20">
@@ -2365,7 +2365,7 @@ export default function App() {
       {/* ══════════════════════════════════════════
           KINETIC QUOTE
       ══════════════════════════════════════════ */}
-      <section className="bg-elevate-black px-6 py-12 md:px-12 lg:px-20 lg:py-20 gsap-snap-section min-h-svh flex flex-col justify-center snap-start">
+      <section className="bg-elevate-black px-6 py-12 md:px-12 lg:px-20 lg:py-20 gsap-snap-section min-h-svh flex flex-col justify-center">
         <div className="mx-auto max-w-6xl w-full">
           <ScrollRevealBlock paragraphs={[
             {
@@ -2480,7 +2480,7 @@ export default function App() {
       {/* ══════════════════════════════════════════
           ABOUT
       ══════════════════════════════════════════ */}
-      <section className="relative overflow-hidden bg-elevate-orange px-6 py-28 text-white md:px-12 lg:px-20 lg:py-44 gsap-snap-section min-h-svh flex flex-col justify-center snap-start">
+      <section className="relative overflow-hidden bg-elevate-orange px-6 py-28 text-white md:px-12 lg:px-20 lg:py-44 gsap-snap-section min-h-svh flex flex-col justify-center">
         <div className="relative mx-auto max-w-5xl text-center">
           <Reveal direction="up" className="mb-8 flex items-center justify-center gap-3">
             <SpinningStar className="size-5" />
@@ -2515,7 +2515,7 @@ export default function App() {
         <VelocityMarquee />
         <div className="h-1 w-full bg-elevate-orange" />
       </div>
-      <footer className="bg-elevate-black px-6 py-14 text-elevate-paper md:px-12 lg:px-20 gsap-snap-section snap-start">
+      <footer className="bg-elevate-black px-6 py-14 text-elevate-paper md:px-12 lg:px-20 gsap-snap-section">
         <div className="flex w-full flex-col items-start justify-between gap-10 md:flex-row md:items-center">
           <div className="flex items-center gap-3">
             <SpinningStar className="size-6 text-elevate-orange" />
