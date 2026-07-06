@@ -407,9 +407,10 @@ function SocialSVG({ id }: { id: string }) {
 }
 
 /* Realistic trash bin built entirely with SVG gradients, depth and highlights */
-function TrashBinSVG({ open }: { open: boolean }) {
+function TrashBinSVG({ open, size = 280 }: { open: boolean; size?: number }) {
+  const height = Math.round(size * (400 / 280));
   return (
-    <svg width="280" height="400" viewBox="0 0 140 200" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ overflow: 'visible' }}>
+    <svg width={size} height={height} viewBox="0 0 140 200" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ overflow: 'visible' }}>
       <defs>
         {/* ── Body cylinder gradient — dark charcoal matching site theme ── */}
         <linearGradient id="bodyMain" x1="0" y1="0" x2="140" y2="0" gradientUnits="userSpaceOnUse">
@@ -722,12 +723,10 @@ function AppBlockedAnimation() {
       {/* Trash bin — right side, z-index below icons */}
       <div
         ref={binRef}
-        className="absolute right-4 bottom-32"
+        className="absolute right-4 bottom-28"
         style={{ zIndex: 20, willChange: 'transform' }}
       >
-        <div style={{ transform: 'scale(0.5)', transformOrigin: 'bottom right' }}>
-          <TrashBinSVG open={binOpen} />
-        </div>
+        <TrashBinSVG open={binOpen} size={140} />
       </div>
     </div>
   );
@@ -800,36 +799,36 @@ function AppLimitSpawner({ delayOffset = 0, index = 0 }: { delayOffset?: number;
   return (
     <div 
       ref={cardRef}
-      className="pointer-events-auto absolute w-[75vw] max-w-[240px] rounded-3xl border border-white/5 bg-[#0d0d12]/95 backdrop-blur-2xl p-4 shadow-[0_50px_100px_rgba(0,0,0,0.95)] opacity-0"
+      className="pointer-events-auto absolute w-[70vw] max-w-[220px] rounded-2xl border border-white/5 bg-[#0d0d12]/95 backdrop-blur-2xl p-3 shadow-[0_50px_100px_rgba(0,0,0,0.95)] opacity-0"
       style={{ top: `${pos.top}%`, right: `${pos.right}%`, willChange: 'transform, opacity' }}
     >
-      <div className="flex items-center gap-3 mb-3">
-        <div className="shrink-0 flex items-center justify-center">
-          <div style={{ transform: 'scale(0.6)' }}>
+      <div className="flex items-center gap-2 mb-2">
+        <div className="shrink-0 flex items-center justify-center w-8 h-8">
+          <div style={{ transform: 'scale(0.45)', transformOrigin: 'center' }}>
             <SocialSVG id={currentApp.id} />
           </div>
         </div>
         <div>
-          <p className="text-sm font-semibold text-white leading-tight">App used &gt; {currentApp.used} mins</p>
+          <p className="text-[11px] font-semibold text-white leading-tight">App used &gt; {currentApp.used} mins</p>
         </div>
       </div>
 
       {/* Progress Bar */}
-      <div className="mb-3.5">
-        <div className="h-1 w-full bg-elevate-paper/10 rounded-full overflow-hidden">
+      <div className="mb-2">
+        <div className="h-[3px] w-full bg-elevate-paper/10 rounded-full overflow-hidden">
           <div 
             className="h-full bg-red-500 rounded-full shadow-[0_0_8px_rgba(239,68,68,0.5)]" 
             style={{ width: `${(currentApp.used / 30) * 100}%` }} 
           />
         </div>
         <div className="flex justify-between mt-1">
-          <span className="text-[9px] font-semibold text-elevate-paper/50">0 minutes</span>
-          <span className="text-[9px] font-bold text-red-500">30 minutes</span>
+          <span className="text-[8px] font-semibold text-elevate-paper/50">0 min</span>
+          <span className="text-[8px] font-bold text-red-500">30 min</span>
         </div>
       </div>
 
-      <p className="text-[11px] text-elevate-paper/60 whitespace-nowrap">
-        Close it to maintain screen time or you will be kicked out of the app
+      <p className="text-[9px] text-elevate-paper/60 leading-snug">
+        Close it to maintain screen time or you will be kicked out
       </p>
     </div>
   );
