@@ -1139,7 +1139,9 @@ function WorkoutPlanningAnimation() {
       tl.set('.wo-screen-b', { x: 350, display: 'none' }); 
       tl.set('.wo-screen-c', { y: 750, display: 'none' }); 
       tl.set('.wo-added-item', { display: 'none', opacity: 0, height: 0, margin: 0 }); 
-      tl.set('.wo-timer-sec', { innerHTML: '57s' });
+      tl.set('.wo-timer-min', { innerHTML: '44m' });
+      tl.set('.wo-timer-sec', { innerHTML: '58s' });
+      tl.set('.wo-b-timer', { innerHTML: '44m58s' });
       tl.set('.wo-close-btn', { scale: 1 });
       tl.set('.wo-c-ex1', { scale: 1 });
       tl.set('.wo-a-ex1', { scale: 1 });
@@ -1178,9 +1180,10 @@ function WorkoutPlanningAnimation() {
 
       // Timer ticks
       tl.to({}, { duration: 0.5 });
-      tl.set('.wo-timer-sec', { innerHTML: '58s' });
-      tl.to({}, { duration: 1 });
       tl.set('.wo-timer-sec', { innerHTML: '59s' });
+      tl.to({}, { duration: 1 });
+      tl.set('.wo-timer-min', { innerHTML: '45m' });
+      tl.set('.wo-timer-sec', { innerHTML: '00s' });
       tl.to({}, { duration: 0.5 });
 
       // Click Exercise 1 (Pull Ups) in Screen A
@@ -1192,15 +1195,19 @@ function WorkoutPlanningAnimation() {
       tl.to('.wo-screen-b', { x: 0, duration: 0.5, ease: 'power3.out' });
 
       tl.to({}, { duration: 0.5 }); // Short pause
+      tl.set('.wo-b-timer', { innerHTML: '45m01s' });
 
       // ANIMATE SCROLL DOWN to show the buttons
       tl.to('.wo-b-inner-scroll', { y: -180, duration: 1.2, ease: 'power3.inOut' });
+      tl.set('.wo-b-timer', { innerHTML: '45m02s' });
 
       tl.to({}, { duration: 0.5 }); // Wait before clicking
+      tl.set('.wo-b-timer', { innerHTML: '45m03s' });
       
       // Click DONE button
       tl.to('.wo-real-btn-done', { scale: 0.95, duration: 0.1 });
       tl.to('.wo-real-btn-done', { scale: 1, backgroundColor: '#15803d', duration: 0.2 });
+      tl.set('.wo-b-timer', { innerHTML: '45m04s' });
 
       // Morph Set 1 to Done, Set 2 to Active
       tl.to('.wo-set-1-active', { opacity: 0, duration: 0.2, display: 'none' }, "-=0.2");
@@ -1282,7 +1289,7 @@ function WorkoutPlanningAnimation() {
 
               <div className="flex justify-center mb-10">
                 <h1 className="text-white text-6xl font-black tracking-tighter">
-                  <span className="wo-timer-min">1h25m</span><span className="wo-timer-sec">57s</span>
+                  <span className="wo-timer-min">44m</span><span className="wo-timer-sec">58s</span>
                 </h1>
               </div>
 
@@ -1347,7 +1354,7 @@ function WorkoutPlanningAnimation() {
             
             <div className="px-5 pt-16 flex items-center justify-between mb-5 shrink-0 bg-[#0a0a0c] z-10 pb-2">
               <div className="bg-[#eab308] text-black font-bold px-5 py-2 rounded-full text-xs shadow-sm">Pause</div>
-              <div className="text-[#22c55e] font-black text-xl tracking-tighter">44m58s</div>
+              <div className="wo-b-timer text-[#22c55e] font-black text-xl tracking-tighter">44m58s</div>
               <div className="bg-[#ef4444] text-white font-bold px-5 py-2 rounded-full text-xs shadow-sm">Finish</div>
             </div>
 
