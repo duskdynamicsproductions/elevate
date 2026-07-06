@@ -711,7 +711,7 @@ function AppBlockedAnimation() {
               ref={el => { svgRefs.current[i] = el; }}
               style={{ filter: `drop-shadow(0 0 14px ${icon.color}99)` }}
             >
-              <div style={{ transform: 'scale(0.65)', transformOrigin: 'center' }}>
+              <div style={{ transform: 'scale(0.45)', transformOrigin: 'center' }}>
                 <SocialSVG id={icon.id} />
               </div>
             </div>
@@ -722,10 +722,10 @@ function AppBlockedAnimation() {
       {/* Trash bin — right side, z-index below icons */}
       <div
         ref={binRef}
-        className="absolute right-8 bottom-32"
+        className="absolute right-4 bottom-32"
         style={{ zIndex: 20, willChange: 'transform' }}
       >
-        <div style={{ transform: 'scale(0.65)', transformOrigin: 'bottom right' }}>
+        <div style={{ transform: 'scale(0.5)', transformOrigin: 'bottom right' }}>
           <TrashBinSVG open={binOpen} />
         </div>
       </div>
@@ -800,7 +800,7 @@ function AppLimitSpawner({ delayOffset = 0, index = 0 }: { delayOffset?: number;
   return (
     <div 
       ref={cardRef}
-      className="pointer-events-auto absolute w-[85vw] max-w-[280px] rounded-3xl border border-white/5 bg-[#0d0d12]/95 backdrop-blur-2xl p-4 shadow-[0_50px_100px_rgba(0,0,0,0.95)] opacity-0"
+      className="pointer-events-auto absolute w-[75vw] max-w-[240px] rounded-3xl border border-white/5 bg-[#0d0d12]/95 backdrop-blur-2xl p-4 shadow-[0_50px_100px_rgba(0,0,0,0.95)] opacity-0"
       style={{ top: `${pos.top}%`, right: `${pos.right}%`, willChange: 'transform, opacity' }}
     >
       <div className="flex items-center gap-3 mb-3">
@@ -896,7 +896,7 @@ function ReelsScrolledAnimation() {
     <div className="absolute inset-0 pointer-events-none flex items-center justify-center" style={{ zIndex: 15 }}>
       
       {/* Mobile Phone Mockup */}
-      <div className="relative w-[330px] h-[680px] rounded-[3.5rem] border-[10px] border-[#0d0d12] bg-[#050508] shadow-[0_60px_120px_rgba(0,0,0,1)] overflow-hidden" style={{ transform: 'scale(min(0.62, calc(58vw / 330)))', transformOrigin: 'center top', marginTop: '-2rem' }}>
+      <div className="relative w-[330px] h-[680px] rounded-[3.5rem] border-[10px] border-[#0d0d12] bg-[#050508] shadow-[0_60px_120px_rgba(0,0,0,1)] overflow-hidden" style={{ transform: 'scale(min(0.55, calc(50vw / 330)))', transformOrigin: 'center center', marginTop: '-4rem' }}>
         
         {/* Dynamic Island / Notch */}
         <div className="absolute top-2 left-1/2 -translate-x-1/2 w-[90px] h-[26px] bg-[#0d0d12] rounded-full z-30 shadow-sm" />
@@ -1020,7 +1020,7 @@ function NsfwDetoxAnimation() {
   return (
     <div className="absolute inset-0 pointer-events-none flex items-center justify-center" style={{ zIndex: 15 }}>
       {/* Mobile Phone Mockup */}
-      <div className="relative w-[330px] h-[680px] rounded-[3.5rem] border-[10px] border-[#0d0d12] bg-[#050508] shadow-[0_60px_120px_rgba(0,0,0,1)] overflow-hidden" ref={screenRef} style={{ transform: 'scale(min(0.62, calc(58vw / 330)))', transformOrigin: 'center top', marginTop: '-2rem' }}>
+      <div className="relative w-[330px] h-[680px] rounded-[3.5rem] border-[10px] border-[#0d0d12] bg-[#050508] shadow-[0_60px_120px_rgba(0,0,0,1)] overflow-hidden" ref={screenRef} style={{ transform: 'scale(min(0.55, calc(50vw / 330)))', transformOrigin: 'center center', marginTop: '-4rem' }}>
         
         {/* Dynamic Island / Notch */}
         <div className="absolute top-2 left-1/2 -translate-x-1/2 w-[90px] h-[26px] bg-[#0d0d12] rounded-full z-30 shadow-sm" />
@@ -1253,7 +1253,7 @@ function WorkoutPlanningAnimation() {
       <div 
         ref={containerRef}
         className="relative w-[330px] h-[680px] rounded-[3.5rem] border-[10px] border-[#0d0d12] bg-[#050505] shadow-[0_60px_120px_rgba(0,0,0,1)] overflow-hidden"
-        style={{ transform: 'scale(min(0.62, calc(58vw / 330)))', transformOrigin: 'center top', marginTop: '-2rem' }}
+        style={{ transform: 'scale(min(0.55, calc(50vw / 330)))', transformOrigin: 'center center', marginTop: '-4rem' }}
       >
         <div className="absolute top-2 left-1/2 -translate-x-1/2 w-[90px] h-[26px] bg-[#0d0d12] rounded-full z-50 shadow-sm" />
 
@@ -1586,7 +1586,7 @@ function PhysicalAnalyticsAnimation() {
       <div 
         ref={containerRef}
         className="relative w-[330px] h-[680px] rounded-[3.5rem] border-[10px] border-[#0d0d12] bg-[#050505] shadow-[0_60px_120px_rgba(0,0,0,1)] overflow-hidden"
-        style={{ transform: 'scale(min(0.62, calc(58vw / 330)))', transformOrigin: 'center top', marginTop: '-2rem' }}
+        style={{ transform: 'scale(min(0.55, calc(50vw / 330)))', transformOrigin: 'center center', marginTop: '-4rem' }}
       >
         <div className="absolute top-2 left-1/2 -translate-x-1/2 w-[90px] h-[26px] bg-[#0d0d12] rounded-full z-50 shadow-sm" />
 
@@ -1819,7 +1819,7 @@ function HorizontalFeatures() {
         {features.map((feat, i) => (
           <div
             key={feat.num}
-            className="relative flex min-h-[90svh] w-full flex-col justify-end px-6 py-16 border-b border-white/[0.04]"
+            className="relative flex min-h-[90svh] w-full flex-col justify-end px-6 py-16 border-b border-white/[0.04] snap-start"
           >
             {/* APP BLOCKED EXPLOSION */}
             {feat.num === '01' && <AppBlockedAnimation />}
@@ -2233,7 +2233,7 @@ export default function App() {
   }, []);
 
   return (
-    <div className="relative font-display bg-elevate-black overflow-x-hidden max-w-full">
+    <div className="relative font-display bg-elevate-black overflow-x-hidden max-w-full h-[100dvh] overflow-y-auto snap-y snap-mandatory scroll-smooth">
 
 
 
@@ -2242,7 +2242,7 @@ export default function App() {
       ══════════════════════════════════════════ */}
       <section
         ref={heroRef}
-        className="relative flex h-svh min-h-[700px] w-full flex-col bg-elevate-black text-elevate-paper gsap-snap-section"
+        className="relative flex h-svh min-h-[700px] w-full flex-col bg-elevate-black text-elevate-paper gsap-snap-section snap-start"
       >
         {/* Nav */}
         <header className="hero-nav flex w-full items-center justify-between px-6 py-6 md:px-12 lg:px-20">
@@ -2365,7 +2365,7 @@ export default function App() {
       {/* ══════════════════════════════════════════
           KINETIC QUOTE
       ══════════════════════════════════════════ */}
-      <section className="bg-elevate-black px-6 py-12 md:px-12 lg:px-20 lg:py-20 gsap-snap-section min-h-svh flex flex-col justify-center">
+      <section className="bg-elevate-black px-6 py-12 md:px-12 lg:px-20 lg:py-20 gsap-snap-section min-h-svh flex flex-col justify-center snap-start">
         <div className="mx-auto max-w-6xl w-full">
           <ScrollRevealBlock paragraphs={[
             {
@@ -2480,7 +2480,7 @@ export default function App() {
       {/* ══════════════════════════════════════════
           ABOUT
       ══════════════════════════════════════════ */}
-      <section className="relative overflow-hidden bg-elevate-orange px-6 py-28 text-white md:px-12 lg:px-20 lg:py-44 gsap-snap-section min-h-svh flex flex-col justify-center">
+      <section className="relative overflow-hidden bg-elevate-orange px-6 py-28 text-white md:px-12 lg:px-20 lg:py-44 gsap-snap-section min-h-svh flex flex-col justify-center snap-start">
         <div className="relative mx-auto max-w-5xl text-center">
           <Reveal direction="up" className="mb-8 flex items-center justify-center gap-3">
             <SpinningStar className="size-5" />
@@ -2515,7 +2515,7 @@ export default function App() {
         <VelocityMarquee />
         <div className="h-1 w-full bg-elevate-orange" />
       </div>
-      <footer className="bg-elevate-black px-6 py-14 text-elevate-paper md:px-12 lg:px-20 gsap-snap-section">
+      <footer className="bg-elevate-black px-6 py-14 text-elevate-paper md:px-12 lg:px-20 gsap-snap-section snap-start">
         <div className="flex w-full flex-col items-start justify-between gap-10 md:flex-row md:items-center">
           <div className="flex items-center gap-3">
             <SpinningStar className="size-6 text-elevate-orange" />
