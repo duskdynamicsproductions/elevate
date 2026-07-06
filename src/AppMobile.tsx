@@ -2227,7 +2227,7 @@ export default function App() {
   }, []);
 
   return (
-    <div className="relative font-display bg-elevate-black">
+    <div className="relative font-display bg-elevate-black overflow-x-hidden max-w-full">
 
 
 
@@ -2270,7 +2270,7 @@ export default function App() {
             <span className="hero-word block" style={{ color: 'transparent', WebkitTextStroke: '2px rgba(253,252,250,0.8)' }}>smarter.</span>
           </h1>
           
-          <p className="mt-6 md:mt-10 whitespace-nowrap text-sm md:text-base font-['Space_Mono',monospace] font-bold uppercase tracking-widest text-elevate-orange">
+          <p className="mt-6 md:mt-10 text-sm md:text-base font-['Space_Mono',monospace] font-bold uppercase tracking-widest text-elevate-orange overflow-hidden">
             "The lion will achieve everything he sets his sights on or he will perish in the pursuit of it."
           </p>
         </div>
