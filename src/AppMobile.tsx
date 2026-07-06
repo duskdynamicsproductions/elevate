@@ -1953,7 +1953,8 @@ function VelocityMarquee() {
   useEffect(() => {
     let req: number;
     const tick = () => {
-      const scrollY = window.scrollY;
+      const scroller = document.getElementById('mobile-scroller');
+      const scrollY = scroller ? scroller.scrollTop : window.scrollY;
       velocityRef.current = scrollY - lastScrollY.current;
       lastScrollY.current = scrollY;
       
@@ -2186,6 +2187,7 @@ function ScrollRevealBlock({ paragraphs }: { paragraphs: {text: string, classNam
           ease: 'none',
           scrollTrigger: {
             trigger: containerRef.current,
+            scroller: '#mobile-scroller',
             start: 'top 80%',
           }
         }
@@ -2230,7 +2232,7 @@ export default function App() {
   }, []);
 
   return (
-    <div className="fixed inset-0 font-display bg-elevate-black overflow-x-hidden overflow-y-auto snap-y snap-mandatory scroll-smooth" style={{ WebkitOverflowScrolling: 'touch' }}>
+    <div id="mobile-scroller" className="fixed inset-0 font-display bg-elevate-black overflow-x-hidden overflow-y-auto snap-y snap-mandatory scroll-smooth" style={{ WebkitOverflowScrolling: 'touch' }}>
 
 
 
