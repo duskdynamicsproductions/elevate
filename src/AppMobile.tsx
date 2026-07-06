@@ -2230,7 +2230,7 @@ export default function App() {
   }, []);
 
   return (
-    <div className="relative font-display bg-elevate-black overflow-x-hidden max-w-full">
+    <div className="relative font-display bg-elevate-black overflow-x-hidden max-w-full h-[100dvh] overflow-y-auto snap-y snap-mandatory scroll-smooth">
 
 
 
@@ -2239,7 +2239,7 @@ export default function App() {
       ══════════════════════════════════════════ */}
       <section
         ref={heroRef}
-        className="relative flex h-svh min-h-[700px] w-full flex-col bg-elevate-black text-elevate-paper gsap-snap-section"
+        className="relative flex h-svh min-h-[700px] w-full flex-col bg-elevate-black text-elevate-paper gsap-snap-section snap-start"
       >
         {/* Nav */}
         <header className="hero-nav flex w-full items-center justify-between px-6 py-6 md:px-12 lg:px-20">
@@ -2291,9 +2291,9 @@ export default function App() {
       {/* ══════════════════════════════════════════
           FEATURES — Native Mobile Horizontal Swipe
       ══════════════════════════════════════════ */}
-      <div className="relative bg-elevate-black" id="story">
+      <div className="relative bg-elevate-black flex flex-col h-[100dvh] snap-start" id="story">
         {/* Section header */}
-        <div className="px-6 pt-12 pb-6">
+        <div className="px-6 pt-12 pb-4 shrink-0">
           <p className="text-xs font-semibold tracking-[0.3em] text-elevate-orange uppercase mb-2">Features</p>
           <h2 className="text-3xl font-black uppercase leading-[1.1] tracking-tight text-elevate-paper">Swipe to explore</h2>
           <div className="mt-3 flex items-center gap-2 text-xs text-elevate-paper/30 font-semibold tracking-widest uppercase">
@@ -2304,7 +2304,7 @@ export default function App() {
 
         {/* Horizontal scroll track — 100vw cards, native CSS snap */}
         <div
-          className="flex overflow-x-auto"
+          className="flex overflow-x-auto flex-1"
           style={{
             scrollSnapType: 'x mandatory',
             WebkitOverflowScrolling: 'touch',
@@ -2318,7 +2318,6 @@ export default function App() {
               className="relative flex-shrink-0 flex flex-col justify-end bg-elevate-black border-r border-white/[0.06]"
               style={{
                 width: '100vw',
-                minHeight: '85svh',
                 scrollSnapAlign: 'start',
               }}
             >
@@ -2362,7 +2361,7 @@ export default function App() {
       {/* ══════════════════════════════════════════
           KINETIC QUOTE
       ══════════════════════════════════════════ */}
-      <section className="bg-elevate-black px-6 py-12 md:px-12 lg:px-20 lg:py-20 gsap-snap-section min-h-svh flex flex-col justify-center">
+      <section className="bg-elevate-black px-6 py-12 md:px-12 lg:px-20 lg:py-20 gsap-snap-section min-h-svh flex flex-col justify-center snap-start">
         <div className="mx-auto max-w-6xl w-full">
           <ScrollRevealBlock paragraphs={[
             {
@@ -2390,7 +2389,7 @@ export default function App() {
       {/* ══════════════════════════════════════════
           WORKOUT TEMPLATES — Hover Flood
       ══════════════════════════════════════════ */}
-      <section className="bg-elevate-black px-6 py-8 md:px-12 lg:px-20 lg:py-10 gsap-snap-section min-h-svh flex flex-col justify-center">
+      <section className="bg-elevate-black px-6 py-8 md:px-12 lg:px-20 lg:py-10 gsap-snap-section min-h-svh flex flex-col justify-center snap-start">
         <div className="mx-auto max-w-6xl">
           <Reveal direction="up" className="mb-8 flex items-center gap-3">
             <SpinningStar className="size-4 text-elevate-orange" />
@@ -2419,7 +2418,7 @@ export default function App() {
       {/* ══════════════════════════════════════════
           MANIFESTO
       ══════════════════════════════════════════ */}
-      <section id="focus" className="relative overflow-hidden bg-elevate-black px-6 py-28 md:px-12 lg:px-20 lg:py-44 gsap-snap-section min-h-svh flex flex-col justify-center">
+      <section id="focus" className="relative overflow-hidden bg-elevate-black px-6 py-28 md:px-12 lg:px-20 lg:py-44 gsap-snap-section min-h-svh flex flex-col justify-center snap-start">
         <div className="mx-auto w-full max-w-7xl flex flex-col md:flex-row items-center justify-between gap-12 lg:gap-20">
           {/* Left: Text */}
           <div className="flex-1 flex flex-col items-start -translate-y-6 md:-translate-y-12">
@@ -2477,7 +2476,7 @@ export default function App() {
       {/* ══════════════════════════════════════════
           ABOUT
       ══════════════════════════════════════════ */}
-      <section className="relative overflow-hidden bg-elevate-orange px-6 py-28 text-white md:px-12 lg:px-20 lg:py-44 gsap-snap-section min-h-svh flex flex-col justify-center">
+      <section className="relative overflow-hidden bg-elevate-orange px-6 py-28 text-white md:px-12 lg:px-20 lg:py-44 gsap-snap-section min-h-svh flex flex-col justify-center snap-start">
         <div className="relative mx-auto max-w-5xl text-center">
           <Reveal direction="up" className="mb-8 flex items-center justify-center gap-3">
             <SpinningStar className="size-5" />
@@ -2512,7 +2511,7 @@ export default function App() {
         <VelocityMarquee />
         <div className="h-1 w-full bg-elevate-orange" />
       </div>
-      <footer className="bg-elevate-black px-6 py-14 text-elevate-paper md:px-12 lg:px-20 gsap-snap-section">
+      <footer className="bg-elevate-black px-6 py-14 text-elevate-paper md:px-12 lg:px-20 gsap-snap-section snap-start">
         <div className="flex w-full flex-col items-start justify-between gap-10 md:flex-row md:items-center">
           <div className="flex items-center gap-3">
             <SpinningStar className="size-6 text-elevate-orange" />
