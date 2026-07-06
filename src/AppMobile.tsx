@@ -2249,7 +2249,7 @@ export default function App() {
       ══════════════════════════════════════════ */}
       <section
         ref={heroRef}
-        className="relative flex h-svh min-h-[700px] w-full flex-col bg-elevate-black text-elevate-paper gsap-snap-section snap-start"
+        className="relative flex h-[100dvh] min-h-[700px] w-full flex-col bg-elevate-black text-elevate-paper gsap-snap-section snap-start"
       >
         {/* Nav */}
         <header className="hero-nav flex w-full items-center justify-between px-6 py-6 md:px-12 lg:px-20">
@@ -2371,7 +2371,7 @@ export default function App() {
       {/* ══════════════════════════════════════════
           KINETIC QUOTE
       ══════════════════════════════════════════ */}
-      <section className="bg-elevate-black px-6 py-12 md:px-12 lg:px-20 lg:py-20 gsap-snap-section min-h-svh flex flex-col justify-center snap-start">
+      <section className="bg-elevate-black px-6 py-12 md:px-12 lg:px-20 lg:py-20 gsap-snap-section min-h-[100dvh] flex flex-col justify-center snap-start">
         <div className="mx-auto max-w-6xl w-full">
           <ScrollRevealBlock paragraphs={[
             {
@@ -2399,7 +2399,7 @@ export default function App() {
       {/* ══════════════════════════════════════════
           WORKOUT TEMPLATES — Hover Flood
       ══════════════════════════════════════════ */}
-      <section className="bg-elevate-black px-6 py-6 md:px-12 lg:px-20 lg:py-10 gsap-snap-section min-h-svh flex flex-col justify-center snap-start">
+      <section className="bg-elevate-black px-6 py-6 md:px-12 lg:px-20 lg:py-10 gsap-snap-section min-h-[100dvh] flex flex-col justify-center snap-start">
         <div className="mx-auto w-full max-w-6xl">
           <Reveal direction="up" className="mb-6 flex items-center gap-3">
             <SpinningStar className="size-4 text-elevate-orange" />
@@ -2428,7 +2428,7 @@ export default function App() {
       {/* ══════════════════════════════════════════
           MANIFESTO
       ══════════════════════════════════════════ */}
-      <section id="focus" className="relative overflow-hidden bg-elevate-black px-6 py-28 md:px-12 lg:px-20 lg:py-44 gsap-snap-section min-h-svh flex flex-col justify-center snap-start">
+      <section id="focus" className="relative overflow-hidden bg-elevate-black px-6 py-28 md:px-12 lg:px-20 lg:py-44 gsap-snap-section min-h-[100dvh] flex flex-col justify-center snap-start">
         <div className="mx-auto w-full max-w-7xl flex flex-col md:flex-row items-center justify-between gap-12 lg:gap-20">
           {/* Left: Text */}
           <div className="flex-1 flex flex-col items-start -translate-y-6 md:-translate-y-12 order-2 md:order-1">
@@ -2486,7 +2486,7 @@ export default function App() {
       {/* ══════════════════════════════════════════
           ABOUT
       ══════════════════════════════════════════ */}
-      <section className="relative overflow-hidden bg-elevate-orange px-6 py-28 text-white md:px-12 lg:px-20 lg:py-44 gsap-snap-section min-h-svh flex flex-col justify-center snap-start">
+      <section className="relative overflow-hidden bg-elevate-orange px-6 py-28 text-white md:px-12 lg:px-20 lg:py-44 gsap-snap-section min-h-[100dvh] flex flex-col justify-center snap-start">
         <div className="relative mx-auto max-w-5xl text-center">
           <Reveal direction="up" className="mb-8 flex items-center justify-center gap-3">
             <SpinningStar className="size-5" />
