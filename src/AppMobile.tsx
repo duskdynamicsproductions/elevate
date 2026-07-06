@@ -2230,7 +2230,7 @@ export default function App() {
   }, []);
 
   return (
-    <div className="relative font-display bg-elevate-black overflow-x-hidden max-w-full h-[100dvh] overflow-y-auto snap-y snap-mandatory scroll-smooth">
+    <div className="fixed inset-0 font-display bg-elevate-black overflow-x-hidden overflow-y-auto snap-y snap-mandatory scroll-smooth" style={{ WebkitOverflowScrolling: 'touch' }}>
 
 
 
