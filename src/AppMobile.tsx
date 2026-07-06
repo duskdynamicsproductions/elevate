@@ -1873,7 +1873,7 @@ function HoverFloodItem({ text, index, exercises }: { text: string; index: numbe
           <span className="mb-1 shrink-0 text-sm font-black tracking-[0.2em] text-elevate-paper/20 transition-colors duration-300 group-hover:text-[#0C0B0B]">
             {String(index + 1).padStart(2, '0')}
           </span>
-          <div className="hidden flex-col items-end md:flex">
+          <div className="flex flex-col items-end">
             {exercises.map((ex, i) => (
               <span 
                 key={i} 
