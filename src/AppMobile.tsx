@@ -2283,6 +2283,75 @@ export default function App() {
 
 
 
+
+
+      {/* ══════════════════════════════════════════
+          FEATURES — Native Mobile Horizontal Swipe
+      ══════════════════════════════════════════ */}
+      <div className="relative bg-elevate-black" id="story">
+        {/* Section header */}
+        <div className="px-6 pt-12 pb-6">
+          <p className="text-xs font-semibold tracking-[0.3em] text-elevate-orange uppercase mb-2">Features</p>
+          <h2 className="text-3xl font-black uppercase leading-[1.1] tracking-tight text-elevate-paper">Swipe to explore</h2>
+          <div className="mt-3 flex items-center gap-2 text-xs text-elevate-paper/30 font-semibold tracking-widest uppercase">
+            <span>Swipe</span>
+            <span className="text-elevate-orange">→</span>
+          </div>
+        </div>
+
+        {/* Horizontal scroll track — 100vw cards, native CSS snap */}
+        <div
+          className="flex overflow-x-auto"
+          style={{
+            scrollSnapType: 'x mandatory',
+            WebkitOverflowScrolling: 'touch',
+            scrollbarWidth: 'none',
+            msOverflowStyle: 'none',
+          }}
+        >
+          {features.map((feat) => (
+            <div
+              key={feat.num}
+              className="relative flex-shrink-0 flex flex-col justify-end bg-elevate-black border-r border-white/[0.06]"
+              style={{
+                width: '100vw',
+                minHeight: '85svh',
+                scrollSnapAlign: 'start',
+              }}
+            >
+              {/* Animation */}
+              <div className="absolute inset-0 overflow-hidden">
+                {feat.num === '01' && <AppBlockedAnimation />}
+                {feat.num === '02' && <AppLimitNotification />}
+                {feat.num === '03' && <ReelsScrolledAnimation />}
+                {feat.num === '04' && <NsfwDetoxAnimation />}
+                {feat.num === '05' && <WorkoutPlanningAnimation />}
+                {feat.num === '06' && <PhysicalAnalyticsAnimation />}
+              </div>
+
+              {/* Text */}
+              <div className="relative z-10 px-6 pb-10 pt-32 bg-gradient-to-t from-elevate-black via-elevate-black/80 to-transparent">
+                <span className="block mb-1 text-5xl font-black leading-none text-elevate-paper/10 select-none">{feat.num}</span>
+                <h3 className="text-[7vw] font-black uppercase leading-[1.1] tracking-tight text-elevate-paper mb-3">
+                  {feat.title}
+                </h3>
+                <div className="mb-3 h-px w-10 bg-elevate-orange" />
+                <p className="text-sm leading-relaxed text-elevate-paper/55 max-w-xs">
+                  {feat.desc}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Dot indicators */}
+        <div className="flex justify-center gap-2 py-4">
+          {features.map((feat) => (
+            <div key={feat.num} className="h-1 w-6 rounded-full bg-elevate-paper/15" />
+          ))}
+        </div>
+      </div>
+
       {/* Orange separator */}
       <div className="h-1 w-full bg-elevate-orange" />
 
