@@ -2223,6 +2223,7 @@ function ScrollRevealBlock({ paragraphs }: { paragraphs: {text: string, classNam
 
 export default function App() {
   const heroRef = useRef<HTMLElement>(null);
+  const [activeFeatureIndex, setActiveFeatureIndex] = useState(0);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -2316,7 +2317,7 @@ export default function App() {
             <p className="text-xs font-semibold tracking-[0.3em] text-elevate-orange uppercase mb-2">Features</p>
             <div className="mt-3 flex items-center gap-2 text-xs text-elevate-paper/30 font-semibold tracking-widest uppercase">
               <span>Scroll</span>
-              <span className="text-elevate-orange">→</span>
+              <span className="text-elevate-orange transition-transform duration-300" style={{ transform: activeFeatureIndex === features.length - 1 ? 'rotate(90deg)' : 'none' }}>→</span>
             </div>
           </div>
         </div>
@@ -2329,6 +2330,12 @@ export default function App() {
             WebkitOverflowScrolling: 'touch',
             scrollbarWidth: 'none',
             msOverflowStyle: 'none',
+          }}
+          onScroll={(e) => {
+            const index = Math.round(e.currentTarget.scrollLeft / window.innerWidth);
+            if (index !== activeFeatureIndex && index >= 0 && index < features.length) {
+              setActiveFeatureIndex(index);
+            }
           }}
         >
           {features.map((feat) => (
