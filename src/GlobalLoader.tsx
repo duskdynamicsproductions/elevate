@@ -20,7 +20,11 @@ export function GlobalLoader() {
     prevPath.current = location.pathname;
     setLoading(true);
     setFading(false);
-    window.scrollTo(0, 0); // instantly scroll to top before any painting
+    
+    // Force instant scroll to prevent "scrolling up" animation on Safari/Chrome
+    document.documentElement.style.scrollBehavior = 'auto';
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    document.documentElement.style.scrollBehavior = '';
   }
 
   useEffect(() => {

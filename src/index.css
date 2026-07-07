@@ -44,8 +44,7 @@ body,
 }
 
 html {
-  scroll-behavior: smooth;
-  /* Removed scroll-snap */
+  /* Removed scroll-behavior: smooth to prevent animated scrolling on route changes */
 }
 
 body {
