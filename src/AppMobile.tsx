@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, useMemo, useId } from 'react';
 import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { ImageWithSkeleton } from './ImageWithSkeleton';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -1318,7 +1319,7 @@ function WorkoutPlanningAnimation() {
 
                   <div className="flex items-center gap-4 bg-[#111113] p-3 rounded-2xl">
                     <div className="w-16 h-16 bg-white rounded-xl overflow-hidden flex items-center justify-center p-1.5">
-                      <img src="/pull-up.gif" className="w-full h-full object-contain mix-blend-multiply" alt="Pull Ups" />
+                      <ImageWithSkeleton src="/pull-up.gif" className="w-full h-full object-contain mix-blend-multiply" alt="Pull Ups" />
                     </div>
                     <div>
                       <h5 className="text-white font-bold text-sm">Pull Ups</h5>
@@ -1375,7 +1376,7 @@ function WorkoutPlanningAnimation() {
                 </div>
 
                 <div className="w-full h-48 bg-white rounded-[1.5rem] mb-8 flex items-center justify-center overflow-hidden p-4 shadow-lg border-2 border-[#eab308]">
-                   <img className="w-full h-full object-contain mix-blend-multiply" src="/pull-up.gif" alt="Exercise" />
+                   <ImageWithSkeleton className="w-full h-full object-contain mix-blend-multiply" src="/pull-up.gif" alt="Exercise" />
                 </div>
 
                 <div className="flex items-start justify-between mb-4">
@@ -1487,7 +1488,7 @@ function WorkoutPlanningAnimation() {
                      
                      <div className="wo-c-ex1 flex items-center gap-4 bg-[#111113] p-3 rounded-2xl border border-white/5">
                        <div className="w-[72px] h-[72px] bg-white rounded-xl flex items-center justify-center overflow-hidden p-1.5 shrink-0">
-                          <img src="/pull-up.gif" className="w-full h-full object-contain mix-blend-multiply" alt="Pull Ups" />
+                          <ImageWithSkeleton src="/pull-up.gif" className="w-full h-full object-contain mix-blend-multiply" alt="Pull Ups" />
                        </div>
                        <div className="flex-1">
                           <h3 className="text-white font-bold text-[15px] mb-1">Pull Ups</h3>
@@ -1497,7 +1498,7 @@ function WorkoutPlanningAnimation() {
 
                      <div className="flex items-center gap-4 bg-[#111113] p-3 rounded-2xl border border-white/5">
                        <div className="w-[72px] h-[72px] bg-white rounded-xl flex items-center justify-center overflow-hidden p-1.5 shrink-0">
-                          <img src="/dumbbell-bench-press.gif" className="w-full h-full object-contain mix-blend-multiply" alt="Bench Press" />
+                          <ImageWithSkeleton src="/dumbbell-bench-press.gif" className="w-full h-full object-contain mix-blend-multiply" alt="Bench Press" />
                        </div>
                        <div className="flex-1">
                           <h3 className="text-white font-bold text-[15px] mb-1">Bench Press</h3>
@@ -1507,7 +1508,7 @@ function WorkoutPlanningAnimation() {
 
                      <div className="flex items-center gap-4 bg-[#111113] p-3 rounded-2xl border border-white/5">
                        <div className="w-[72px] h-[72px] bg-white rounded-xl flex items-center justify-center overflow-hidden p-1.5 shrink-0">
-                          <img src="/push-up.gif" className="w-full h-full object-contain mix-blend-multiply" alt="Push Ups" />
+                          <ImageWithSkeleton src="/push-up.gif" className="w-full h-full object-contain mix-blend-multiply" alt="Push Ups" />
                        </div>
                        <div className="flex-1">
                           <h3 className="text-white font-bold text-[15px] mb-1">Push Ups</h3>
@@ -1606,7 +1607,7 @@ function PhysicalAnalyticsAnimation() {
               <div className="relative w-full h-[380px] bg-[#0a0a0c] rounded-[2rem] border border-white/5 overflow-hidden mb-6 mt-4 flex flex-col justify-end p-5">
                  
                  <div className="absolute inset-0 w-full h-full opacity-100 flex items-center justify-center p-4 pt-12 pb-0">
-                    <img src="/Muscular System.svg" className="w-full h-full object-contain object-bottom" alt="Muscular System" />
+                    <ImageWithSkeleton src="/Muscular System.svg" className="w-full h-full object-contain object-bottom" alt="Muscular System" />
                  </div>
                  <div className="absolute top-4 right-4 drop-shadow-lg">
                    <ElevateMedal size={40} color="#F59E0B" rank="I" />
@@ -1676,7 +1677,7 @@ function PhysicalAnalyticsAnimation() {
                     
                     <div className="flex gap-4">
                        <div className="w-1/2 flex items-center justify-center p-2">
-                          <img src="/Muscular System.svg" className="w-full h-full object-contain opacity-90" alt="Anatomy" />
+                          <ImageWithSkeleton src="/Muscular System.svg" className="w-full h-full object-contain opacity-90" alt="Anatomy" />
                        </div>
                        <div className="w-1/2 flex flex-col gap-4">
                           <div>
@@ -2465,7 +2466,7 @@ export default function App() {
                 {/* Notch */}
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-6 bg-[#111] rounded-b-2xl z-10" />
                 {/* Screen: GIF */}
-                <img
+                <ImageWithSkeleton
                   src="/intro.gif"
                   alt="Elevate App Intro"
                   className="w-full h-full object-cover"
