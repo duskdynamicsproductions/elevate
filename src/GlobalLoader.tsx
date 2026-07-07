@@ -11,33 +11,43 @@ function SpinningStar({ className = '' }: { className?: string }) {
 
 export function GlobalLoader() {
   const [loading, setLoading] = useState(true);
+  const [fading, setFading] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
-    // Show loader on route change
+    // Show loader on route change immediately
     setLoading(true);
+    setFading(false);
+    
+    // Scroll to top instantly before the new page renders, hiding the flash of the scrolled page
+    window.scrollTo(0, 0);
 
-    // Wait a minimum time so the animation is visible, and clear when loaded
-    const handleLoad = () => {
-      setTimeout(() => setLoading(false), 1200); 
+    const finish = () => {
+      setFading(true);
+      setTimeout(() => setLoading(false), 500); // 500ms fade out transition
     };
 
     if (document.readyState === 'complete') {
-      handleLoad();
+      // If the document is loaded (like on route changes or fast reloads), wait 800ms so the loader is visible
+      setTimeout(finish, 800); 
     } else {
-      window.addEventListener('load', handleLoad);
-      return () => window.removeEventListener('load', handleLoad);
+      const onWindowLoad = () => setTimeout(finish, 800);
+      window.addEventListener('load', onWindowLoad);
+      return () => window.removeEventListener('load', onWindowLoad);
     }
     
     // Safety fallback
-    const fallback = setTimeout(() => setLoading(false), 3000);
+    const fallback = setTimeout(() => {
+      setFading(true);
+      setTimeout(() => setLoading(false), 500);
+    }, 3000);
     return () => clearTimeout(fallback);
   }, [location.pathname]);
 
   if (!loading) return null;
 
   return (
-    <div className="fixed inset-0 z-[99999] flex flex-col items-center justify-center bg-elevate-black transition-opacity duration-500">
+    <div className={`fixed inset-0 z-[99999] flex flex-col items-center justify-center bg-elevate-black transition-opacity duration-500 ${fading ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
       <div className="relative flex flex-col items-center">
         {/* Bouncing container */}
         <div className="animate-bounce-realistic origin-bottom">

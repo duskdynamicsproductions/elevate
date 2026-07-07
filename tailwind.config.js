@@ -36,11 +36,11 @@ export default {
           '50%': { transform: 'translateY(0)', animationTimingFunction: 'cubic-bezier(0, 0, 0.2, 1)' },
         },
         'squash-stretch': {
-          '0%, 35%, 100%': { transform: 'scale(1, 1)' },
-          '45%': { transform: 'scale(0.7, 1.3)' },
-          '50%': { transform: 'scale(1.6, 0.4)' },
-          '55%': { transform: 'scale(0.7, 1.3)' },
-          '65%': { transform: 'scale(1, 1)' },
+          '0%, 100%': { transform: 'scale(1, 1)' },
+          '40%': { transform: 'scale(0.9, 1.1)' },
+          '50%': { transform: 'scale(1.25, 0.75)' },
+          '60%': { transform: 'scale(0.95, 1.05)' },
+          '75%': { transform: 'scale(1, 1)' },
         },
         'shadow-pulse': {
           '0%, 100%': { transform: 'scale(0.3)', opacity: '0.1', animationTimingFunction: 'cubic-bezier(0.8, 0, 1, 1)' },
