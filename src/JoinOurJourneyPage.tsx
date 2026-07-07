@@ -115,7 +115,7 @@ const roles = [
     category: "6. Growth & Market",
     title: "Customer Success & Support",
     subtitle: "The Voice of the App",
-    mission: "Keep existing users happy, resolve their issues, and turn them into advocates.",
+    mission: "Keep existing users happy and resolve their issues.",
     specific: "Helping a user figure out why their Google Drive backup failed, or responding to 1-star reviews on the Play Store.",
     responsibilities: [
       "Responding to support emails and Play Store reviews.",
