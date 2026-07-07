@@ -51,6 +51,7 @@ export function DownloadPage() {
         <div className="flex flex-wrap items-center justify-center gap-6 md:gap-8">
           <Link to="/privacy_policy" className="text-xs font-semibold tracking-[0.15em] uppercase text-elevate-paper/30 transition-colors hover:text-elevate-paper">Privacy</Link>
           <Link to="/terms" className="text-xs font-semibold tracking-[0.15em] uppercase text-elevate-paper/30 transition-colors hover:text-elevate-paper">Terms</Link>
+          <Link to="/joinourjourney" className="text-xs font-semibold tracking-[0.15em] uppercase text-elevate-paper/30 transition-colors hover:text-elevate-paper">Join Us</Link>
         </div>
         <div className="flex flex-col items-start gap-4 md:items-end">
           <p className="text-xs text-elevate-paper/20">© 2026 Elevate. All rights reserved.</p>

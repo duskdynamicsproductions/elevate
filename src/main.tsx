@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import App from './App';
 import { PrivacyPage, TermsPage } from './LegalPages';
 import { DownloadPage } from './DownloadPage';
-import { CareersPage } from './CareersPage';
+import { JoinOurJourneyPage } from './JoinOurJourneyPage';
 import CustomCursor from './CustomCursor';
 import './index.css';
 
@@ -17,7 +17,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/download" element={<DownloadPage />} />
-        <Route path="/careers" element={<CareersPage />} />
+        <Route path="/joinourjourney" element={<JoinOurJourneyPage />} />
         <Route path="/privacy_policy" element={<PrivacyPage />} />
         <Route path="/terms" element={<TermsPage />} />
       </Routes>
