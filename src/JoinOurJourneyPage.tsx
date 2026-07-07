@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { AnimatedLogo } from './AnimatedLogo';
 
 function SpinningStar({ className = '' }: { className?: string }) {
   return (
@@ -150,10 +151,13 @@ export function JoinOurJourneyPage() {
     <div id="careers-container" className="relative h-[100dvh] overflow-y-auto snap-y snap-mandatory md:h-auto md:overflow-visible md:snap-none bg-elevate-black text-elevate-paper selection:bg-elevate-orange selection:text-black">
       {/* Navbar */}
       <header className="absolute left-0 top-0 z-50 flex w-full items-center justify-between px-6 py-6 md:px-12 lg:px-20 pointer-events-none">
-        <Link to="/" className="pointer-events-auto flex items-center gap-2 transition-opacity hover:opacity-50">
-          <SpinningStar className="size-4 text-elevate-orange" />
-          <span className="text-sm font-bold tracking-widest uppercase">Elevate</span>
-        </Link>
+        <AnimatedLogo 
+          to="/" 
+          className="pointer-events-auto flex items-center gap-2 transition-opacity hover:opacity-50"
+          starClassName="size-4 text-elevate-orange"
+          textClassName="text-sm font-bold tracking-widest uppercase"
+          ariaLabel="Elevate home"
+        />
 
         {/* Centered Nav */}
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
@@ -241,10 +245,13 @@ export function JoinOurJourneyPage() {
       
       {/* Footer */}
       <footer className="snap-start md:snap-align-none mt-auto flex w-full flex-col items-start justify-between gap-10 border-t border-elevate-paper/10 px-6 py-8 md:flex-row md:items-center md:px-12 lg:px-20">
-        <div className="flex items-center gap-3">
-          <SpinningStar className="size-6 text-elevate-orange" />
-          <span className="text-3xl font-black tracking-tight">Elevate</span>
-        </div>
+        <AnimatedLogo 
+          to="/" 
+          className="flex items-center gap-3 transition-opacity hover:opacity-50"
+          starClassName="size-6 text-elevate-orange"
+          textClassName="text-3xl font-black tracking-tight"
+          ariaLabel="Elevate home"
+        />
         <div className="flex flex-wrap items-center justify-center gap-6 md:gap-8">
           <Link to="/privacy_policy" className="text-xs font-semibold tracking-[0.15em] uppercase text-elevate-paper/30 transition-colors hover:text-elevate-paper">Privacy</Link>
           <Link to="/terms" className="text-xs font-semibold tracking-[0.15em] uppercase text-elevate-paper/30 transition-colors hover:text-elevate-paper">Terms</Link>
