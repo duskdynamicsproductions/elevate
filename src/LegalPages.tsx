@@ -127,7 +127,7 @@ function LegalLayout({
               key={i}
               className="relative flex min-h-[70dvh] flex-col justify-center border-b border-elevate-paper/[0.06] px-6 py-20 md:min-h-0 md:h-screen md:w-screen md:border-b-0 md:border-r md:border-elevate-paper/10 md:px-12 lg:px-20 overflow-hidden group"
             >
-              <div className="z-10 max-w-3xl flex flex-col items-start">
+              <div className="z-10 w-full max-w-3xl flex flex-col items-start">
                 {/* Ghost number now above the title */}
                 <span className="pointer-events-none select-none text-6xl md:text-[8vw] font-black leading-none text-elevate-paper/[0.08] transition-colors group-hover:text-elevate-paper/[0.12] mb-4">
                   {String(i + 1).padStart(2, '0')}
@@ -137,14 +137,14 @@ function LegalLayout({
                   {s.title}
                 </h2>
                 {s.body && (
-                  <p className="mb-6 text-sm leading-relaxed text-elevate-paper/50 md:text-xl lg:text-2xl">{s.body}</p>
+                  <p className="mb-6 text-sm leading-relaxed text-elevate-paper/50 md:text-xl lg:text-2xl w-full break-words">{s.body}</p>
                 )}
                 {s.list && (
-                  <ul className="mt-6 space-y-4 md:space-y-6">
+                  <ul className="mt-6 space-y-4 md:space-y-6 w-full">
                     {s.list.map((item, j) => (
-                      <li key={j} className="flex items-start gap-4 text-sm leading-relaxed text-elevate-paper/50 md:text-lg lg:text-xl">
+                      <li key={j} className="flex items-start gap-4 text-sm leading-relaxed text-elevate-paper/50 md:text-lg lg:text-xl w-full break-words">
                         <span className="mt-[10px] h-1.5 w-1.5 shrink-0 rounded-full bg-elevate-orange" />
-                        <span>{item}</span>
+                        <span className="flex-1 min-w-0">{item}</span>
                       </li>
                     ))}
                   </ul>
