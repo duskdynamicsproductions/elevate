@@ -15,11 +15,16 @@ export function GlobalLoader() {
   const location = useLocation();
   const prevPath = useRef(location.pathname);
 
+  let shouldShow = loading;
+  let currentFading = fading;
+
   // Synchronously intercept route changes BEFORE paint
   if (prevPath.current !== location.pathname) {
     prevPath.current = location.pathname;
     setLoading(true);
     setFading(false);
+    shouldShow = true; // Force render immediately in this frame
+    currentFading = false;
     
     // Force instant scroll to prevent "scrolling up" animation on Safari/Chrome
     document.documentElement.style.scrollBehavior = 'auto';
@@ -50,10 +55,10 @@ export function GlobalLoader() {
     return () => clearTimeout(fallback);
   }, [location.pathname]);
 
-  if (!loading) return null;
+  if (!shouldShow) return null;
 
   return (
-    <div className={`fixed inset-0 z-[99999] flex flex-col items-center justify-center bg-elevate-black transition-opacity duration-500 ${fading ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+    <div className={`fixed inset-0 z-[99999] flex flex-col items-center justify-center bg-elevate-black transition-opacity duration-500 ${currentFading ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
       <div className="relative flex flex-col items-center">
         {/* Bouncing container */}
         <div className="animate-bounce-realistic origin-bottom">
