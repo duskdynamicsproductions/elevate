@@ -55,6 +55,29 @@ export function GlobalLoader() {
     return () => clearTimeout(fallback);
   }, [location.pathname]);
 
+  // Capture link clicks natively to show loader instantly (bypassing React 18 Suspense transitions)
+  useEffect(() => {
+    const handleGlobalClick = (e: MouseEvent) => {
+      const target = (e.target as HTMLElement).closest('a');
+      if (!target || !target.href) return;
+
+      const url = new URL(target.href, window.location.origin);
+      // Check if it's an internal link to a DIFFERENT page, and not a new tab
+      if (
+        url.origin === window.location.origin &&
+        url.pathname !== window.location.pathname &&
+        target.target !== '_blank' &&
+        !e.ctrlKey && !e.metaKey
+      ) {
+        setLoading(true);
+        setFading(false);
+      }
+    };
+
+    document.addEventListener('click', handleGlobalClick, true);
+    return () => document.removeEventListener('click', handleGlobalClick, true);
+  }, []);
+
   if (!shouldShow) return null;
 
   return (
