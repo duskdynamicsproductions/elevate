@@ -2293,11 +2293,6 @@ export default function App() {
             "The lion will achieve everything he sets his sights on or he will perish in the pursuit of it."
           </p>
         </div>
-
-        {/* Scroll indicator */}
-        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
-          <div className="h-8 w-px bg-elevate-paper/20" style={{ animation: 'scrollLine 2s ease-in-out infinite' }} />
-        </div>
       </section>
 
 
