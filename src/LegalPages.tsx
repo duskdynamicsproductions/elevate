@@ -40,41 +40,53 @@ function LegalLayout({
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    
+    // Apply snapping directly to the document for native mobile scrolling
+    if (window.innerWidth < 768) {
+      document.documentElement.classList.add('snap-y', 'snap-mandatory');
+    }
+
     const container = containerRef.current;
     const track = trackRef.current;
     if (!container || !track) return;
 
     // Only apply horizontal scroll on md+ screens
-    if (window.innerWidth < 768) return;
+    if (window.innerWidth >= 768) {
+      const totalWidth = track.scrollWidth - window.innerWidth;
+      if (totalWidth > 0) {
+        const ctx = gsap.context(() => {
+          gsap.to(track, {
+            x: -totalWidth,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: container,
+              start: 'top top',
+              end: () => `+=${totalWidth}`,
+              scrub: 1,
+              pin: true,
+              anticipatePin: 1,
+              snap: {
+                snapTo: 1 / sections.length,
+                duration: { min: 0.2, max: 0.5 },
+                ease: 'power2.inOut'
+              },
+            },
+          });
+        });
+        return () => {
+          ctx.revert();
+          document.documentElement.classList.remove('snap-y', 'snap-mandatory');
+        };
+      }
+    }
 
-    const totalWidth = track.scrollWidth - window.innerWidth;
-    if (totalWidth <= 0) return;
-
-    const ctx = gsap.context(() => {
-      gsap.to(track, {
-        x: -totalWidth,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: container,
-          start: 'top top',
-          end: () => `+=${totalWidth}`,
-          scrub: 1,
-          pin: true,
-          anticipatePin: 1,
-          snap: {
-            snapTo: 1 / sections.length,
-            duration: { min: 0.2, max: 0.5 },
-            ease: 'power2.inOut'
-          },
-        },
-      });
-    });
-
-    return () => ctx.revert();
+    return () => {
+      document.documentElement.classList.remove('snap-y', 'snap-mandatory');
+    };
   }, [sections.length]);
 
   return (
-    <div className="bg-elevate-black font-display text-elevate-paper selection:bg-elevate-orange selection:text-white h-[100dvh] w-full overflow-y-auto overflow-x-hidden snap-y snap-mandatory md:h-auto md:overflow-y-visible md:snap-none">
+    <div className="bg-elevate-black font-display text-elevate-paper selection:bg-elevate-orange selection:text-white md:overflow-x-hidden">
       
       <header className="absolute left-0 top-0 z-50 flex w-full items-center justify-between px-6 py-6 md:px-12 lg:px-20 pointer-events-none">
         <Link to="/" className="pointer-events-auto flex items-center gap-2 transition-opacity hover:opacity-50">
