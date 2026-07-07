@@ -165,7 +165,7 @@ export function CareersPage() {
       {/* ── Full Screen Hero ── */}
       <section className="relative flex h-svh min-h-[700px] w-full flex-col justify-center px-6 md:px-12 lg:px-20 bg-elevate-black border-b border-elevate-paper/[0.06]">
         <div className="max-w-4xl pt-24 md:pt-0">
-          <h1 className="mb-6 text-5xl font-black leading-[0.92] tracking-tight md:text-7xl lg:text-[100px] uppercase text-elevate-orange">
+          <h1 className="mb-6 text-[13vw] sm:text-6xl font-black leading-[0.92] tracking-tight md:text-7xl lg:text-[100px] uppercase text-elevate-orange">
             Roles &<br/>Responsibilities
           </h1>
         </div>
@@ -181,23 +181,23 @@ export function CareersPage() {
       <main className="pt-32 px-6 pb-32 md:px-12 lg:px-24 max-w-7xl mx-auto">
         <div className="space-y-16 md:space-y-24">
           {roles.map((role, index) => (
-            <div key={index} className="group relative bg-[#0a0a0c] p-8 md:p-12 rounded-3xl border border-transparent hover:border-elevate-orange/50 transition-colors duration-500">
+            <div key={index} className="group relative bg-[#0a0a0c] p-6 sm:p-8 md:p-12 rounded-3xl border border-transparent hover:border-elevate-orange/50 transition-colors duration-500">
               
-              <div className="flex flex-col md:flex-row md:items-start justify-between gap-8 mb-12">
+              <div className="flex flex-col md:flex-row md:items-start justify-between gap-6 md:gap-8 mb-10 md:mb-12">
                 <div>
-                  <h2 className="text-3xl md:text-4xl font-black tracking-tight mb-2">{role.title}</h2>
+                  <h2 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tight mb-2">{role.title}</h2>
                 </div>
                 <a
                   href={getGoogleFormLink(role.title)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center shrink-0 bg-elevate-orange text-black px-8 py-4 font-black uppercase tracking-widest text-sm hover:bg-white transition-colors duration-300"
+                  className="inline-flex items-center justify-center shrink-0 w-full md:w-auto bg-elevate-orange text-black px-6 sm:px-8 py-4 font-black uppercase tracking-widest text-sm hover:bg-white transition-colors duration-300"
                 >
                   Apply Now
                 </a>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
                 <div className="space-y-8">
                   <div>
                     <h4 className="text-sm font-bold tracking-[0.1em] text-white/40 uppercase mb-3 border-b border-white/10 pb-2">Mission</h4>
