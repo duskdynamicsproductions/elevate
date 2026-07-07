@@ -252,19 +252,19 @@ export function JoinOurJourneyPage() {
                 </div>
               </div>
               
-              <div className="mt-6 md:mt-8 flex items-center gap-3">
+              <div className="mt-6 md:mt-8">
                 <a
                   href={getGoogleFormLink(role.title)}
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={(e) => handleApplyClick(e, role.availability)}
-                  className={`inline-flex flex-1 items-center justify-center bg-elevate-orange text-black px-4 sm:px-8 py-3.5 md:py-5 font-black uppercase tracking-widest text-[10px] md:text-sm hover:bg-white transition-colors duration-300 rounded-[1rem] ${role.availability.startsWith('0/') ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  className={`flex w-full items-center justify-between bg-elevate-orange text-black px-6 sm:px-8 py-3.5 md:py-5 font-black uppercase tracking-widest text-[10px] md:text-sm hover:bg-white transition-colors duration-300 rounded-[1rem] ${role.availability.startsWith('0/') ? 'opacity-50 cursor-not-allowed' : ''}`}
                 >
-                  Apply Now
+                  <span>Apply Now</span>
+                  <span className="bg-black/10 text-black px-3 py-1 rounded-lg border border-black/5 text-[9px] md:text-xs">
+                    {role.availability}
+                  </span>
                 </a>
-                <div className="shrink-0 flex items-center justify-center bg-[#18181b] text-white px-6 py-3.5 md:py-5 rounded-[1rem] font-black text-[10px] md:text-sm tracking-widest border border-white/5">
-                  {role.availability}
-                </div>
               </div>
               
             </div>
