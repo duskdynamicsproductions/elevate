@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import gsap from 'gsap';
 
 export default function CustomCursor() {
@@ -60,6 +61,15 @@ export default function CustomCursor() {
       obs.disconnect();
     };
   }, []);
+
+  const location = useLocation();
+
+  useEffect(() => {
+    // Reset cursor scale back to normal when route changes
+    if (dotRef.current && !isMobile) {
+      gsap.to(dotRef.current, { scale: 1, duration: 0.3, ease: 'power2.out' });
+    }
+  }, [location.pathname, isMobile]);
 
   if (isMobile) return null;
 
