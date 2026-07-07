@@ -181,7 +181,6 @@ export function CareersPage() {
       <header className="px-6 pt-32 pb-16 md:px-12 lg:px-24 md:pt-48 md:pb-24">
         <div className="max-w-4xl">
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-black uppercase tracking-tight leading-[0.9] mb-8">
-            Elevate Team<br />
             <span className="text-elevate-orange">Roles & Responsibilities</span>
           </h1>
 
