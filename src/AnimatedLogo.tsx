@@ -4,13 +4,8 @@ import gsap from 'gsap';
 
 function SpinningStar({ className = '' }: { className?: string }) {
   return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      xmlns="http://www.w3.org/2000/svg"
-      className={`animate-spin-slow ${className}`}
-    >
-      <path d="M12 0L13.5 8.5L22 7.5L16.5 13.5L20 21L12 17.5L4 21L7.5 13.5L2 7.5L10.5 8.5L12 0Z" />
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 118 119" fill="none" className={`animate-spin-slow ${className}`}>
+      <path d="M0 70.2418H33.8241L9.90981 94.164L24.5755 108.842L48.4969 84.9194V118.755H69.2407V84.9194L93.155 108.842L107.828 94.164L83.9134 70.2418H117.73V49.4913H83.9134L107.828 25.5691L93.155 10.8915L69.2407 34.8137V0.978394H48.4969V34.8137L24.5755 10.8915L9.90981 25.5691L33.8241 49.4913H0V70.2418Z" fill="currentColor" />
     </svg>
   );
 }
