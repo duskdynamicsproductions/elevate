@@ -142,8 +142,8 @@ export function JoinOurJourneyPage() {
     // IMPORTANT: Replace the base URL and entry ID with your actual Google Form details.
     // 1. Get your Google Form pre-filled link.
     // 2. Find the entry IDs for Email, Mobile Number, and Role.
-    const baseUrl = "https://docs.google.com/forms/d/e/YOUR_FORM_ID/viewform";
-    const roleEntryId = "entry.YOUR_ROLE_ENTRY_ID"; // e.g., entry.123456789
+    const baseUrl = "https://docs.google.com/forms/d/e/1FAIpQLScqxx28fgb_BWTp7JI1jj2l1ENkjteCSt3CyvlMlBeeOTW50Q/viewform";
+    const roleEntryId = "entry.1791197897"; 
     return `${baseUrl}?usp=pp_url&${roleEntryId}=${encodeURIComponent(roleTitle)}`;
   };
 
