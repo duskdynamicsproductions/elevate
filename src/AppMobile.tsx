@@ -2330,7 +2330,7 @@ export default function App() {
         <div
           className="flex overflow-x-auto h-full"
           style={{
-            scrollSnapType: 'x proximity',
+            scrollSnapType: 'x mandatory',
             WebkitOverflowScrolling: 'touch',
             scrollbarWidth: 'none',
             msOverflowStyle: 'none',
@@ -2348,7 +2348,7 @@ export default function App() {
               className="relative flex-shrink-0 flex flex-col justify-end bg-elevate-black border-r border-white/[0.06]"
               style={{
                 width: '100vw',
-                scrollSnapAlign: 'start',
+                scrollSnapAlign: 'center',
               }}
             >
               {/* Animation */}
