@@ -12,21 +12,6 @@ function SpinningStar({ className = '' }: { className?: string }) {
 const roles = [
   {
     category: "1. Product & Project Management",
-    title: "Product Manager (PM) / Product Owner",
-    subtitle: "The Visionary & Prioritizer",
-    mission: "Ensure the team is building the right features that users actually want and that align with business goals.",
-    specific: "Deciding whether the team should build a new \"Workout Template\" feature next, or focus on improving the \"Focus Timer\" analytics.",
-    responsibilities: [
-      "Conducting user research and analyzing user feedback.",
-      "Maintaining and prioritizing the Product Backlog.",
-      "Writing detailed User Stories (e.g., \"As a user, I want to see my current streak medal on the dashboard so I stay motivated\").",
-      "Defining acceptance criteria for new features."
-    ],
-    deliverables: "Product Roadmap, PRDs (Product Requirement Documents), User Stories.",
-    tools: "Jira, Linear, Notion, Amplitude (for analytics)."
-  },
-  {
-    category: "1. Product & Project Management",
     title: "Scrum Master / Agile Project Manager",
     subtitle: "The Process Facilitator",
     mission: "Ensure the engineering and design teams are working efficiently without blockers.",
