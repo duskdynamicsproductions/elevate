@@ -181,7 +181,7 @@ export function CareersPage() {
       <main className="pt-32 px-6 pb-32 md:px-12 lg:px-24 max-w-7xl mx-auto">
         <div className="space-y-16 md:space-y-24">
           {roles.map((role, index) => (
-            <div key={index} className="group relative p-8 md:p-12 rounded-3xl">
+            <div key={index} className="group relative bg-[#0a0a0c] p-8 md:p-12 rounded-3xl border border-transparent hover:border-elevate-orange/50 transition-colors duration-500">
               
               <div className="flex flex-col md:flex-row md:items-start justify-between gap-8 mb-12">
                 <div>
