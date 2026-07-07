@@ -261,9 +261,14 @@ export function JoinOurJourneyPage() {
                   className={`flex w-full items-center justify-between bg-elevate-orange text-black px-6 sm:px-8 py-3.5 md:py-5 font-black uppercase tracking-widest text-[10px] md:text-sm hover:bg-white transition-colors duration-300 rounded-[1rem] ${role.availability.startsWith('0/') ? 'opacity-50 cursor-not-allowed' : ''}`}
                 >
                   <span>Apply Now</span>
-                  <span className="bg-black/10 text-black px-3 py-1 rounded-lg border border-black/5 text-[9px] md:text-xs">
-                    {role.availability}
-                  </span>
+                  <div className="flex flex-col items-center">
+                    <span className="text-[7px] md:text-[8px] font-bold tracking-[0.2em] uppercase opacity-60 mb-1">
+                      Vacancies
+                    </span>
+                    <span className="bg-black/10 text-black px-3 py-1 rounded-lg border border-black/5 text-[9px] md:text-xs leading-none">
+                      {role.availability}
+                    </span>
+                  </div>
                 </a>
               </div>
               
