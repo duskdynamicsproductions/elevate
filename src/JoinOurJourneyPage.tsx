@@ -14,6 +14,7 @@ const roles = [
   {
     category: "1. Product & Project Management",
     title: "Scrum Master / Agile Project Manager",
+    availability: "1/1",
     subtitle: "The Process Facilitator",
     mission: "Ensure the engineering and design teams are working efficiently without blockers.",
     specific: "",
@@ -28,6 +29,7 @@ const roles = [
   {
     category: "2. Design & User Experience (UX)",
     title: "UI/UX Designer",
+    availability: "2/2",
     subtitle: "The Architect of the User Journey",
     mission: "Make the app visually stunning, intuitive to use, and frictionless.",
     specific: "Designing the layout of the Streak Medals, creating the dark-mode color palette, and ensuring the \"Focus Mode\" app-blocking screen is easy to understand.",
@@ -43,6 +45,7 @@ const roles = [
   {
     category: "3. Engineering (The Builders)",
     title: "Android Native Engineer",
+    availability: "1/1",
     subtitle: "The Client-Side Builder",
     mission: "Translate the UI/UX designs into high-performing, crash-free Android code.",
     specific: "Writing Jetpack Compose code for the UI, interacting with Android's UsageStatsManager for app blocking, and implementing local databases (Room) for offline workout tracking.",
@@ -58,6 +61,7 @@ const roles = [
   {
     category: "3. Engineering (The Builders)",
     title: "Backend / Cloud Engineer (BaaS)",
+    availability: "1/1",
     subtitle: "The Data & Security Architect",
     mission: "Manage the infrastructure that lives outside the user's phone, ensuring data syncs quickly and securely.",
     specific: "Managing Firebase Realtime Database rules, setting up Firebase Authentication, and ensuring Google Drive backups trigger correctly.",
@@ -73,6 +77,7 @@ const roles = [
   {
     category: "4. Quality & Reliability",
     title: "Quality Assurance (QA) Engineer",
+    availability: "1/1",
     subtitle: "The Bug Hunter",
     mission: "Ensure the app never crashes in production and works exactly as designed.",
     specific: "Testing if the app correctly blocks TikTok when Focus Mode is engaged on Android 13 vs Android 14. Testing the account deletion flow to ensure Firebase data is actually wiped.",
@@ -87,6 +92,7 @@ const roles = [
   {
     category: "5. Compliance & Operations",
     title: "Data Privacy Officer (DPO) / Legal Counsel",
+    availability: "1/1",
     subtitle: "The Protector",
     mission: "Keep the company out of legal trouble and protect user privacy.",
     specific: "Ensuring compliance with India's DPDP Act 2023, managing the theduskdynamicsproductions@gmail.com grievance inbox, and verifying Google Play Data Safety forms.",
@@ -101,6 +107,7 @@ const roles = [
   {
     category: "6. Growth & Market",
     title: "Growth Marketer / ASO Specialist",
+    availability: "1/1",
     subtitle: "The User Acquisition Expert",
     mission: "Get the app onto as many phones as possible at the lowest cost.",
     specific: "Ranking the app #1 for search terms like \"Android focus timer\" or \"minimalist workout tracker\" on the Play Store.",
@@ -115,6 +122,7 @@ const roles = [
   {
     category: "6. Growth & Market",
     title: "Customer Success & Support",
+    availability: "0/1",
     subtitle: "The Voice of the App",
     mission: "Keep existing users happy and resolve their issues.",
     specific: "Helping a user figure out why their Google Drive backup failed, or responding to 1-star reviews on the Play Store.",
@@ -129,6 +137,8 @@ const roles = [
 ];
 
 export function JoinOurJourneyPage() {
+  const [toastMessage, setToastMessage] = React.useState<string | null>(null);
+
   useEffect(() => {
     if (window.innerWidth < 768) {
       document.getElementById('careers-container')?.scrollTo(0, 0);
@@ -147,8 +157,21 @@ export function JoinOurJourneyPage() {
     return `${baseUrl}?usp=pp_url&${roleEntryId}=${encodeURIComponent(roleTitle)}`;
   };
 
+  const handleApplyClick = (e: React.MouseEvent, availability: string) => {
+    if (availability.startsWith("0/")) {
+      e.preventDefault();
+      setToastMessage("Already filled by someone else");
+      setTimeout(() => setToastMessage(null), 3000);
+    }
+  };
+
   return (
     <div id="careers-container" className="relative h-[100dvh] overflow-y-auto snap-y snap-mandatory md:h-auto md:overflow-visible md:snap-none bg-elevate-black text-elevate-paper selection:bg-elevate-orange selection:text-black">
+      
+      {/* Toast Notification */}
+      <div className={`fixed top-8 left-1/2 -translate-x-1/2 z-[99999] bg-elevate-orange text-black px-6 py-3 rounded-full font-bold shadow-xl transition-all duration-300 ${toastMessage ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-8 pointer-events-none'}`}>
+        {toastMessage}
+      </div>
       {/* Navbar */}
       <header className="absolute left-0 top-0 z-50 flex w-full items-center justify-between px-6 py-6 md:px-12 lg:px-20 pointer-events-none">
         <AnimatedLogo 
@@ -229,14 +252,20 @@ export function JoinOurJourneyPage() {
                 </div>
               </div>
               
-              <a
-                href={getGoogleFormLink(role.title)}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-6 md:mt-8 inline-flex items-center justify-center shrink-0 w-full bg-elevate-orange text-black px-4 sm:px-8 py-3.5 md:py-5 font-black uppercase tracking-widest text-[10px] md:text-sm hover:bg-white transition-colors duration-300 rounded-[1rem]"
-              >
-                Apply Now
-              </a>
+              <div className="mt-6 md:mt-8 flex items-center gap-3">
+                <a
+                  href={getGoogleFormLink(role.title)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => handleApplyClick(e, role.availability)}
+                  className={`inline-flex flex-1 items-center justify-center bg-elevate-orange text-black px-4 sm:px-8 py-3.5 md:py-5 font-black uppercase tracking-widest text-[10px] md:text-sm hover:bg-white transition-colors duration-300 rounded-[1rem] ${role.availability.startsWith('0/') ? 'opacity-50 cursor-not-allowed' : ''}`}
+                >
+                  Apply Now
+                </a>
+                <div className="shrink-0 flex items-center justify-center bg-[#18181b] text-white px-6 py-3.5 md:py-5 rounded-[1rem] font-black text-[10px] md:text-sm tracking-widest border border-white/5">
+                  {role.availability}
+                </div>
+              </div>
               
             </div>
           ))}
