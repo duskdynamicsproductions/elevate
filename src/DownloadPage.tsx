@@ -56,7 +56,7 @@ export function DownloadPage() {
         <div className="flex flex-col items-start gap-4 md:items-end">
           <p className="text-xs text-elevate-paper/20">© 2026 Elevate. All rights reserved.</p>
           <div className="flex items-center gap-6">
-            <a href="https://www.instagram.com/not_brihit/" target="_blank" rel="noreferrer" className="text-[10px] font-bold tracking-[0.15em] uppercase text-elevate-paper/30 transition-colors hover:text-elevate-paper">Brihit Nath</a>
+            <a href="https://www.linkedin.com/in/brihit-nath-7114623a6/" target="_blank" rel="noreferrer" className="text-[10px] font-bold tracking-[0.15em] uppercase text-elevate-paper/30 transition-colors hover:text-elevate-paper">Brihit Nath</a>
             <a href="https://www.instagram.com/the.duskdynamics/" target="_blank" rel="noreferrer" className="text-[10px] font-bold tracking-[0.15em] uppercase text-elevate-paper/30 transition-colors hover:text-elevate-paper">Duskdynamics</a>
           </div>
         </div>
