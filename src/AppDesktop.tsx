@@ -2531,10 +2531,10 @@ export default function App() {
             </p>
           </Reveal>
           <Reveal direction="up" delay={300}>
-            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=brihitnath@gmail.com&su=Hey,%20i%20want%20to%20work%20with%20you" target="_blank" rel="noreferrer"
+            <Link to="/careers"
               className="mt-14 inline-block text-sm font-bold uppercase tracking-wider underline underline-offset-4 transition-opacity hover:opacity-60">
               Work with us
-            </a>
+            </Link>
           </Reveal>
         </div>
       </section>
