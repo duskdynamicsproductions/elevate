@@ -6,12 +6,14 @@ import { PrivacyPage, TermsPage } from './LegalPages';
 import { DownloadPage } from './DownloadPage';
 import { JoinOurJourneyPage } from './JoinOurJourneyPage';
 import CustomCursor from './CustomCursor';
+import { GlobalLoader } from './GlobalLoader';
 import './index.css';
 
 const isTouchDevice = typeof window !== 'undefined' && ('ontouchstart' in window || navigator.maxTouchPoints > 0);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
+    <GlobalLoader />
     <BrowserRouter>
       {!isTouchDevice && <CustomCursor />}
       <Routes>
