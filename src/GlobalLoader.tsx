@@ -59,7 +59,7 @@ export function GlobalLoader() {
         </div>
         
         {/* Surface Shadow */}
-        <div className="mt-2 h-1.5 w-16 rounded-[100%] bg-black animate-shadow-pulse blur-[2px]" />
+        <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 h-1.5 w-16 rounded-[100%] bg-black animate-shadow-pulse blur-[2px]" />
       </div>
     </div>
   );
