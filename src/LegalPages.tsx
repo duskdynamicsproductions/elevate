@@ -156,20 +156,22 @@ function LegalLayout({
           {/* Contact Card & Footer Slide */}
           <div className="relative flex flex-col justify-center px-6 py-16 md:min-h-0 md:h-screen md:w-screen md:px-12 lg:px-20">
             
-            <div className="max-w-3xl rounded-2xl bg-elevate-orange px-8 py-10 md:px-12 md:py-16">
-              <p className="mb-2 text-xs font-semibold tracking-[0.2em] uppercase text-white/60">Get in touch</p>
-              <h3 className="mb-8 text-3xl font-black text-white md:text-5xl lg:text-6xl">Questions? Reach out directly.</h3>
-              <div className="space-y-3 text-sm md:text-base text-white/80">
+            <div className="max-w-3xl rounded-2xl bg-elevate-orange px-6 py-8 md:px-12 md:py-16">
+              <p className="mb-2 text-[10px] md:text-xs font-semibold tracking-[0.2em] uppercase text-white/60">Get in touch</p>
+              <h3 className="mb-6 text-2xl font-black text-white md:mb-8 md:text-5xl lg:text-6xl">Questions? Reach out directly.</h3>
+              <div className="space-y-4 text-xs md:space-y-3 md:text-base text-white/80">
                 <p>Developer / Controller: <span className="font-bold text-white">Brihit Nath</span></p>
                 <p className="break-words">
-                  Privacy & Support:&nbsp;
+                  Privacy & Support:
+                  <br />
                   <a href="mailto:theduskdynamicsproductions@gmail.com" className="font-bold text-white underline underline-offset-2 hover:text-elevate-black transition-colors break-all">
                     theduskdynamicsproductions@gmail.com
                   </a>
                 </p>
-                <p>
-                  Grievance contact:&nbsp;
-                  <a href="mailto:brihitnath@gmail.com" className="font-bold text-white underline underline-offset-2 hover:text-elevate-black transition-colors">
+                <p className="break-words">
+                  Grievance contact:
+                  <br />
+                  <a href="mailto:brihitnath@gmail.com" className="font-bold text-white underline underline-offset-2 hover:text-elevate-black transition-colors break-all">
                     brihitnath@gmail.com
                   </a>
                 </p>
