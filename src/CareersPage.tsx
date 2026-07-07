@@ -162,18 +162,23 @@ export function CareersPage() {
         </div>
       </header>
 
-      {/* Header */}
-      <header className="px-6 pt-32 pb-16 md:px-12 lg:px-24 md:pt-48 md:pb-24">
-        <div className="max-w-4xl">
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-black uppercase tracking-tight leading-[0.9] mb-8">
-            <span className="text-elevate-orange">Roles & Responsibilities</span>
+      {/* ── Full Screen Hero ── */}
+      <section className="relative flex h-svh min-h-[700px] w-full flex-col justify-center px-6 md:px-12 lg:px-20 bg-elevate-black border-b border-elevate-paper/[0.06]">
+        <div className="max-w-4xl pt-24 md:pt-0">
+          <h1 className="mb-6 text-5xl font-black leading-[0.92] tracking-tight md:text-7xl lg:text-[100px] uppercase text-elevate-orange">
+            Roles &<br/>Responsibilities
           </h1>
-
         </div>
-      </header>
+
+        {/* Scroll indicator */}
+        <div className="absolute bottom-12 left-6 md:left-12 lg:left-20 flex items-center gap-3 text-xs font-semibold tracking-[0.2em] text-elevate-paper/30 uppercase">
+          <span>Scroll</span>
+          <span className="animate-bounce text-elevate-orange">↓</span>
+        </div>
+      </section>
 
       {/* Roles List */}
-      <main className="px-6 pb-32 md:px-12 lg:px-24 max-w-7xl mx-auto">
+      <main className="pt-32 px-6 pb-32 md:px-12 lg:px-24 max-w-7xl mx-auto">
         <div className="space-y-16 md:space-y-24">
           {roles.map((role, index) => (
             <div key={index} className="group relative p-8 md:p-12 rounded-3xl">
