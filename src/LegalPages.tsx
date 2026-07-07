@@ -307,7 +307,7 @@ export function PrivacyPage() {
     },
     {
       title: 'Children',
-      body: 'Elevate is not intended for users under 18. Do not use the app if you are under 18.',
+      body: 'Elevate is not intended for users under 18. If a minor uses Elevate, strict and continuous adult supervision is strictly necessary. By allowing a minor to use Elevate, the parent or guardian assumes full responsibility and liability for their actions and safety. Elevate, Duskdynamics, and Brihit Nath are strictly not responsible for any injuries, accidents, or damages (such as those resulting from attempting workouts, exercises, or scenarios depicted in the app) sustained by users of any age.',
     },
     {
       title: 'Policy changes',
