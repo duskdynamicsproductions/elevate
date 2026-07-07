@@ -147,7 +147,7 @@ export function JoinOurJourneyPage() {
   };
 
   return (
-    <div id="careers-container" className="h-[100dvh] overflow-y-auto snap-y snap-mandatory md:h-auto md:overflow-visible md:snap-none bg-elevate-black text-elevate-paper selection:bg-elevate-orange selection:text-black">
+    <div id="careers-container" className="relative h-[100dvh] overflow-y-auto snap-y snap-mandatory md:h-auto md:overflow-visible md:snap-none bg-elevate-black text-elevate-paper selection:bg-elevate-orange selection:text-black">
       {/* Navbar */}
       <header className="absolute left-0 top-0 z-50 flex w-full items-center justify-between px-6 py-6 md:px-12 lg:px-20 pointer-events-none">
         <Link to="/" className="pointer-events-auto flex items-center gap-2 transition-opacity hover:opacity-50">
