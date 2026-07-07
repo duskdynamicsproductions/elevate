@@ -185,20 +185,10 @@ export function JoinOurJourneyPage() {
       <main className="pt-32 px-6 pb-32 md:px-12 lg:px-24 max-w-7xl mx-auto">
         <div className="space-y-16 md:space-y-24">
           {roles.map((role, index) => (
-            <div key={index} className="snap-start md:snap-align-none scroll-m-6 group relative bg-[#0f0f13] shadow-lg p-3 sm:p-5 md:p-12 rounded-3xl border border-elevate-paper/[0.05] hover:border-elevate-orange/50 transition-colors duration-500 max-h-[95dvh] overflow-y-auto overflow-x-hidden md:max-h-none md:overflow-visible flex flex-col justify-between">
+            <div key={index} className="snap-start md:snap-align-none scroll-m-6 group relative bg-[#0f0f13] shadow-lg p-3 sm:p-5 md:p-12 rounded-[2.5rem] border border-elevate-paper/[0.05] hover:border-elevate-orange/50 transition-colors duration-500 max-h-[95dvh] overflow-y-auto overflow-x-hidden md:max-h-none md:overflow-visible flex flex-col justify-between">
               
-              <div className="flex flex-col md:flex-row md:items-start justify-between gap-2 md:gap-8 mb-3 md:mb-12">
-                <div>
-                  <h2 className="text-base sm:text-lg md:text-4xl font-black tracking-tight mb-0.5 md:mb-2 leading-tight">{role.title}</h2>
-                </div>
-                <a
-                  href={getGoogleFormLink(role.title)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center shrink-0 w-full md:w-auto bg-elevate-orange text-black px-3 sm:px-8 py-2 md:py-4 font-black uppercase tracking-widest text-[9px] md:text-sm hover:bg-white transition-colors duration-300"
-                >
-                  Apply Now
-                </a>
+              <div className="flex flex-col mb-3 md:mb-10">
+                <h2 className="text-xl sm:text-2xl md:text-5xl font-black tracking-tight mb-0.5 md:mb-2 leading-tight">{role.title}</h2>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-12 flex-1">
@@ -234,6 +224,15 @@ export function JoinOurJourneyPage() {
                   )}
                 </div>
               </div>
+              
+              <a
+                href={getGoogleFormLink(role.title)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-4 md:mt-8 inline-flex items-center justify-center shrink-0 w-full bg-elevate-orange text-black px-3 sm:px-8 py-3 md:py-5 font-black uppercase tracking-widest text-[10px] md:text-sm hover:bg-white transition-colors duration-300 rounded-[1rem]"
+              >
+                Apply Now
+              </a>
               
             </div>
           ))}
