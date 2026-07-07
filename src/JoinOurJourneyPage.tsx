@@ -188,7 +188,7 @@ export function JoinOurJourneyPage() {
             <div key={index} className="snap-start md:snap-align-none scroll-m-6 group relative bg-[#0f0f13] shadow-lg p-6 sm:p-8 md:p-12 rounded-[2.5rem] border border-elevate-paper/[0.05] hover:border-elevate-orange/50 transition-colors duration-500 min-h-[85dvh] max-h-[95dvh] overflow-y-auto overflow-x-hidden md:min-h-0 md:max-h-none md:overflow-visible flex flex-col justify-between">
               
               <div className="flex flex-col mb-6 md:mb-10">
-                <h2 className="text-xl sm:text-2xl md:text-5xl font-black tracking-tight mb-2 md:mb-2 leading-tight">{role.title}</h2>
+                <h2 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight mb-2 md:mb-2 leading-none uppercase">{role.title}</h2>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-12 flex-1">
