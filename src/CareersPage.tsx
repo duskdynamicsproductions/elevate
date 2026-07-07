@@ -1,6 +1,14 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
+function SpinningStar({ className = '' }: { className?: string }) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 118 119" fill="none" className={`animate-spin-slow ${className}`}>
+      <path d="M0 70.2418H33.8241L9.90981 94.164L24.5755 108.842L48.4969 84.9194V118.755H69.2407V84.9194L93.155 108.842L107.828 94.164L83.9134 70.2418H117.73V49.4913H83.9134L107.828 25.5691L93.155 10.8915L69.2407 34.8137V0.978394H48.4969V34.8137L24.5755 10.8915L9.90981 25.5691L33.8241 49.4913H0V70.2418Z" fill="currentColor" />
+    </svg>
+  );
+}
+
 const roles = [
   {
     category: "1. Product & Project Management",
@@ -152,11 +160,22 @@ export function CareersPage() {
   return (
     <div className="min-h-screen bg-elevate-black text-elevate-paper selection:bg-elevate-orange selection:text-black">
       {/* Navbar */}
-      <nav className="fixed top-0 left-0 w-full z-50 px-6 py-6 flex items-center justify-between pointer-events-none mix-blend-difference">
-        <Link to="/" className="text-2xl font-black tracking-tighter uppercase pointer-events-auto">
-          Elevate
+      <header className="absolute left-0 top-0 z-50 flex w-full items-center justify-between px-6 py-6 md:px-12 lg:px-20 pointer-events-none">
+        <Link to="/" className="pointer-events-auto flex items-center gap-2 transition-opacity hover:opacity-50">
+          <SpinningStar className="size-4 text-elevate-orange" />
+          <span className="text-sm font-bold tracking-widest uppercase">Elevate</span>
         </Link>
-      </nav>
+
+        {/* Centered Nav */}
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+          <Link
+            to="/"
+            className="pointer-events-auto text-xs font-semibold tracking-[0.2em] uppercase text-elevate-paper/40 transition-colors hover:text-elevate-paper"
+          >
+            HOME
+          </Link>
+        </div>
+      </header>
 
       {/* Header */}
       <header className="px-6 pt-32 pb-16 md:px-12 lg:px-24 md:pt-48 md:pb-24">
@@ -230,10 +249,22 @@ export function CareersPage() {
       </main>
       
       {/* Footer */}
-      <footer className="px-6 py-12 border-t border-elevate-paper/10 text-center">
-        <p className="text-sm text-elevate-paper/40 font-bold uppercase tracking-widest">
-          © {new Date().getFullYear()} Dusk Dynamics Productions
-        </p>
+      <footer className="mt-auto flex w-full flex-col items-start justify-between gap-10 border-t border-elevate-paper/10 px-6 py-8 md:flex-row md:items-center md:px-12 lg:px-20">
+        <div className="flex items-center gap-3">
+          <SpinningStar className="size-6 text-elevate-orange" />
+          <span className="text-3xl font-black tracking-tight">Elevate</span>
+        </div>
+        <div className="flex flex-wrap items-center justify-center gap-6 md:gap-8">
+          <Link to="/privacy_policy" className="text-xs font-semibold tracking-[0.15em] uppercase text-elevate-paper/30 transition-colors hover:text-elevate-paper">Privacy</Link>
+          <Link to="/terms" className="text-xs font-semibold tracking-[0.15em] uppercase text-elevate-paper/30 transition-colors hover:text-elevate-paper">Terms</Link>
+        </div>
+        <div className="flex flex-col items-start gap-4 md:items-end">
+          <p className="text-xs text-elevate-paper/20">© {new Date().getFullYear()} Elevate. All rights reserved.</p>
+          <div className="flex items-center gap-6">
+            <a href="https://www.instagram.com/not_brihit/" target="_blank" rel="noreferrer" className="text-[10px] font-bold tracking-[0.15em] uppercase text-elevate-paper/30 transition-colors hover:text-elevate-paper">Brihit Nath</a>
+            <a href="https://www.instagram.com/the.duskdynamics/" target="_blank" rel="noreferrer" className="text-[10px] font-bold tracking-[0.15em] uppercase text-elevate-paper/30 transition-colors hover:text-elevate-paper">Duskdynamics</a>
+          </div>
+        </div>
       </footer>
     </div>
   );
