@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 
 function SpinningStar({ className = '' }: { className?: string }) {
@@ -13,15 +13,17 @@ export function GlobalLoader() {
   const [loading, setLoading] = useState(true);
   const [fading, setFading] = useState(false);
   const location = useLocation();
+  const prevPath = useRef(location.pathname);
 
-  useEffect(() => {
-    // Show loader on route change immediately
+  // Synchronously intercept route changes BEFORE paint
+  if (prevPath.current !== location.pathname) {
+    prevPath.current = location.pathname;
     setLoading(true);
     setFading(false);
-    
-    // Scroll to top instantly before the new page renders, hiding the flash of the scrolled page
-    window.scrollTo(0, 0);
+    window.scrollTo(0, 0); // instantly scroll to top before any painting
+  }
 
+  useEffect(() => {
     const finish = () => {
       setFading(true);
       setTimeout(() => setLoading(false), 500); // 500ms fade out transition
