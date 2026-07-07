@@ -1549,7 +1549,7 @@ function PhysicalAnalyticsAnimation() {
               <div className="relative w-full h-[380px] bg-[#0a0a0c] rounded-[2rem] border border-white/5 overflow-hidden mb-6 mt-4 flex flex-col justify-end p-5">
                  
                  <div className="absolute inset-0 w-full h-full opacity-100 flex items-center justify-center p-4 pt-12 pb-0">
-                    <ImageWithSkeleton src="/Muscular System.svg" className="w-full h-full object-contain object-bottom" alt="Muscular System" />
+                    <ImageWithSkeleton src="/muscular-system.svg" className="w-full h-full object-contain object-bottom" alt="Muscular System" />
                  </div>
                  <div className="absolute top-4 right-4 drop-shadow-lg">
                    <ElevateMedal size={40} color="#F59E0B" rank="I" />
@@ -1619,7 +1619,7 @@ function PhysicalAnalyticsAnimation() {
                     
                     <div className="flex gap-4">
                        <div className="w-1/2 flex items-center justify-center p-2">
-                          <ImageWithSkeleton src="/Muscular System.svg" className="w-full h-full object-contain opacity-90" alt="Anatomy" />
+                          <ImageWithSkeleton src="/muscular-system.svg" className="w-full h-full object-contain opacity-90" alt="Anatomy" />
                        </div>
                        <div className="w-1/2 flex flex-col gap-4">
                           <div>
