@@ -1,4 +1,4 @@
-import React, { useState, useEffect, ImgHTMLAttributes } from 'react';
+import React, { useState, useEffect, ImgHTMLAttributes, useRef } from 'react';
 
 interface ImageWithSkeletonProps extends ImgHTMLAttributes<HTMLImageElement> {
   containerClassName?: string;
@@ -9,9 +9,16 @@ export function ImageWithSkeleton({ className = '', containerClassName = '', ske
   const [isLoaded, setIsLoaded] = useState(false);
   const [hasError, setHasError] = useState(false);
 
+  const imgRef = useRef<HTMLImageElement>(null);
+
   useEffect(() => {
     setIsLoaded(false);
     setHasError(false);
+    
+    // If the image is already cached/completed before React attaches onLoad, force loaded state
+    if (imgRef.current && imgRef.current.complete) {
+      setIsLoaded(true);
+    }
   }, [src]);
 
   return (
@@ -23,6 +30,7 @@ export function ImageWithSkeleton({ className = '', containerClassName = '', ske
       
       {/* Actual Image */}
       <img
+        ref={imgRef}
         src={src}
         alt={alt}
         className={`transition-opacity duration-700 ease-in-out relative z-10 ${
