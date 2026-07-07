@@ -40,11 +40,6 @@ function LegalLayout({
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    
-    // Apply snapping directly to the document for native mobile scrolling
-    if (window.innerWidth < 768) {
-      document.documentElement.classList.add('snap-y', 'snap-mandatory');
-    }
 
     const container = containerRef.current;
     const track = trackRef.current;
@@ -75,14 +70,11 @@ function LegalLayout({
         });
         return () => {
           ctx.revert();
-          document.documentElement.classList.remove('snap-y', 'snap-mandatory');
         };
       }
     }
 
-    return () => {
-      document.documentElement.classList.remove('snap-y', 'snap-mandatory');
-    };
+    return () => {};
   }, [sections.length]);
 
   return (
@@ -106,7 +98,7 @@ function LegalLayout({
       </header>
 
       {/* ── Full Screen Hero ── */}
-      <section className="snap-start relative flex h-svh min-h-[700px] w-full flex-col justify-center px-6 md:px-12 lg:px-20 bg-elevate-black border-b border-elevate-paper/[0.06]">
+      <section className="relative flex h-svh min-h-[700px] w-full flex-col justify-center px-6 md:px-12 lg:px-20 bg-elevate-black border-b border-elevate-paper/[0.06]">
         <div className="max-w-4xl pt-24 md:pt-0">
           <p className="mb-5 text-xs font-semibold tracking-[0.3em] text-elevate-orange uppercase">{badge}</p>
           <h1 className="mb-6 text-5xl font-black leading-[0.92] tracking-tight md:text-7xl lg:text-[100px]">
@@ -133,7 +125,7 @@ function LegalLayout({
           {sections.map((s, i) => (
             <div
               key={i}
-              className="snap-start relative flex min-h-[90dvh] flex-col justify-center border-b border-elevate-paper/[0.06] px-6 py-16 md:min-h-0 md:h-screen md:w-screen md:border-b-0 md:border-r md:border-elevate-paper/10 md:px-12 lg:px-20 overflow-hidden group"
+              className="relative flex min-h-[70dvh] flex-col justify-center border-b border-elevate-paper/[0.06] px-6 py-20 md:min-h-0 md:h-screen md:w-screen md:border-b-0 md:border-r md:border-elevate-paper/10 md:px-12 lg:px-20 overflow-hidden group"
             >
               <div className="z-10 max-w-3xl flex flex-col items-start">
                 {/* Ghost number now above the title */}
@@ -162,7 +154,7 @@ function LegalLayout({
           ))}
 
           {/* Contact Card & Footer Slide */}
-          <div className="snap-start relative flex min-h-[100dvh] flex-col justify-center px-6 py-8 md:min-h-0 md:h-screen md:w-screen md:px-12 lg:px-20">
+          <div className="relative flex flex-col justify-center px-6 py-16 md:min-h-0 md:h-screen md:w-screen md:px-12 lg:px-20">
             
             <div className="max-w-3xl rounded-2xl bg-elevate-orange px-8 py-10 md:px-12 md:py-16">
               <p className="mb-2 text-xs font-semibold tracking-[0.2em] uppercase text-white/60">Get in touch</p>
