@@ -152,3 +152,4 @@ select {
 }
 .mobile-snap { scroll-snap-type: y mandatory; scroll-behavior: smooth; } 
 .mobile-snap, .mobile-snap body { overflow-x: visible !important; } 
+html.lenis, html.lenis body { height: auto; } html.lenis { scroll-behavior: initial; } 

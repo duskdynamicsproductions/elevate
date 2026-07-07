@@ -5,6 +5,8 @@ import CustomCursor from './CustomCursor';
 import { GlobalLoader } from './GlobalLoader';
 import './index.css';
 
+import { SmoothScroll } from './SmoothScroll';
+
 // Lazy loaded routes
 const App = React.lazy(() => import('./App'));
 const PrivacyPage = React.lazy(() => import('./LegalPages').then(m => ({ default: m.PrivacyPage })));
@@ -37,17 +39,19 @@ function FullPageSkeleton() {
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <BrowserRouter>
-      <GlobalLoader />
-      {!isTouchDevice && <CustomCursor />}
-      <Suspense fallback={<FullPageSkeleton />}>
-        <Routes>
-          <Route path="/" element={<App />} />
-          <Route path="/download" element={<DownloadPage />} />
-          <Route path="/joinourjourney" element={<JoinOurJourneyPage />} />
-          <Route path="/privacy_policy" element={<PrivacyPage />} />
-          <Route path="/terms" element={<TermsPage />} />
-        </Routes>
-      </Suspense>
+      <SmoothScroll>
+        <GlobalLoader />
+        {!isTouchDevice && <CustomCursor />}
+        <Suspense fallback={<FullPageSkeleton />}>
+          <Routes>
+            <Route path="/" element={<App />} />
+            <Route path="/download" element={<DownloadPage />} />
+            <Route path="/joinourjourney" element={<JoinOurJourneyPage />} />
+            <Route path="/privacy_policy" element={<PrivacyPage />} />
+            <Route path="/terms" element={<TermsPage />} />
+          </Routes>
+        </Suspense>
+      </SmoothScroll>
     </BrowserRouter>
   </React.StrictMode>
 );
