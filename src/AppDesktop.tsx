@@ -63,14 +63,12 @@ const workoutTemplates = [
    CUSTOM CURSOR
 ══════════════════════════════════════════════════════════ */
 function CustomCursor() {
-  const cursorRef = useRef<HTMLDivElement>(null);
   const dotRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const cursor = cursorRef.current;
     const dot = dotRef.current;
-    if (!cursor || !dot) return;
-    let mouseX = 0, mouseY = 0, curX = 0, curY = 0;
+    if (!dot) return;
+    let mouseX = 0, mouseY = 0;
     
     const onMove = (e: MouseEvent) => {
       mouseX = e.clientX; mouseY = e.clientY;
@@ -81,25 +79,17 @@ function CustomCursor() {
       if (target) {
         const isLight = target.closest('.bg-elevate-orange, .bg-elevate-paper');
         if (isLight) {
-          cursor.style.borderColor = 'rgba(12,11,11,0.8)';
           dot.style.backgroundColor = '#0C0B0B';
         } else {
-          cursor.style.borderColor = 'rgba(253,252,250,0.6)';
           dot.style.backgroundColor = '#FDFCFA';
         }
       }
     };
     
-    const tick = () => {
-      curX += (mouseX - curX) * 0.08; curY += (mouseY - curY) * 0.08;
-      gsap.set(cursor, { x: curX - 12, y: curY - 12 });
-      requestAnimationFrame(tick);
-    };
-    requestAnimationFrame(tick);
     window.addEventListener('mousemove', onMove);
     
-    const onEnter = () => gsap.to(cursor, { scale: 2.5, duration: 0.3, ease: 'power2.out' });
-    const onLeave = () => gsap.to(cursor, { scale: 1, duration: 0.3, ease: 'power2.out' });
+    const onEnter = () => gsap.to(dot, { scale: 2.5, duration: 0.3, ease: 'power2.out' });
+    const onLeave = () => gsap.to(dot, { scale: 1, duration: 0.3, ease: 'power2.out' });
     document.querySelectorAll('a, button').forEach((el) => {
       el.addEventListener('mouseenter', onEnter);
       el.addEventListener('mouseleave', onLeave);
@@ -109,8 +99,7 @@ function CustomCursor() {
 
   return (
     <>
-      <div ref={cursorRef} className="pointer-events-none fixed top-0 left-0 z-[9999] h-6 w-6 rounded-full border border-elevate-paper/60 transition-colors duration-200" style={{ willChange: 'transform' }} />
-      <div ref={dotRef} className="pointer-events-none fixed top-0 left-0 z-[9999] h-2 w-2 rounded-full bg-elevate-paper transition-colors duration-200" style={{ willChange: 'transform' }} />
+      <div ref={dotRef} className="pointer-events-none fixed top-0 left-0 z-[9999] h-2 w-2 rounded-full bg-elevate-paper mix-blend-difference transition-colors duration-200" style={{ willChange: 'transform' }} />
     </>
   );
 }

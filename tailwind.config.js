@@ -22,9 +22,9 @@ export default {
       animation: {
         'spin-slow': 'spin 10s linear infinite',
         'marquee': 'marquee 28s linear infinite',
-        'bounce-realistic': 'bounce-realistic 0.7s infinite',
-        'squash-stretch': 'squash-stretch 0.7s infinite',
-        'shadow-pulse': 'shadow-pulse 0.7s infinite',
+        'bounce-realistic': 'bounce-realistic 0.6s infinite',
+        'squash-stretch': 'squash-stretch 0.6s infinite',
+        'shadow-pulse': 'shadow-pulse 0.6s infinite',
       },
       keyframes: {
         marquee: {
@@ -32,19 +32,19 @@ export default {
           '100%': { transform: 'translateX(-50%)' },
         },
         'bounce-realistic': {
-          '0%, 100%': { transform: 'translateY(-100px)', animationTimingFunction: 'cubic-bezier(0.8, 0, 1, 1)' },
+          '0%, 100%': { transform: 'translateY(-140px)', animationTimingFunction: 'cubic-bezier(0.8, 0, 1, 1)' },
           '50%': { transform: 'translateY(0)', animationTimingFunction: 'cubic-bezier(0, 0, 0.2, 1)' },
         },
         'squash-stretch': {
-          '0%, 40%, 100%': { transform: 'scale(1, 1)' },
-          '48%': { transform: 'scale(0.85, 1.15)' },
-          '50%': { transform: 'scale(1.4, 0.6)' },
-          '52%': { transform: 'scale(0.85, 1.15)' },
-          '60%': { transform: 'scale(1, 1)' },
+          '0%, 35%, 100%': { transform: 'scale(1, 1)' },
+          '45%': { transform: 'scale(0.7, 1.3)' },
+          '50%': { transform: 'scale(1.6, 0.4)' },
+          '55%': { transform: 'scale(0.7, 1.3)' },
+          '65%': { transform: 'scale(1, 1)' },
         },
         'shadow-pulse': {
-          '0%, 100%': { transform: 'scale(0.4)', opacity: '0.1', animationTimingFunction: 'cubic-bezier(0.8, 0, 1, 1)' },
-          '50%': { transform: 'scale(1)', opacity: '0.5', animationTimingFunction: 'cubic-bezier(0, 0, 0.2, 1)' },
+          '0%, 100%': { transform: 'scale(0.3)', opacity: '0.1', animationTimingFunction: 'cubic-bezier(0.8, 0, 1, 1)' },
+          '50%': { transform: 'scale(1.2)', opacity: '0.6', animationTimingFunction: 'cubic-bezier(0, 0, 0.2, 1)' },
         },
       },
     },

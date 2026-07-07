@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 function SpinningStar({ className = '' }: { className?: string }) {
   return (
@@ -10,8 +11,12 @@ function SpinningStar({ className = '' }: { className?: string }) {
 
 export function GlobalLoader() {
   const [loading, setLoading] = useState(true);
+  const location = useLocation();
 
   useEffect(() => {
+    // Show loader on route change
+    setLoading(true);
+
     // Wait a minimum time so the animation is visible, and clear when loaded
     const handleLoad = () => {
       setTimeout(() => setLoading(false), 1200); 
@@ -27,7 +32,7 @@ export function GlobalLoader() {
     // Safety fallback
     const fallback = setTimeout(() => setLoading(false), 3000);
     return () => clearTimeout(fallback);
-  }, []);
+  }, [location.pathname]);
 
   if (!loading) return null;
 

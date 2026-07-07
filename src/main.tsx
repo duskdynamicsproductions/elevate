@@ -13,8 +13,8 @@ const isTouchDevice = typeof window !== 'undefined' && ('ontouchstart' in window
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <GlobalLoader />
     <BrowserRouter>
+      <GlobalLoader />
       {!isTouchDevice && <CustomCursor />}
       <Routes>
         <Route path="/" element={<App />} />
@@ -24,5 +24,5 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <Route path="/terms" element={<TermsPage />} />
       </Routes>
     </BrowserRouter>
-  </React.StrictMode>,
+  </React.StrictMode>
 );
