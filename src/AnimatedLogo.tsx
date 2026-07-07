@@ -121,7 +121,6 @@ export function AnimatedLogo({
           {
             scaleY: 0.6,
             scaleX: 1.3,
-            y: 2,
             transformOrigin: 'bottom center',
             duration: jumpDuration / 2,
             ease: 'power1.out',
