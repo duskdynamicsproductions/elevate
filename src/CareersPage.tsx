@@ -185,7 +185,7 @@ export function CareersPage() {
               
               <div className="flex flex-col md:flex-row md:items-start justify-between gap-6 md:gap-8 mb-10 md:mb-12">
                 <div>
-                  <h2 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tight mb-2">{role.title}</h2>
+                  <h2 className="text-xl sm:text-2xl md:text-4xl font-black tracking-tight mb-2">{role.title}</h2>
                 </div>
                 <a
                   href={getGoogleFormLink(role.title)}
