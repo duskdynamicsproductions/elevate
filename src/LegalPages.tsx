@@ -74,7 +74,7 @@ function LegalLayout({
   }, [sections.length]);
 
   return (
-    <div className="bg-elevate-black font-display text-elevate-paper selection:bg-elevate-orange selection:text-white overflow-x-hidden">
+    <div className="bg-elevate-black font-display text-elevate-paper selection:bg-elevate-orange selection:text-white h-[100dvh] w-full overflow-y-auto overflow-x-hidden snap-y snap-mandatory md:h-auto md:overflow-y-visible md:snap-none">
       
       <header className="absolute left-0 top-0 z-50 flex w-full items-center justify-between px-6 py-6 md:px-12 lg:px-20 pointer-events-none">
         <Link to="/" className="pointer-events-auto flex items-center gap-2 transition-opacity hover:opacity-50">
@@ -94,7 +94,7 @@ function LegalLayout({
       </header>
 
       {/* ── Full Screen Hero ── */}
-      <section className="relative flex h-svh min-h-[700px] w-full flex-col justify-center px-6 md:px-12 lg:px-20 bg-elevate-black border-b border-elevate-paper/[0.06]">
+      <section className="snap-start relative flex h-svh min-h-[700px] w-full flex-col justify-center px-6 md:px-12 lg:px-20 bg-elevate-black border-b border-elevate-paper/[0.06]">
         <div className="max-w-4xl pt-24 md:pt-0">
           <p className="mb-5 text-xs font-semibold tracking-[0.3em] text-elevate-orange uppercase">{badge}</p>
           <h1 className="mb-6 text-5xl font-black leading-[0.92] tracking-tight md:text-7xl lg:text-[100px]">
@@ -121,14 +121,14 @@ function LegalLayout({
           {sections.map((s, i) => (
             <div
               key={i}
-              className="relative flex h-auto flex-col justify-center border-b border-elevate-paper/[0.06] px-6 py-16 md:h-screen md:w-screen md:border-b-0 md:border-r md:border-elevate-paper/10 md:px-12 lg:px-20 overflow-hidden group"
+              className="snap-start relative flex min-h-[90dvh] flex-col justify-center border-b border-elevate-paper/[0.06] px-6 py-16 md:min-h-0 md:h-screen md:w-screen md:border-b-0 md:border-r md:border-elevate-paper/10 md:px-12 lg:px-20 overflow-hidden group"
             >
-              {/* Ghost number */}
-              <span className="pointer-events-none absolute right-6 top-8 select-none text-[25vw] font-black leading-none text-elevate-paper/[0.02] md:right-12 md:top-12 md:text-[20vw] transition-colors group-hover:text-elevate-paper/[0.04]">
-                {String(i + 1).padStart(2, '0')}
-              </span>
-
-              <div className="z-10 max-w-3xl">
+              <div className="z-10 max-w-3xl flex flex-col items-start">
+                {/* Ghost number now above the title */}
+                <span className="pointer-events-none select-none text-6xl md:text-[8vw] font-black leading-none text-elevate-paper/[0.08] transition-colors group-hover:text-elevate-paper/[0.12] mb-4">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                
                 <h2 className="mb-8 text-3xl font-black leading-[0.9] tracking-tight text-elevate-orange uppercase md:text-5xl lg:text-[4vw]">
                   {s.title}
                 </h2>
@@ -150,7 +150,7 @@ function LegalLayout({
           ))}
 
           {/* Contact Card & Footer Slide */}
-          <div className="relative flex h-auto flex-col justify-center px-6 py-8 md:h-screen md:w-screen md:px-12 lg:px-20">
+          <div className="snap-start relative flex min-h-[100dvh] flex-col justify-center px-6 py-8 md:min-h-0 md:h-screen md:w-screen md:px-12 lg:px-20">
             
             <div className="max-w-3xl rounded-2xl bg-elevate-orange px-8 py-10 md:px-12 md:py-16">
               <p className="mb-2 text-xs font-semibold tracking-[0.2em] uppercase text-white/60">Get in touch</p>
