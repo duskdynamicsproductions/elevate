@@ -311,7 +311,7 @@ export function PrivacyPage() {
     },
     {
       title: 'Policy changes',
-      body: 'Elevate may update this policy as the app changes. The current public policy is always available at: https://duskdynamicsproductions.github.io/Elevate/privacy_policy.html',
+      body: 'Elevate may update this policy as the app changes. The current public policy is always available at this website only on this page.',
     },
   ];
 
