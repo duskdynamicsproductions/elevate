@@ -185,24 +185,24 @@ export function JoinOurJourneyPage() {
       <main className="pt-32 px-6 pb-32 md:px-12 lg:px-24 max-w-7xl mx-auto">
         <div className="space-y-16 md:space-y-24">
           {roles.map((role, index) => (
-            <div key={index} className="snap-start md:snap-align-none scroll-m-6 group relative bg-[#0f0f13] shadow-lg p-3 sm:p-5 md:p-12 rounded-[2.5rem] border border-elevate-paper/[0.05] hover:border-elevate-orange/50 transition-colors duration-500 max-h-[95dvh] overflow-y-auto overflow-x-hidden md:max-h-none md:overflow-visible flex flex-col justify-between">
+            <div key={index} className="snap-start md:snap-align-none scroll-m-6 group relative bg-[#0f0f13] shadow-lg p-6 sm:p-8 md:p-12 rounded-[2.5rem] border border-elevate-paper/[0.05] hover:border-elevate-orange/50 transition-colors duration-500 min-h-[85dvh] max-h-[95dvh] overflow-y-auto overflow-x-hidden md:min-h-0 md:max-h-none md:overflow-visible flex flex-col justify-between">
               
-              <div className="flex flex-col mb-3 md:mb-10">
-                <h2 className="text-xl sm:text-2xl md:text-5xl font-black tracking-tight mb-0.5 md:mb-2 leading-tight">{role.title}</h2>
+              <div className="flex flex-col mb-6 md:mb-10">
+                <h2 className="text-xl sm:text-2xl md:text-5xl font-black tracking-tight mb-2 md:mb-2 leading-tight">{role.title}</h2>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-12 flex-1">
-                <div className="space-y-3 md:space-y-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-12 flex-1">
+                <div className="space-y-4 md:space-y-8">
                   <div>
-                    <h4 className="text-[8px] md:text-sm font-bold tracking-[0.1em] text-white/40 uppercase mb-1 md:mb-3 border-b border-white/10 pb-0.5 md:pb-2">Mission</h4>
-                    <p className="text-[9px] md:text-base leading-[1.3] md:leading-relaxed">{role.mission}</p>
+                    <h4 className="text-[8px] md:text-sm font-bold tracking-[0.1em] text-white/40 uppercase mb-1.5 md:mb-3 border-b border-white/10 pb-1 md:pb-2">Mission</h4>
+                    <p className="text-[9px] md:text-base leading-[1.4] md:leading-relaxed">{role.mission}</p>
                   </div>
 
                   <div>
-                    <h4 className="text-[8px] md:text-sm font-bold tracking-[0.1em] text-white/40 uppercase mb-1 md:mb-3 border-b border-white/10 pb-0.5 md:pb-2">Key Responsibilities</h4>
-                    <ul className="space-y-1 md:space-y-3">
+                    <h4 className="text-[8px] md:text-sm font-bold tracking-[0.1em] text-white/40 uppercase mb-1.5 md:mb-3 border-b border-white/10 pb-1 md:pb-2">Key Responsibilities</h4>
+                    <ul className="space-y-1.5 md:space-y-3">
                       {role.responsibilities.map((resp, i) => (
-                        <li key={i} className="flex items-start gap-1.5 md:gap-3 text-[9px] md:text-base leading-[1.3] md:leading-relaxed">
+                        <li key={i} className="flex items-start gap-2 md:gap-3 text-[9px] md:text-base leading-[1.4] md:leading-relaxed">
                           <span className="text-elevate-orange mt-[3px] md:mt-1.5 shrink-0 block w-1 h-1 md:w-1.5 md:h-1.5 rounded-full bg-elevate-orange" />
                           <span>{resp}</span>
                         </li>
@@ -211,15 +211,15 @@ export function JoinOurJourneyPage() {
                   </div>
                 </div>
 
-                <div className="space-y-3 md:space-y-8">
+                <div className="space-y-4 md:space-y-8">
                   <div>
-                    <h4 className="text-[8px] md:text-sm font-bold tracking-[0.1em] text-white/40 uppercase mb-1 md:mb-3 border-b border-white/10 pb-0.5 md:pb-2">Deliverables</h4>
-                    <p className="text-[9px] md:text-base leading-[1.3] md:leading-relaxed font-['Special_Elite',_monospace] text-elevate-paper/80">{role.deliverables}</p>
+                    <h4 className="text-[8px] md:text-sm font-bold tracking-[0.1em] text-white/40 uppercase mb-1.5 md:mb-3 border-b border-white/10 pb-1 md:pb-2">Deliverables</h4>
+                    <p className="text-[9px] md:text-base leading-[1.4] md:leading-relaxed font-['Special_Elite',_monospace] text-elevate-paper/80">{role.deliverables}</p>
                   </div>
                   {role.tools && (
                     <div>
-                      <h4 className="text-[8px] md:text-sm font-bold tracking-[0.1em] text-white/40 uppercase mb-1 md:mb-3 border-b border-white/10 pb-0.5 md:pb-2">Standard Tools</h4>
-                      <p className="text-[9px] md:text-base leading-[1.3] md:leading-relaxed font-semibold">{role.tools}</p>
+                      <h4 className="text-[8px] md:text-sm font-bold tracking-[0.1em] text-white/40 uppercase mb-1.5 md:mb-3 border-b border-white/10 pb-1 md:pb-2">Standard Tools</h4>
+                      <p className="text-[9px] md:text-base leading-[1.4] md:leading-relaxed font-semibold">{role.tools}</p>
                     </div>
                   )}
                 </div>
@@ -229,7 +229,7 @@ export function JoinOurJourneyPage() {
                 href={getGoogleFormLink(role.title)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-4 md:mt-8 inline-flex items-center justify-center shrink-0 w-full bg-elevate-orange text-black px-3 sm:px-8 py-3 md:py-5 font-black uppercase tracking-widest text-[10px] md:text-sm hover:bg-white transition-colors duration-300 rounded-[1rem]"
+                className="mt-6 md:mt-8 inline-flex items-center justify-center shrink-0 w-full bg-elevate-orange text-black px-4 sm:px-8 py-3.5 md:py-5 font-black uppercase tracking-widest text-[10px] md:text-sm hover:bg-white transition-colors duration-300 rounded-[1rem]"
               >
                 Apply Now
               </a>
