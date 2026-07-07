@@ -2476,7 +2476,7 @@ export default function App() {
           </Reveal>
           <Reveal direction="up" delay={200}>
             <p className="mx-auto max-w-3xl text-lg font-medium leading-relaxed text-white/75 md:text-xl lg:text-2xl">
-              We're builders, athletes, and data nerds. Coffee lovers, fitness obsessed, curious by nature, strategic by choice.
+              We're builders, athletes, and data nerds. Coffee lovers, fitness obsessed.
             </p>
           </Reveal>
           <Reveal direction="up" delay={300}>
