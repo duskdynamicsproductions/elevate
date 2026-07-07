@@ -25,6 +25,17 @@ export default function CustomCursor() {
     const onMove = (e: MouseEvent) => {
       mouseX = e.clientX; mouseY = e.clientY;
       gsap.to(dot, { x: mouseX - 4, y: mouseY - 4, duration: 0.05, ease: 'none' });
+      
+      // Dynamic contrast detection to keep it solid but visible
+      const target = document.elementFromPoint(mouseX, mouseY);
+      if (target) {
+        const isLight = target.closest('.bg-elevate-orange, .bg-elevate-paper, .bg-white');
+        if (isLight) {
+          dot.style.backgroundColor = '#0C0B0B';
+        } else {
+          dot.style.backgroundColor = '#FDFCFA';
+        }
+      }
     };
 
     window.addEventListener('mousemove', onMove);
@@ -54,7 +65,7 @@ export default function CustomCursor() {
 
   return (
     <div ref={dotRef}
-      className="pointer-events-none fixed top-0 left-0 z-[9999] h-2 w-2 rounded-full bg-elevate-paper mix-blend-difference"
+      className="pointer-events-none fixed top-0 left-0 z-[9999] h-2 w-2 rounded-full bg-elevate-paper transition-colors duration-150"
       style={{ willChange: 'transform' }} />
   );
 }
