@@ -36,7 +36,7 @@ function FullPageSkeleton() {
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename="/elevate">
       <GlobalLoader />
       {!isTouchDevice && <CustomCursor />}
       <Suspense fallback={<FullPageSkeleton />}>
