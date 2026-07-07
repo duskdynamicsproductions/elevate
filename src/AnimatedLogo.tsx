@@ -75,7 +75,7 @@ export function AnimatedLogo({
       onComplete: finishNavigation,
     });
 
-    const jumpDuration = 0.3; // significantly slower bounce
+    const jumpDuration = 0.45; // 50% slower bounce
     const totalJumps = letters.length;
 
     // Linear horizontal movement across the letters
@@ -135,7 +135,7 @@ export function AnimatedLogo({
             scaleY: 1,
             scaleX: 1,
             y: 0,
-            duration: 0.6,
+            duration: 0.9,
             ease: 'elastic.out(1.2, 0.3)',
           },
           t + jumpDuration
@@ -149,7 +149,7 @@ export function AnimatedLogo({
       starRef.current,
       {
         x: 0,
-        duration: 0.8,
+        duration: 1.2,
         ease: 'power2.inOut',
       },
       backStart
@@ -158,7 +158,7 @@ export function AnimatedLogo({
       starRef.current,
       {
         y: -45,
-        duration: 0.4,
+        duration: 0.6,
         ease: 'sine.out',
       },
       backStart
@@ -167,10 +167,10 @@ export function AnimatedLogo({
       starRef.current,
       {
         y: 0,
-        duration: 0.4,
+        duration: 0.6,
         ease: 'sine.in',
       },
-      backStart + 0.4
+      backStart + 0.6
     );
   };
 
