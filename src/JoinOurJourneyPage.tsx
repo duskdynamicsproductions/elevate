@@ -133,6 +133,22 @@ const roles = [
     ],
     deliverables: "Support tickets resolved, FAQ documentation, weekly user sentiment reports.",
     tools: "Zendesk, Intercom, Google Play Console (Reviews section)."
+  },
+  {
+    category: "7. Artificial Intelligence",
+    title: "AI Pipeline Maker",
+    availability: "1/1",
+    subtitle: "The Intelligence Architect",
+    mission: "Design and train new AI models to enhance the Elevate app experience.",
+    specific: "Building data pipelines, training machine learning models for personalized user experiences, and integrating AI features into the app.",
+    responsibilities: [
+      "Designing and implementing scalable AI/ML pipelines.",
+      "Training and evaluating machine learning models.",
+      "Collaborating with engineering to deploy models to production.",
+      "Optimizing model performance and cost."
+    ],
+    deliverables: "Trained models, inference APIs, data processing scripts, technical documentation.",
+    tools: "Python, TensorFlow/PyTorch, AWS/GCP, Docker, Git."
   }
 ];
 
