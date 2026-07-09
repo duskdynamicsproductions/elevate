@@ -26,28 +26,32 @@
 
     .bounce {
       animation: bounce-realistic 0.6s infinite;
-      transform-origin: 100px 279px;
     }
     .squash {
       animation: squash-stretch 0.6s infinite;
-      transform-origin: 100px 279px;
+      transform-box: fill-box;
+      transform-origin: center bottom;
     }
     .spin {
       animation: spin 10s linear infinite;
-      transform-origin: 100px 219.5px;
+      transform-box: fill-box;
+      transform-origin: center center;
     }
     .shadow {
       animation: shadow-pulse 0.6s infinite;
-      transform-origin: 100px 300px;
+      transform-box: fill-box;
+      transform-origin: center center;
     }
   </style>
 
+  <!-- Shadow placed at y=300 -->
   <ellipse cx="100" cy="300" rx="32" ry="4" fill="#000" class="shadow" filter="url(#shadow-blur)" />
 
   <g class="bounce">
     <g class="squash">
       <g class="spin">
-        <g transform="translate(41, 160)">
+        <!-- Translate places the star's bottom (181 + 119 = 300) perfectly on the shadow -->
+        <g transform="translate(41, 181)">
           <path d="M0 70.2418H33.8241L9.90981 94.164L24.5755 108.842L48.4969 84.9194V118.755H69.2407V84.9194L93.155 108.842L107.828 94.164L83.9134 70.2418H117.73V49.4913H83.9134L107.828 25.5691L93.155 10.8915L69.2407 34.8137V0.978394H48.4969V34.8137L24.5755 10.8915L9.90981 25.5691L33.8241 49.4913H0V70.2418Z" fill="#FF6200" />
         </g>
       </g>
