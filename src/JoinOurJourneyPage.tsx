@@ -136,7 +136,7 @@ const roles = [
   },
   {
     category: "7. Artificial Intelligence",
-    title: "AI Pipeline Maker",
+    title: "AI Pipeline Engineer",
     availability: "1/1",
     subtitle: "The Intelligence Architect",
     mission: "Design and train new AI models to enhance the Elevate app experience.",
