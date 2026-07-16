@@ -45,7 +45,7 @@ const roles = [
   {
     category: "3. Engineering (The Builders)",
     title: "Android Native Engineer",
-    availability: "1/1",
+    availability: "0/1",
     subtitle: "The Client-Side Builder",
     mission: "Translate the UI/UX designs into high-performing, crash-free Android code.",
     specific: "Writing Jetpack Compose code for the UI, interacting with Android's UsageStatsManager for app blocking, and implementing local databases (Room) for offline workout tracking.",
@@ -137,7 +137,7 @@ const roles = [
   {
     category: "7. Artificial Intelligence",
     title: "AI Pipeline Engineer",
-    availability: "1/1",
+    availability: "0/1",
     subtitle: "The Intelligence Architect",
     mission: "Design and train new AI models to enhance the Elevate app experience.",
     specific: "Building data pipelines, training machine learning models for personalized user experiences, and integrating AI features into the app.",
