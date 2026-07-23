@@ -2260,7 +2260,7 @@ export default function App() {
             href="#" 
             className="flex items-center gap-2 transition-opacity hover:opacity-50"
             starClassName="size-4 text-elevate-orange"
-            textClassName="text-sm font-bold tracking-widest uppercase text-elevate-paper"
+            textClassName="text-sm font-bold tracking-widest text-elevate-paper"
             ariaLabel="Elevate home"
           />
           <nav className="hidden items-center gap-10 md:flex">
@@ -2279,17 +2279,18 @@ export default function App() {
 
         {/* Hero content */}
         <div className="flex flex-1 flex-col items-start justify-end px-6 pb-16 md:px-12 lg:px-20 lg:pb-28">
+
           {/* Massive headline */}
-          <h1 className="flex flex-col gap-0 text-[68px] font-black leading-[0.88] tracking-[-0.03em] md:text-[110px] lg:text-[150px] xl:text-[190px]">
+          <h2 className="flex flex-col gap-0 text-[68px] font-black leading-[0.88] tracking-[-0.03em] md:text-[110px] lg:text-[150px] xl:text-[190px]">
             <span className="hero-word block text-elevate-paper">Focus</span>
             <span className="hero-word block" style={{ color: 'transparent', WebkitTextStroke: '2px rgba(253,252,250,0.8)' }}>
               <MeshWord words={heroWords} />
             </span>
             <span className="hero-word block text-elevate-paper">Train</span>
             <span className="hero-word block" style={{ color: 'transparent', WebkitTextStroke: '2px rgba(253,252,250,0.8)' }}>smarter.</span>
-          </h1>
+          </h2>
           
-          <p className="mt-6 md:mt-10 whitespace-nowrap text-sm md:text-base font-['Space_Mono',monospace] font-bold uppercase tracking-widest text-elevate-orange">
+          <p className="hero-sub mt-6 md:mt-10 max-w-2xl text-sm md:text-base font-['Space_Mono',monospace] font-bold uppercase tracking-widest text-elevate-orange">
             "The lion will achieve everything he sets his sights on or he will perish in the pursuit of it."
           </p>
         </div>
@@ -2495,13 +2496,15 @@ export default function App() {
       </div>
       <footer className="bg-elevate-black px-6 py-14 text-elevate-paper md:px-12 lg:px-20 gsap-snap-section">
         <div className="flex w-full flex-col items-start justify-between gap-10 md:flex-row md:items-center">
-          <AnimatedLogo 
-            href="#" 
-            className="flex items-center gap-3 transition-opacity hover:opacity-50"
-            starClassName="size-6 text-elevate-orange"
-            textClassName="text-3xl font-black tracking-tight"
-            ariaLabel="Elevate home"
-          />
+          <div className="flex flex-col items-start gap-3">
+            <AnimatedLogo 
+              href="#" 
+              className="flex items-center gap-3 transition-opacity hover:opacity-50"
+              starClassName="size-6 text-elevate-orange"
+              textClassName="text-3xl font-black tracking-tight"
+              ariaLabel="Elevate home"
+            />
+          </div>
           <div className="flex flex-wrap items-center justify-center gap-6 md:gap-8">
             <Link to="/privacy_policy" className="text-xs font-semibold tracking-[0.15em] uppercase text-elevate-paper/30 transition-colors hover:text-elevate-paper">Privacy</Link>
             <Link to="/terms" className="text-xs font-semibold tracking-[0.15em] uppercase text-elevate-paper/30 transition-colors hover:text-elevate-paper">Terms</Link>

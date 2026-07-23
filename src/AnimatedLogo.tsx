@@ -12,7 +12,7 @@ function SpinningStar({ className = '' }: { className?: string }) {
 export function AnimatedLogo({
   className = 'flex items-center gap-2 transition-opacity hover:opacity-80',
   starClassName = 'size-4 text-elevate-orange',
-  textClassName = 'text-sm font-bold tracking-widest uppercase text-elevate-paper',
+  textClassName = 'text-sm font-bold tracking-widest text-elevate-paper',
   href,
   to,
   onClick,
@@ -31,9 +31,9 @@ export function AnimatedLogo({
       <div className="z-10 relative">
         <SpinningStar className={starClassName} />
       </div>
-      <div className={`${textClassName} flex pointer-events-none`}>
-        ELEVATE
-      </div>
+      <h1 className={`${textClassName} flex pointer-events-none`}>
+        Elevate
+      </h1>
     </>
   );
 

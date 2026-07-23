@@ -24,9 +24,13 @@ export default function App() {
   // Prevent hydration mismatch or flash of wrong content by not rendering until mounted
   if (!mounted) return null;
 
-  if (isMobile) {
-    return <AppMobile />;
-  }
-
-  return <AppDesktop />;
+  return (
+    <>
+      <div style={{ backgroundColor: '#FF6200', color: '#0C0B0B', padding: '12px 20px', textAlign: 'center', zIndex: 99999, position: 'relative', width: '100%' }}>
+        <h1 style={{ fontSize: '20px', fontWeight: '900', margin: '0 0 4px 0', textTransform: 'none' }}>Elevate</h1>
+        <p style={{ fontSize: '14px', margin: 0, fontWeight: '500' }}>Elevate is a comprehensive male wellness application designed to optimize your physical fitness and mental wellness journey. We request Google Login to securely save and sync your fitness progress.</p>
+      </div>
+      {isMobile ? <AppMobile /> : <AppDesktop />}
+    </>
+  );
 }
