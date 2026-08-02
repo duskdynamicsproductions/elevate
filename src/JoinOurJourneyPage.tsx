@@ -1,27 +1,51 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { AnimatedLogo } from './AnimatedLogo';
+import { KineticTextScramble } from './KineticTextScramble';
+import { MagneticWrapper } from './MagneticWrapper';
+import { SpotlightGrid } from './SpotlightGrid';
+import { RoleCard } from './components/RoleCard';
+import {
+  Users,
+  CheckCircle2,
+  XCircle,
+  Sparkles,
+  Search,
+  Target,
+  FileCheck,
+  X,
+  Mail,
+  ArrowUpRight,
+  Shield,
+  Zap,
+  Flame,
+  Code
+} from 'lucide-react';
 
-function SpinningStar({ className = '' }: { className?: string }) {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 118 119" fill="none" className={`animate-spin-slow ${className}`}>
-      <path d="M0 70.2418H33.8241L9.90981 94.164L24.5755 108.842L48.4969 84.9194V118.755H69.2407V84.9194L93.155 108.842L107.828 94.164L83.9134 70.2418H117.73V49.4913H83.9134L107.828 25.5691L93.155 10.8915L69.2407 34.8137V0.978394H48.4969V34.8137L24.5755 10.8915L9.90981 25.5691L33.8241 49.4913H0V70.2418Z" fill="currentColor" />
-    </svg>
-  );
-}
+type RoleItem = {
+  category: string;
+  title: string;
+  availability: string;
+  subtitle: string;
+  mission: string;
+  specific: string;
+  responsibilities: string[];
+  deliverables: string;
+  tools: string;
+};
 
-const roles = [
+const roles: RoleItem[] = [
   {
     category: "1. Product & Project Management",
     title: "Scrum Master / Agile Project Manager",
     availability: "1/1",
     subtitle: "The Process Facilitator",
     mission: "Ensure the engineering and design teams are working efficiently without blockers.",
-    specific: "",
+    specific: "Managing sprint velocity, organizing daily standups, and protecting core developers from outside scope creep.",
     responsibilities: [
-      "Running daily stand-up meetings (syncs).",
-      "Managing two-week \"Sprints\" to ensure code is delivered on time.",
-      "Protecting developers from outside distractions."
+      "Running daily stand-up syncs.",
+      "Managing two-week Sprints to ensure features deliver on time.",
+      "Protecting developers from outside distractions and scope creep."
     ],
     deliverables: "Sprint reports, velocity tracking, meeting facilitation.",
     tools: "Jira, Trello, Slack/Discord."
@@ -32,9 +56,9 @@ const roles = [
     availability: "2/2",
     subtitle: "The Architect of the User Journey",
     mission: "Make the app visually stunning, intuitive to use, and frictionless.",
-    specific: "Designing the layout of the Streak Medals, creating the dark-mode color palette, and ensuring the \"Focus Mode\" app-blocking screen is easy to understand.",
+    specific: "Designing the layout of the Streak Medals, creating the dark-mode color palette, and ensuring the Focus Mode app-blocking screen is easy to understand.",
     responsibilities: [
-      "UX (User Experience): Wireframing user flows (e.g., the flow of creating a new workout routine).",
+      "UX (User Experience): Wireframing user flows (e.g., creating a new workout routine).",
       "UI (User Interface): Creating high-fidelity, pixel-perfect screens for developers to build.",
       "Prototyping features before code is written to test with real users.",
       "Creating visual assets (icons, medal graphics, animations)."
@@ -72,7 +96,7 @@ const roles = [
       "Monitoring server costs and scaling limits."
     ],
     deliverables: "Deployed Cloud Functions, Security Rules (firebase.json), API documentation.",
-    tools: "Firebase Console, Node.js/TypeScript (for functions), Google Cloud Platform (GCP)."
+    tools: "Firebase Console, Node.js/TypeScript, Google Cloud Platform (GCP)."
   },
   {
     category: "4. Quality & Reliability",
@@ -102,7 +126,7 @@ const roles = [
       "Handling official user requests for data deletion or data export."
     ],
     deliverables: "Legal documentation, Compliance Audits, Data Mapping documents.",
-    tools: ""
+    tools: "Legal research tools, Privacy frameworks, Markdown documentation."
   },
   {
     category: "6. Growth & Market",
@@ -116,8 +140,8 @@ const roles = [
       "Managing paid ad campaigns (Google Ads, Meta Ads).",
       "Partnering with fitness and productivity influencers."
     ],
-    deliverables: "Marketing campaigns, ASO keyword reports, ROI (Return on Investment) analysis.",
-    tools: "Google Play Console (Store Presence), Appsflyer/Adjust, AppTweak/SensorTower."
+    deliverables: "Marketing campaigns, ASO keyword reports, ROI analysis.",
+    tools: "Google Play Console, Appsflyer/Adjust, AppTweak/SensorTower."
   },
   {
     category: "6. Growth & Market",
@@ -132,7 +156,7 @@ const roles = [
       "Categorizing user complaints to hand back to the Product Manager."
     ],
     deliverables: "Support tickets resolved, FAQ documentation, weekly user sentiment reports.",
-    tools: "Zendesk, Intercom, Google Play Console (Reviews section)."
+    tools: "Zendesk, Intercom, Google Play Console."
   },
   {
     category: "7. Artificial Intelligence",
@@ -153,168 +177,365 @@ const roles = [
 ];
 
 export function JoinOurJourneyPage() {
-  const [toastMessage, setToastMessage] = React.useState<string | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState('ALL');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedRole, setSelectedRole] = useState<RoleItem | null>(null);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   useEffect(() => {
-    if (window.innerWidth < 768) {
-      document.getElementById('careers-container')?.scrollTo(0, 0);
-    } else {
-      window.scrollTo(0, 0);
-    }
+    window.scrollTo(0, 0);
   }, []);
 
+  const triggerToast = (msg: string) => {
+    setToastMessage(msg);
+    setTimeout(() => setToastMessage(null), 3000);
+  };
+
+  const categories = useMemo(() => {
+    const set = new Set(roles.map((r) => r.category));
+    return ['ALL', ...Array.from(set)];
+  }, []);
+
+  const filteredRoles = useMemo(() => {
+    return roles.filter((r) => {
+      const matchesCategory = selectedCategory === 'ALL' || r.category === selectedCategory;
+      const q = searchQuery.toLowerCase();
+      const matchesSearch =
+        !q ||
+        r.title.toLowerCase().includes(q) ||
+        r.subtitle.toLowerCase().includes(q) ||
+        r.mission.toLowerCase().includes(q) ||
+        r.tools.toLowerCase().includes(q);
+      return matchesCategory && matchesSearch;
+    });
+  }, [selectedCategory, searchQuery]);
+
   const getGoogleFormLink = (roleTitle: string) => {
-    // PREFILL GOOGLE FORM LINK:
-    // IMPORTANT: Replace the base URL and entry ID with your actual Google Form details.
-    // 1. Get your Google Form pre-filled link.
-    // 2. Find the entry IDs for Email, Mobile Number, and Role.
     const baseUrl = "https://docs.google.com/forms/d/e/1FAIpQLScqxx28fgb_BWTp7JI1jj2l1ENkjteCSt3CyvlMlBeeOTW50Q/viewform";
-    const roleEntryId = "entry.1791197897"; 
+    const roleEntryId = "entry.1791197897";
     return `${baseUrl}?usp=pp_url&${roleEntryId}=${encodeURIComponent(roleTitle)}`;
   };
 
-  const handleApplyClick = (e: React.MouseEvent, availability: string) => {
-    if (availability.startsWith("0/")) {
+  const handleApplyClick = (e: React.MouseEvent, role: RoleItem) => {
+    if (role.availability.startsWith("0/")) {
       e.preventDefault();
-      setToastMessage("Already filled by someone else");
-      setTimeout(() => setToastMessage(null), 3000);
+      triggerToast(`Position "${role.title}" has already been filled.`);
     }
   };
 
   return (
-    <div id="careers-container" className="relative h-[100dvh] overflow-y-auto snap-y snap-mandatory md:h-auto md:overflow-visible md:snap-none bg-elevate-black text-elevate-paper selection:bg-elevate-orange selection:text-black">
+    <div className="relative min-h-screen bg-elevate-black font-display text-elevate-paper selection:bg-elevate-orange selection:text-white flex flex-col overflow-x-hidden">
       
-      {/* Toast Notification */}
-      <div className={`fixed top-8 left-1/2 -translate-x-1/2 z-[99999] bg-elevate-orange text-black px-6 py-3 rounded-full font-bold shadow-xl transition-all duration-300 ${toastMessage ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-8 pointer-events-none'}`}>
-        {toastMessage}
+      {/* ── Interactive Spotlight Background Grid Canvas ── */}
+      <SpotlightGrid gridSize={48} spotlightRadius={220} />
+
+      {/* ── Ambient Kinetic Glow Orbs ── */}
+      <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden opacity-30">
+        <div className="animate-float-slow animate-pulse-glow absolute -top-40 -right-40 h-[600px] w-[600px] rounded-full bg-elevate-orange/20 blur-[150px]" />
+        <div className="animate-float-slow animate-pulse-glow absolute top-1/2 -left-40 h-[500px] w-[500px] rounded-full bg-blue-600/15 blur-[130px]" style={{ animationDelay: '-7s' }} />
       </div>
-      {/* Navbar */}
-      <header className="absolute left-0 top-0 z-50 flex w-full items-center justify-between px-6 py-6 md:px-12 lg:px-20 pointer-events-none">
-        <AnimatedLogo 
-          to="/" 
-          className="pointer-events-auto flex items-center gap-2 transition-opacity hover:opacity-50"
+
+      {/* ── Toast Popup ── */}
+      {toastMessage && (
+        <div className="fixed top-24 left-1/2 z-[100] flex -translate-x-1/2 items-center gap-3 rounded-full border border-elevate-orange/40 bg-elevate-dark/95 px-6 py-3 text-xs font-bold tracking-wide text-white shadow-2xl backdrop-blur-xl animate-in fade-in">
+          <Sparkles className="size-4 text-elevate-orange" />
+          <span>{toastMessage}</span>
+        </div>
+      )}
+
+      {/* ── Global Header ── */}
+      <header className="sticky top-0 z-50 flex w-full items-center justify-between border-b border-white/[0.06] bg-elevate-black/80 px-6 py-5 backdrop-blur-xl md:px-12 lg:px-20">
+        <AnimatedLogo
+          to="/"
+          className="flex items-center gap-2 transition-opacity hover:opacity-80"
           starClassName="size-4 text-elevate-orange"
           textClassName="text-sm font-bold tracking-widest uppercase"
           ariaLabel="Elevate home"
         />
 
-        {/* Centered Nav */}
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+        <div className="flex items-center gap-6">
+          <MagneticWrapper strength={0.25}>
+            <Link
+              to="/download"
+              className="hidden items-center gap-2 rounded-full border border-elevate-orange/30 bg-elevate-orange/10 px-4 py-1.5 text-xs font-bold tracking-wider text-elevate-orange uppercase transition-all hover:bg-elevate-orange hover:text-white md:flex"
+            >
+              <Sparkles className="size-3.5" />
+              <span>Download Alpha</span>
+            </Link>
+          </MagneticWrapper>
+
           <Link
             to="/"
-            className="pointer-events-auto text-xs font-semibold tracking-[0.2em] uppercase text-elevate-paper/40 transition-colors hover:text-elevate-paper"
+            className="text-xs font-bold tracking-[0.2em] uppercase text-elevate-paper/40 transition-colors hover:text-white"
           >
             HOME
           </Link>
         </div>
       </header>
 
-      {/* ── Full Screen Hero ── */}
-      <section className="snap-start md:snap-align-none relative flex h-[100dvh] min-h-[700px] w-full flex-col justify-center px-6 md:px-12 lg:px-20 bg-elevate-black border-b border-elevate-paper/[0.06]">
-        <div className="max-w-4xl pt-24 md:pt-0">
-          <h1 className="mb-6 text-[10.5vw] sm:text-6xl font-black leading-[0.92] tracking-tight md:text-7xl lg:text-[100px] uppercase text-elevate-orange">
-            Roles &<br/>Responsibilities
+      {/* ── Main Hero ── */}
+      <main className="relative z-10 flex-1 px-6 py-16 md:px-12 lg:px-20">
+        <div className="mx-auto max-w-6xl">
+          
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-elevate-orange/30 bg-elevate-orange/10 px-4 py-1.5 text-xs font-bold tracking-widest text-elevate-orange uppercase">
+            <Users className="size-3.5" />
+            <span>CAREERS · JOIN OUR JOURNEY</span>
+          </div>
+
+          <h1 className="mb-6 text-4xl font-black leading-[0.92] tracking-tight text-white md:text-7xl lg:text-[96px] uppercase">
+            <KineticTextScramble text="Build the Future of" />
+            <br />
+            <span className="text-elevate-orange">
+              <KineticTextScramble text="Male Wellness." />
+            </span>
           </h1>
-        </div>
 
-        {/* Scroll indicator */}
-        <div className="absolute bottom-12 left-6 md:left-12 lg:left-20 flex items-center gap-3 text-xs font-semibold tracking-[0.2em] text-elevate-paper/30 uppercase">
-          <span>Scroll</span>
-          <span className="animate-bounce text-elevate-orange">↓</span>
-        </div>
-      </section>
+          <p className="mb-12 max-w-2xl text-base leading-relaxed text-elevate-paper/60 md:text-xl">
+            We are looking for ambitious builders, creators, engineers, and legal minds to join Elevate in optimizing physical fitness and mental focus.
+          </p>
 
-      {/* Roles List */}
-      <main className="pt-32 px-6 pb-32 md:px-12 lg:px-24 max-w-7xl mx-auto">
-        <div className="space-y-16 md:space-y-24">
-          {roles.map((role, index) => (
-            <div key={index} className="snap-start md:snap-align-none scroll-m-6 group relative bg-[#0f0f13] shadow-lg p-6 sm:p-8 md:p-12 rounded-[2.5rem] border border-elevate-paper/[0.05] hover:border-elevate-orange/50 transition-colors duration-500 min-h-[85dvh] max-h-[95dvh] overflow-y-auto overflow-x-hidden md:min-h-0 md:max-h-none md:overflow-visible flex flex-col justify-between">
-              
-              <div className="flex flex-col mb-6 md:mb-10">
-                <h2 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight mb-2 md:mb-2 leading-none uppercase">{role.title}</h2>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-12 flex-1">
-                <div className="space-y-4 md:space-y-8">
-                  <div>
-                    <h4 className="text-[8px] md:text-sm font-bold tracking-[0.1em] text-white/40 uppercase mb-1.5 md:mb-3 border-b border-white/10 pb-1 md:pb-2">Mission</h4>
-                    <p className="text-[9px] md:text-base leading-[1.4] md:leading-relaxed">{role.mission}</p>
-                  </div>
-
-                  <div>
-                    <h4 className="text-[8px] md:text-sm font-bold tracking-[0.1em] text-white/40 uppercase mb-1.5 md:mb-3 border-b border-white/10 pb-1 md:pb-2">Key Responsibilities</h4>
-                    <ul className="space-y-1.5 md:space-y-3">
-                      {role.responsibilities.map((resp, i) => (
-                        <li key={i} className="flex items-start gap-2 md:gap-3 text-[9px] md:text-base leading-[1.4] md:leading-relaxed">
-                          <span className="text-elevate-orange mt-[3px] md:mt-1.5 shrink-0 block w-1 h-1 md:w-1.5 md:h-1.5 rounded-full bg-elevate-orange" />
-                          <span>{resp}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-
-                <div className="space-y-4 md:space-y-8">
-                  <div>
-                    <h4 className="text-[8px] md:text-sm font-bold tracking-[0.1em] text-white/40 uppercase mb-1.5 md:mb-3 border-b border-white/10 pb-1 md:pb-2">Deliverables</h4>
-                    <p className="text-[9px] md:text-base leading-[1.4] md:leading-relaxed font-['Special_Elite',_monospace] text-elevate-paper/80">{role.deliverables}</p>
-                  </div>
-                  {role.tools && (
-                    <div>
-                      <h4 className="text-[8px] md:text-sm font-bold tracking-[0.1em] text-white/40 uppercase mb-1.5 md:mb-3 border-b border-white/10 pb-1 md:pb-2">Standard Tools</h4>
-                      <p className="text-[9px] md:text-base leading-[1.4] md:leading-relaxed font-semibold">{role.tools}</p>
-                    </div>
-                  )}
-                </div>
-              </div>
-              
-              <div className="mt-6 md:mt-8">
-                <a
-                  href={getGoogleFormLink(role.title)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={(e) => handleApplyClick(e, role.availability)}
-                  className={`flex w-full items-center justify-between bg-elevate-orange text-black px-6 sm:px-8 py-3.5 md:py-5 font-black uppercase tracking-widest text-[10px] md:text-sm hover:bg-white transition-colors duration-300 rounded-[1rem] ${role.availability.startsWith('0/') ? 'opacity-50 cursor-not-allowed' : ''}`}
-                >
-                  <span>Apply Now</span>
-                  <div className="flex flex-col items-center">
-                    <span className="text-[7px] md:text-[8px] font-bold tracking-[0.2em] uppercase opacity-60 mb-1">
-                      Vacancies
-                    </span>
-                    <span className="bg-black/10 text-black px-3 py-1 rounded-lg border border-black/5 text-[9px] md:text-xs leading-none">
-                      {role.availability}
-                    </span>
-                  </div>
-                </a>
-              </div>
-              
+          {/* ── Interactive Category Filters & Search ── */}
+          <div className="mb-12 flex flex-col gap-6 border-b border-white/[0.08] pb-8 md:flex-row md:items-center md:justify-between">
+            
+            {/* Category Pills */}
+            <div className="flex flex-wrap gap-2">
+              {categories.map((cat) => (
+                <MagneticWrapper key={cat} strength={0.15}>
+                  <button
+                    onClick={() => setSelectedCategory(cat)}
+                    className={`rounded-full px-4 py-2 text-xs font-bold tracking-wider uppercase transition-all ${
+                      selectedCategory === cat
+                        ? 'bg-elevate-orange text-white shadow-lg shadow-elevate-orange/20'
+                        : 'border border-white/10 bg-white/[0.03] text-elevate-paper/50 hover:border-white/20 hover:text-white'
+                    }`}
+                  >
+                    {cat === 'ALL' ? 'All Roles' : cat.replace(/^\d+\.\s*/, '')}
+                  </button>
+                </MagneticWrapper>
+              ))}
             </div>
-          ))}
+
+            {/* Search Input */}
+            <div className="relative w-full max-w-xs">
+              <Search className="absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-elevate-paper/40" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search roles or skills (e.g. Figma, Kotlin)..."
+                className="w-full rounded-full border border-white/10 bg-white/[0.04] py-2 pl-10 pr-10 text-xs text-white placeholder-elevate-paper/30 outline-none backdrop-blur-md transition-all focus:border-elevate-orange/60 focus:bg-white/[0.08]"
+              />
+              {searchQuery && (
+                <button
+                  onClick={() => setSearchQuery('')}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-elevate-paper/40 hover:text-white"
+                >
+                  <X className="size-4" />
+                </button>
+              )}
+            </div>
+          </div>
+
+          {/* ── Roles Grid ── */}
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {filteredRoles.map((role, idx) => (
+  <RoleCard
+    key={idx}
+    role={role}
+    isOpen={!role.availability.startsWith('0/')}
+    onSelect={setSelectedRole}
+    onApply={handleApplyClick}
+  />
+            ))}
+          </div>
+
+          {/* ── Elevate Team Ethos Grid ── */}
+          <div className="mt-24 rounded-3xl border border-white/10 bg-elevate-dark/60 p-8 backdrop-blur-xl md:p-14">
+            <div className="mb-10 text-center">
+              <h2 className="text-2xl font-black uppercase text-white md:text-4xl">
+                <KineticTextScramble text="Our Engineering & Culture Manifesto" />
+              </h2>
+              <p className="mt-2 text-xs font-medium tracking-widest text-elevate-paper/40 uppercase">
+                What drives the team building Elevate
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-4">
+              <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-6">
+                <Zap className="mb-4 size-6 text-elevate-orange" />
+                <h3 className="mb-2 text-base font-bold text-white">Radical Execution</h3>
+                <p className="text-xs leading-relaxed text-elevate-paper/50">
+                  We ship production-grade code rapidly. Speed and real user feedback trump overthinking.
+                </p>
+              </div>
+
+              <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-6">
+                <Shield className="mb-4 size-6 text-elevate-orange" />
+                <h3 className="mb-2 text-base font-bold text-white">Zero Bureaucracy</h3>
+                <p className="text-xs leading-relaxed text-elevate-paper/50">
+                  No unnecessary meetings or corporate hierarchy. Every team member owns their features 100%.
+                </p>
+              </div>
+
+              <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-6">
+                <Flame className="mb-4 size-6 text-elevate-orange" />
+                <h3 className="mb-2 text-base font-bold text-white">High Standards</h3>
+                <p className="text-xs leading-relaxed text-elevate-paper/50">
+                  Pixel-perfect UI, sub-second SQLite performance, and unyielding commitment to user privacy.
+                </p>
+              </div>
+
+              <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-6">
+                <Code className="mb-4 size-6 text-elevate-orange" />
+                <h3 className="mb-2 text-base font-bold text-white">Modern Tech</h3>
+                <p className="text-xs leading-relaxed text-elevate-paper/50">
+                  Building with Kotlin, Jetpack Compose, Firebase Cloud Functions, Figma design systems, and Room.
+                </p>
+              </div>
+            </div>
+          </div>
+
         </div>
       </main>
-      
-      {/* Footer */}
-      <footer className="snap-start md:snap-align-none mt-auto flex w-full flex-col items-start justify-between gap-10 border-t border-elevate-paper/10 px-6 py-8 md:flex-row md:items-center md:px-12 lg:px-20">
-        <AnimatedLogo 
-          to="/" 
-          className="flex items-center gap-3 transition-opacity hover:opacity-50"
+
+      {/* ── Role Specs Slide-Over Drawer Modal ── */}
+      {selectedRole && (
+        <div className="fixed inset-0 z-[100] flex justify-end bg-black/80 backdrop-blur-md animate-in fade-in">
+          <div className="relative flex h-full w-full max-w-2xl flex-col overflow-y-auto border-l border-white/10 bg-elevate-dark p-8 shadow-2xl md:p-12">
+            
+            <button
+              onClick={() => setSelectedRole(null)}
+              className="absolute right-6 top-6 rounded-full border border-white/10 bg-white/[0.04] p-2 text-elevate-paper/50 transition-colors hover:text-white"
+            >
+              <X className="size-5" />
+            </button>
+
+            <div className="mb-8 border-b border-white/10 pb-6">
+              <span className="mb-2 block text-xs font-bold tracking-widest text-elevate-orange uppercase">
+                {selectedRole.category}
+              </span>
+              <h2 className="text-3xl font-black text-white uppercase md:text-4xl">
+                <KineticTextScramble text={selectedRole.title} />
+              </h2>
+              <p className="mt-1 text-sm font-semibold tracking-wider text-elevate-paper/40 uppercase">
+                {selectedRole.subtitle}
+              </p>
+            </div>
+
+            <div className="mb-8 rounded-2xl border border-elevate-orange/30 bg-elevate-orange/10 p-6">
+              <h4 className="mb-2 flex items-center gap-2 text-xs font-bold text-elevate-orange uppercase tracking-wider">
+                <Target className="size-4" />
+                Core Mission
+              </h4>
+              <p className="text-sm leading-relaxed text-white">
+                {selectedRole.mission}
+              </p>
+            </div>
+
+            {selectedRole.specific && (
+              <div className="mb-8 rounded-2xl border border-white/10 bg-white/[0.02] p-6">
+                <h4 className="mb-2 text-xs font-bold text-elevate-paper/50 uppercase tracking-wider">
+                  Elevate Specific Scenario
+                </h4>
+                <p className="text-xs leading-relaxed text-elevate-paper/70">
+                  {selectedRole.specific}
+                </p>
+              </div>
+            )}
+
+            <div className="mb-8">
+              <h4 className="mb-4 flex items-center gap-2 text-xs font-bold text-elevate-paper/50 uppercase tracking-wider">
+                <FileCheck className="size-4 text-elevate-orange" />
+                Key Responsibilities
+              </h4>
+              <ul className="space-y-3">
+                {selectedRole.responsibilities.map((resp, i) => (
+                  <li key={i} className="flex items-start gap-3 text-xs leading-relaxed text-elevate-paper/70">
+                    <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-elevate-orange" />
+                    <span>{resp}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="mb-8 space-y-4 rounded-2xl border border-white/10 bg-black/40 p-6">
+              <div>
+                <span className="text-[11px] font-bold text-elevate-paper/40 uppercase tracking-wider">Key Deliverables</span>
+                <p className="mt-1 text-xs font-bold text-white">{selectedRole.deliverables}</p>
+              </div>
+
+              {selectedRole.tools && (
+                <div className="border-t border-white/10 pt-3">
+                  <span className="text-[11px] font-bold text-elevate-paper/40 uppercase tracking-wider">Tech Stack & Tools</span>
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    {selectedRole.tools.split(',').map((tool, tIdx) => (
+                      <span
+                        key={tIdx}
+                        className="rounded-lg border border-white/10 bg-white/[0.04] px-3 py-1 text-xs font-mono font-medium text-elevate-orange"
+                      >
+                        {tool.trim()}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <div className="mt-auto border-t border-white/10 pt-6 flex flex-wrap items-center justify-between gap-4">
+              {!selectedRole.availability.startsWith("0/") ? (
+                <MagneticWrapper strength={0.3}>
+                  <a
+                    href={getGoogleFormLink(selectedRole.title)}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="flex items-center gap-2 rounded-full bg-elevate-orange px-8 py-3 text-xs font-bold text-white shadow-lg transition-transform hover:scale-105"
+                  >
+                    <span>Submit Application Form</span>
+                    <ArrowUpRight className="size-4" />
+                  </a>
+                </MagneticWrapper>
+              ) : (
+                <span className="text-xs font-bold text-elevate-paper/40 uppercase">
+                  This position has been filled.
+                </span>
+              )}
+
+              <a
+                href={`mailto:theduskdynamicsproductions@gmail.com?subject=Application%20for%20${encodeURIComponent(selectedRole.title)}`}
+                className="flex items-center gap-2 text-xs font-bold text-elevate-paper/50 hover:text-white"
+              >
+                <Mail className="size-4" />
+                <span>Apply via Email</span>
+              </a>
+            </div>
+
+          </div>
+        </div>
+      )}
+
+      {/* ── Footer ── */}
+      <footer className="relative z-10 mt-auto flex w-full flex-col items-start justify-between gap-8 border-t border-elevate-paper/10 px-6 py-8 md:flex-row md:items-center md:px-12 lg:px-20">
+        <AnimatedLogo
+          to="/"
+          className="flex items-center gap-3 transition-opacity hover:opacity-80"
           starClassName="size-6 text-elevate-orange"
           textClassName="text-3xl font-black tracking-tight"
           ariaLabel="Elevate home"
         />
         <div className="flex flex-wrap items-center justify-center gap-6 md:gap-8">
-          <Link to="/privacy_policy" className="text-xs font-semibold tracking-[0.15em] uppercase text-elevate-paper/30 transition-colors hover:text-elevate-paper">Privacy</Link>
-          <Link to="/terms" className="text-xs font-semibold tracking-[0.15em] uppercase text-elevate-paper/30 transition-colors hover:text-elevate-paper">Terms</Link>
-          <Link to="/joinourjourney" className="text-xs font-semibold tracking-[0.15em] uppercase text-elevate-paper/30 transition-colors hover:text-elevate-paper">Join Us</Link>
+          <Link to="/privacy_policy" className="text-xs font-semibold tracking-[0.15em] uppercase text-elevate-paper/40 transition-colors hover:text-white">Privacy</Link>
+          <Link to="/terms" className="text-xs font-semibold tracking-[0.15em] uppercase text-elevate-paper/40 transition-colors hover:text-white">Terms</Link>
+          <Link to="/joinourjourney" className="text-xs font-semibold tracking-[0.15em] uppercase text-elevate-paper/40 transition-colors hover:text-white">Join Us</Link>
         </div>
         <div className="flex flex-col items-start gap-4 md:items-end">
-          <p className="text-xs text-elevate-paper/20">© {new Date().getFullYear()} Elevate. All rights reserved.</p>
+          <p className="text-xs text-elevate-paper/20">© 2026 Elevate. All rights reserved.</p>
           <div className="flex items-center gap-6">
-            <a href="https://www.linkedin.com/in/brihit-nath-7114623a6/" target="_blank" rel="noreferrer" className="text-[10px] font-bold tracking-[0.15em] uppercase text-elevate-paper/30 transition-colors hover:text-elevate-paper">Brihit Nath</a>
-            <a href="https://www.instagram.com/the.duskdynamics/" target="_blank" rel="noreferrer" className="text-[10px] font-bold tracking-[0.15em] uppercase text-elevate-paper/30 transition-colors hover:text-elevate-paper">Duskdynamics</a>
+            <a href="https://www.linkedin.com/in/brihit-nath-7114623a6/" target="_blank" rel="noreferrer" className="text-[10px] font-bold tracking-[0.15em] uppercase text-elevate-paper/30 transition-colors hover:text-white">Brihit Nath</a>
+            <a href="https://www.instagram.com/the.duskdynamics/" target="_blank" rel="noreferrer" className="text-[10px] font-bold tracking-[0.15em] uppercase text-elevate-paper/30 transition-colors hover:text-white">Duskdynamics</a>
           </div>
         </div>
       </footer>
+
     </div>
   );
 }

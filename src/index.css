@@ -37,6 +37,51 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'Thunder';
+  src: url('/Thunder-BlackLC.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'NeueHaasGrotesk';
+  src: url('/fonts/neue-haas/Neue Haas Grotesk Text Family/NeueHaasGrotText-55Roman-Trial.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'LamaSans';
+  src: url('/fonts/LamaSans-Light.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'LamaSans';
+  src: url('/LamaSans-Black.otf') format('opentype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'LamaSans';
+  src: url('/LamaSans-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'LamaSans';
+  src: url('/LamaSans-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 html,
 body,
 #root {
@@ -153,3 +198,90 @@ select {
 .mobile-snap { scroll-snap-type: y mandatory; scroll-behavior: smooth; } 
 .mobile-snap, .mobile-snap body { overflow-x: visible !important; } 
 html.lenis, html.lenis body { height: auto; } html.lenis { scroll-behavior: initial; } 
+
+/* Ambient floating glow orb animation */
+@keyframes float-slow {
+  0%, 100% { transform: translate(0px, 0px) scale(1); }
+  33% { transform: translate(30px, -40px) scale(1.1); }
+  66% { transform: translate(-20px, 20px) scale(0.95); }
+}
+
+.animate-float-slow {
+  animation: float-slow 16s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.15; filter: blur(80px); }
+  50% { opacity: 0.3; filter: blur(100px); }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 8s ease-in-out infinite;
+}
+
+/* Legal text search match highlight */
+mark.legal-highlight {
+  background-color: rgba(255, 98, 0, 0.35);
+  color: #FFFFFF;
+  padding: 0.1em 0.3em;
+  border-radius: 0.2em;
+  border-bottom: 2px solid #FF6200;
+}
+
+/* ── Lama Lama editorial styles ── */
+@keyframes lama-ticker {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.lama-ticker {
+  animation: lama-ticker 32s linear infinite;
+  display: inline-flex;
+  white-space: nowrap;
+}
+
+.lama-ticker:hover {
+  animation-play-state: paused;
+}
+
+/* Bracket label — [ Section Name ] */
+.lama-bracket {
+  font-family: 'GS', monospace;
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: rgba(253, 252, 250, 0.38);
+  font-weight: 500;
+}
+
+/* Spin slow — for SpinningStar in editorial headers */
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 10s linear infinite;
+}
+
+/* Editorial top-rule divider for section headers */
+.lama-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid rgba(253, 252, 250, 0.08);
+  padding-bottom: 1.5rem;
+}
+
+/* Tag pills — like Lama Lama's Branding / Digital labels */
+.lama-tag {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border: 1px solid rgba(253, 252, 250, 0.15);
+  color: rgba(253, 252, 250, 0.45);
+}
+

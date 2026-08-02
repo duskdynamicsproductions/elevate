@@ -17,6 +17,7 @@ export default {
         'elevate-green-deep': '#158A3E',
       },
       fontFamily: {
+        'sans': ['"Google Sans"', 'sans-serif'],
         'display': ['GS', 'system-ui', '-apple-system', 'sans-serif'],
       },
       animation: {

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import CustomCursor from './CustomCursor';
 import { GlobalLoader } from './GlobalLoader';
+import { PageTransition } from './PageTransition';
 import './index.css';
 
 import { SmoothScroll } from './SmoothScroll';
@@ -13,6 +14,8 @@ const PrivacyPage = React.lazy(() => import('./LegalPages').then(m => ({ default
 const TermsPage = React.lazy(() => import('./LegalPages').then(m => ({ default: m.TermsPage })));
 const DownloadPage = React.lazy(() => import('./DownloadPage').then(m => ({ default: m.DownloadPage })));
 const JoinOurJourneyPage = React.lazy(() => import('./JoinOurJourneyPage').then(m => ({ default: m.JoinOurJourneyPage })));
+const AboutUsPage = React.lazy(() => import('./AboutUsPage').then(m => ({ default: m.AboutUsPage })));
+const ContactUsPage = React.lazy(() => import('./ContactUsPage').then(m => ({ default: m.ContactUsPage })));
 
 const isTouchDevice = typeof window !== 'undefined' && ('ontouchstart' in window || navigator.maxTouchPoints > 0);
 
@@ -43,13 +46,17 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <GlobalLoader />
         {!isTouchDevice && <CustomCursor />}
         <Suspense fallback={<FullPageSkeleton />}>
-          <Routes>
-            <Route path="/" element={<App />} />
-            <Route path="/download" element={<DownloadPage />} />
-            <Route path="/joinourjourney" element={<JoinOurJourneyPage />} />
-            <Route path="/privacy_policy" element={<PrivacyPage />} />
-            <Route path="/terms" element={<TermsPage />} />
-          </Routes>
+          <PageTransition>
+            <Routes>
+              <Route path="/" element={<App />} />
+              <Route path="/download" element={<DownloadPage />} />
+              <Route path="/joinourjourney" element={<JoinOurJourneyPage />} />
+              <Route path="/privacy_policy" element={<PrivacyPage />} />
+              <Route path="/terms" element={<TermsPage />} />
+              <Route path="/about" element={<AboutUsPage />} />
+              <Route path="/contact" element={<ContactUsPage />} />
+            </Routes>
+          </PageTransition>
         </Suspense>
       </SmoothScroll>
     </BrowserRouter>

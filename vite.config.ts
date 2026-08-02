@@ -10,6 +10,10 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: ['**/*'],
+      // Disable SW in dev — prevents it from caching and blocking HMR updates
+      devOptions: {
+        enabled: false,
+      },
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg,gif,jpg,jpeg,webp,woff,woff2,ttf,eot}'],
         maximumFileSizeToCacheInBytes: 10 * 1024 * 1024, // 10MB limit to cache heavy gifs

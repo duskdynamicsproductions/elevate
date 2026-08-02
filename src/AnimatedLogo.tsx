@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { KineticTextScramble } from './KineticTextScramble';
+import { MagneticWrapper } from './MagneticWrapper';
 
 function SpinningStar({ className = '' }: { className?: string }) {
   return (
@@ -27,14 +29,16 @@ export function AnimatedLogo({
   ariaLabel?: string;
 }) {
   const content = (
-    <>
-      <div className="z-10 relative">
-        <SpinningStar className={starClassName} />
+    <MagneticWrapper strength={0.25} range={60}>
+      <div className="flex items-center gap-2">
+        <div className="z-10 relative">
+          <SpinningStar className={starClassName} />
+        </div>
+        <h1 className={`${textClassName} flex pointer-events-none`}>
+          <KineticTextScramble text="Elevate" triggerOnHover={true} />
+        </h1>
       </div>
-      <h1 className={`${textClassName} flex pointer-events-none`}>
-        Elevate
-      </h1>
-    </>
+    </MagneticWrapper>
   );
 
   if (to) {

@@ -2259,10 +2259,21 @@ export default function App() {
       ══════════════════════════════════════════ */}
       <section
         ref={heroRef}
-        className="relative flex h-[100dvh] min-h-[700px] w-full flex-col bg-elevate-black text-elevate-paper gsap-snap-section snap-start"
+        className="relative flex h-[100dvh] min-h-[700px] w-full flex-col bg-elevate-black text-elevate-paper gsap-snap-section snap-start overflow-hidden"
       >
+        {/* Background Video */}
+        <video
+          src="/onboarding-bg.mp4"
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover opacity-60 pointer-events-none"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-black/60 pointer-events-none" />
+
         {/* Nav */}
-        <header className="hero-nav flex w-full items-center justify-between px-6 py-6 md:px-12 lg:px-20">
+        <header className="hero-nav relative z-10 flex w-full items-center justify-between px-6 py-6 md:px-12 lg:px-20">
           <AnimatedLogo 
             href="#" 
             className="flex items-center gap-2 transition-opacity hover:opacity-50"
@@ -2285,7 +2296,7 @@ export default function App() {
         </header>
 
         {/* Hero content */}
-        <div className="flex flex-1 flex-col items-start justify-end px-6 pb-16 md:px-12 lg:px-20 lg:pb-28">
+        <div className="relative z-10 flex flex-1 flex-col items-start justify-end px-6 pb-16 md:px-12 lg:px-20 lg:pb-28">
 
           {/* Massive headline */}
           <h2 className="flex flex-col gap-0 text-[68px] font-black leading-[0.88] tracking-[-0.03em] md:text-[110px] lg:text-[150px] xl:text-[190px]">

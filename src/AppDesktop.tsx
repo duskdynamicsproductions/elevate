@@ -1,11 +1,18 @@
-import { useEffect, useRef, useState, useMemo, useId } from 'react';
+import { useEffect, useRef, useState, useMemo, useId, useCallback } from 'react';
 import { ImageWithSkeleton } from './ImageWithSkeleton';
 import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { Flip } from 'gsap/Flip';
 import { AnimatedLogo } from './AnimatedLogo';
+import { SocialIcon } from './SocialIcon';
+import { DisciplineSlideshow } from './DisciplineSlideshow';
+import { MagneticWrapper } from './MagneticWrapper';
+import AsciiCursor from './components/AsciiCursor';
+import { ContourDivider } from './components/ContourDivider';
+import { AsciiContourDivider } from './components/AsciiContourDivider';
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, Flip);
 
 /* ══════════════════════════════════════════════════════════
    CONSTANTS
@@ -71,10 +78,10 @@ const GLITCH_POOL = '!<>-_\\/[]{}=+*^?#~@$%&ABCDEFabcdef01234';
 
 function MeshWord({ words }: { words: string[] }) {
   const [index, setIndex] = useState(0);
-  const [chars, setChars]  = useState<string[]>(() => words[0].split(''));
-  const containerRef       = useRef<HTMLSpanElement>(null);
-  const busyRef            = useRef(false);
-  const isFirstMount       = useRef(true);
+  const [chars, setChars] = useState<string[]>(() => words[0].split(''));
+  const containerRef = useRef<HTMLSpanElement>(null);
+  const busyRef = useRef(false);
+  const isFirstMount = useRef(true);
 
   // IN: random order so it never sweeps left→right
   useEffect(() => {
@@ -82,7 +89,7 @@ function MeshWord({ words }: { words: string[] }) {
     const container = containerRef.current;
     if (!container) return;
     const spans = Array.from(container.querySelectorAll<HTMLElement>('.mw-c'));
-    const word  = words[index];
+    const word = words[index];
     // shuffle indices
     const order = [...spans.keys()].sort(() => Math.random() - 0.5);
 
@@ -122,9 +129,9 @@ function MeshWord({ words }: { words: string[] }) {
       busyRef.current = true;
       const container = containerRef.current;
       if (!container) return;
-      const spans   = Array.from(container.querySelectorAll<HTMLElement>('.mw-c'));
+      const spans = Array.from(container.querySelectorAll<HTMLElement>('.mw-c'));
       const nextIdx = (index + 1) % words.length;
-      const order   = [...spans.keys()].sort(() => Math.random() - 0.5);
+      const order = [...spans.keys()].sort(() => Math.random() - 0.5);
       let done = 0;
 
       order.forEach((charIdx, orderIdx) => {
@@ -167,7 +174,7 @@ function MeshWord({ words }: { words: string[] }) {
 /* ══════════════════════════════════════════════════════════
    ROLLING NUMBER — slot-machine digit reveal
 ══════════════════════════════════════════════════════════ */
-const DIGITS = ['0','1','2','3','4','5','6','7','8','9'];
+const DIGITS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 
 export function ElevateMedal({ size = 100, color = '#1ED760', rank = 'III', className = '' }: { size?: number, color?: string, rank?: string, className?: string }) {
   const svgWidth = size * 1.64;
@@ -277,11 +284,11 @@ function RollingDigit({ target, delay, color }: { target: string; delay: number;
     const totalItems = DIGITS.length * extraSpins + targetIndex;
     const stripLength = DIGITS.length * 3;
     gsap.set(el, { y: 0, yPercent: 0 });
-    gsap.to(el, { 
-      yPercent: -(totalItems / stripLength) * 100, 
-      duration: 1.4 + delay * 0.3, 
-      delay: delay * 0.08, 
-      ease: 'power4.out' 
+    gsap.to(el, {
+      yPercent: -(totalItems / stripLength) * 100,
+      duration: 1.4 + delay * 0.3,
+      delay: delay * 0.08,
+      ease: 'power4.out'
     });
   }, [target, delay, targetIndex]);
   const strip: string[] = [];
@@ -314,11 +321,11 @@ function RollingNumber({ value, color = '#FF6200', className = '' }: { value: st
           return fired ? <RollingDigit key={i} target={d} delay={i} color={color} /> : <span key={i} style={{ color, opacity: 0 }}>{d}</span>;
         }
         return (
-          <span 
-            key={i} 
+          <span
+            key={i}
             className="shrink-0"
-            style={{ 
-              color, 
+            style={{
+              color,
               fontSize: isSpace ? '0.2em' : '0.85em',
               marginLeft: isSpace ? 0 : '12px',
               transform: isSpace ? 'none' : 'translateY(-5%)'
@@ -349,8 +356,7 @@ const SOCIAL_ICONS_DATA = [
 ];
 
 function SocialSVG({ id }: { id: string }) {
-  // Using the provided user icons from the public directory
-  return <img src={`/social-icons/${id}`} alt="Social Icon" style={{ width: 76, height: 76, display: 'block' }} />;
+  return <SocialIcon id={id} />;
 }
 
 /* Realistic trash bin built entirely with SVG gradients, depth and highlights */
@@ -360,70 +366,70 @@ function TrashBinSVG({ open }: { open: boolean }) {
       <defs>
         {/* ── Body cylinder gradient — dark charcoal matching site theme ── */}
         <linearGradient id="bodyMain" x1="0" y1="0" x2="140" y2="0" gradientUnits="userSpaceOnUse">
-          <stop offset="0%"   stopColor="#060606"/>
-          <stop offset="12%"  stopColor="#0e0e0e"/>
-          <stop offset="30%"  stopColor="#1c1c1c"/>
-          <stop offset="50%"  stopColor="#262626"/>
-          <stop offset="70%"  stopColor="#1c1c1c"/>
-          <stop offset="88%"  stopColor="#0e0e0e"/>
-          <stop offset="100%" stopColor="#050505"/>
+          <stop offset="0%" stopColor="#060606" />
+          <stop offset="12%" stopColor="#0e0e0e" />
+          <stop offset="30%" stopColor="#1c1c1c" />
+          <stop offset="50%" stopColor="#262626" />
+          <stop offset="70%" stopColor="#1c1c1c" />
+          <stop offset="88%" stopColor="#0e0e0e" />
+          <stop offset="100%" stopColor="#050505" />
         </linearGradient>
 
         {/* ── Left edge highlight ── */}
         <linearGradient id="leftShine" x1="0" y1="0" x2="1" y2="0" gradientUnits="objectBoundingBox">
-          <stop offset="0%"   stopColor="rgba(255,255,255,0.07)"/>
-          <stop offset="100%" stopColor="rgba(255,255,255,0)"/>
+          <stop offset="0%" stopColor="rgba(255,255,255,0.07)" />
+          <stop offset="100%" stopColor="rgba(255,255,255,0)" />
         </linearGradient>
 
         {/* ── Top ellipse (opening) — pure black interior ── */}
         <radialGradient id="topOpeningGrad" cx="50%" cy="50%" r="50%">
-          <stop offset="0%"   stopColor="#000000"/>
-          <stop offset="100%" stopColor="#0a0a0a"/>
+          <stop offset="0%" stopColor="#000000" />
+          <stop offset="100%" stopColor="#0a0a0a" />
         </radialGradient>
 
         {/* ── Rim gradient — subtle silver edge ── */}
         <linearGradient id="rimGrad" x1="0" y1="0" x2="140" y2="0" gradientUnits="userSpaceOnUse">
-          <stop offset="0%"   stopColor="#111111"/>
-          <stop offset="30%"  stopColor="#2e2e2e"/>
-          <stop offset="50%"  stopColor="#3d3d3d"/>
-          <stop offset="70%"  stopColor="#2e2e2e"/>
-          <stop offset="100%" stopColor="#0d0d0d"/>
+          <stop offset="0%" stopColor="#111111" />
+          <stop offset="30%" stopColor="#2e2e2e" />
+          <stop offset="50%" stopColor="#3d3d3d" />
+          <stop offset="70%" stopColor="#2e2e2e" />
+          <stop offset="100%" stopColor="#0d0d0d" />
         </linearGradient>
 
         {/* ── Lid top gradient ── */}
         <linearGradient id="lidTop" x1="0" y1="0" x2="140" y2="0" gradientUnits="userSpaceOnUse">
-          <stop offset="0%"   stopColor="#080808"/>
-          <stop offset="25%"  stopColor="#181818"/>
-          <stop offset="50%"  stopColor="#242424"/>
-          <stop offset="75%"  stopColor="#181818"/>
-          <stop offset="100%" stopColor="#080808"/>
+          <stop offset="0%" stopColor="#080808" />
+          <stop offset="25%" stopColor="#181818" />
+          <stop offset="50%" stopColor="#242424" />
+          <stop offset="75%" stopColor="#181818" />
+          <stop offset="100%" stopColor="#080808" />
         </linearGradient>
 
         {/* ── Lid bevel shine ── */}
         <linearGradient id="lidShine" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox">
-          <stop offset="0%"   stopColor="rgba(255,255,255,0.06)"/>
-          <stop offset="100%" stopColor="rgba(255,255,255,0)"/>
+          <stop offset="0%" stopColor="rgba(255,255,255,0.06)" />
+          <stop offset="100%" stopColor="rgba(255,255,255,0)" />
         </linearGradient>
 
         {/* ── Handle gradient ── */}
         <linearGradient id="handleGrad" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox">
-          <stop offset="0%"   stopColor="#2c2c2c"/>
-          <stop offset="50%"  stopColor="#1a1a1a"/>
-          <stop offset="100%" stopColor="#0c0c0c"/>
+          <stop offset="0%" stopColor="#2c2c2c" />
+          <stop offset="50%" stopColor="#1a1a1a" />
+          <stop offset="100%" stopColor="#0c0c0c" />
         </linearGradient>
 
         {/* ── Bottom ellipse ── */}
         <radialGradient id="bottomGrad" cx="50%" cy="30%" r="60%">
-          <stop offset="0%"   stopColor="#111111"/>
-          <stop offset="100%" stopColor="#020202"/>
+          <stop offset="0%" stopColor="#111111" />
+          <stop offset="100%" stopColor="#020202" />
         </radialGradient>
 
         {/* Drop shadow filter */}
         <filter id="binShadow" x="-20%" y="-5%" width="140%" height="120%">
-          <feDropShadow dx="0" dy="8" stdDeviation="10" floodColor="#000" floodOpacity="0.6"/>
+          <feDropShadow dx="0" dy="8" stdDeviation="10" floodColor="#000" floodOpacity="0.6" />
         </filter>
         <filter id="lidShadow" x="-10%" y="-20%" width="120%" height="160%">
-          <feDropShadow dx="0" dy="4" stdDeviation="6" floodColor="#000" floodOpacity="0.5"/>
+          <feDropShadow dx="0" dy="4" stdDeviation="6" floodColor="#000" floodOpacity="0.5" />
         </filter>
       </defs>
 
@@ -451,23 +457,23 @@ function TrashBinSVG({ open }: { open: boolean }) {
         />
 
         {/* Vertical grooves */}
-        <line x1="42"  y1="58" x2="38"  y2="183" stroke="rgba(0,0,0,0.4)" strokeWidth="2" strokeLinecap="round"/>
-        <line x1="70"  y1="58" x2="70"  y2="185" stroke="rgba(0,0,0,0.4)" strokeWidth="2" strokeLinecap="round"/>
-        <line x1="98"  y1="58" x2="102" y2="183" stroke="rgba(0,0,0,0.4)" strokeWidth="2" strokeLinecap="round"/>
+        <line x1="42" y1="58" x2="38" y2="183" stroke="rgba(0,0,0,0.4)" strokeWidth="2" strokeLinecap="round" />
+        <line x1="70" y1="58" x2="70" y2="185" stroke="rgba(0,0,0,0.4)" strokeWidth="2" strokeLinecap="round" />
+        <line x1="98" y1="58" x2="102" y2="183" stroke="rgba(0,0,0,0.4)" strokeWidth="2" strokeLinecap="round" />
 
         {/* Groove highlights (right edge of each groove) */}
-        <line x1="44"  y1="58" x2="40"  y2="183" stroke="rgba(255,255,255,0.04)" strokeWidth="1" strokeLinecap="round"/>
-        <line x1="72"  y1="58" x2="72"  y2="185" stroke="rgba(255,255,255,0.04)" strokeWidth="1" strokeLinecap="round"/>
-        <line x1="100" y1="58" x2="104" y2="183" stroke="rgba(255,255,255,0.04)" strokeWidth="1" strokeLinecap="round"/>
+        <line x1="44" y1="58" x2="40" y2="183" stroke="rgba(255,255,255,0.04)" strokeWidth="1" strokeLinecap="round" />
+        <line x1="72" y1="58" x2="72" y2="185" stroke="rgba(255,255,255,0.04)" strokeWidth="1" strokeLinecap="round" />
+        <line x1="100" y1="58" x2="104" y2="183" stroke="rgba(255,255,255,0.04)" strokeWidth="1" strokeLinecap="round" />
 
         {/* Recycling icon */}
         <text x="70" y="132" textAnchor="middle" fontSize="28" fill="rgba(255,255,255,0.05)" fontFamily="sans-serif">♻</text>
 
         {/* Bottom base ellipse */}
-        <ellipse cx="70" cy="188" rx="42" ry="8" fill="url(#bottomGrad)" stroke="#05050f" strokeWidth="1"/>
+        <ellipse cx="70" cy="188" rx="42" ry="8" fill="url(#bottomGrad)" stroke="#05050f" strokeWidth="1" />
 
         {/* Top opening ellipse (dark interior visible) */}
-        <ellipse cx="70" cy="52" rx="52" ry="10" fill="url(#topOpeningGrad)" stroke="#0a0a18" strokeWidth="0.5"/>
+        <ellipse cx="70" cy="52" rx="52" ry="10" fill="url(#topOpeningGrad)" stroke="#0a0a18" strokeWidth="0.5" />
 
         {/* Top rim ring */}
         <path
@@ -489,7 +495,7 @@ function TrashBinSVG({ open }: { open: boolean }) {
       >
         {/* Lid underside (visible when open) */}
         {open && (
-          <ellipse cx="70" cy="40" rx="54" ry="10" fill="#0d0d0d" stroke="#050505" strokeWidth="0.5"/>
+          <ellipse cx="70" cy="40" rx="54" ry="10" fill="#0d0d0d" stroke="#050505" strokeWidth="0.5" />
         )}
 
         {/* Lid body — slightly wider than bin top */}
@@ -515,12 +521,12 @@ function TrashBinSVG({ open }: { open: boolean }) {
         />
 
         {/* Handle base */}
-        <rect x="52" y="14" width="36" height="28" rx="8" fill="url(#handleGrad)" stroke="#0f0f0f" strokeWidth="1"/>
+        <rect x="52" y="14" width="36" height="28" rx="8" fill="url(#handleGrad)" stroke="#0f0f0f" strokeWidth="1" />
         {/* Handle top shine */}
-        <rect x="55" y="16" width="30" height="8" rx="4" fill="rgba(255,255,255,0.12)"/>
+        <rect x="55" y="16" width="30" height="8" rx="4" fill="rgba(255,255,255,0.12)" />
         {/* Handle grip knob */}
-        <ellipse cx="70" cy="28" rx="10" ry="7" fill="#3a3a3a" stroke="#1a1a1a" strokeWidth="1"/>
-        <ellipse cx="70" cy="26" rx="6" ry="3.5" fill="rgba(150,150,150,0.3)"/>
+        <ellipse cx="70" cy="28" rx="10" ry="7" fill="#3a3a3a" stroke="#1a1a1a" strokeWidth="1" />
+        <ellipse cx="70" cy="26" rx="6" ry="3.5" fill="rgba(150,150,150,0.3)" />
       </g>
     </svg>
   );
@@ -551,17 +557,17 @@ function AppBlockedAnimation() {
         wraps.forEach((wrap, i) => {
           let spawnX = 0;
           let spawnY = 0;
-          
+
           // Force icons to spawn exclusively in the Left half OR Top half of the screen
           // This completely quarantines them away from the Trash Bin (Bottom Right quadrant)
           if (Math.random() > 0.5) {
             // Left half
-            spawnX = gsap.utils.random(-cWidth/2 + 100, -100);
-            spawnY = gsap.utils.random(-cHeight/2 + 100, cHeight/2 - 100);
+            spawnX = gsap.utils.random(-cWidth / 2 + 100, -100);
+            spawnY = gsap.utils.random(-cHeight / 2 + 100, cHeight / 2 - 100);
           } else {
             // Top half
-            spawnX = gsap.utils.random(-cWidth/2 + 100, cWidth/2 - 100);
-            spawnY = gsap.utils.random(-cHeight/2 + 100, -100);
+            spawnX = gsap.utils.random(-cWidth / 2 + 100, cWidth / 2 - 100);
+            spawnY = gsap.utils.random(-cHeight / 2 + 100, -100);
           }
 
           gsap.set(wrap, {
@@ -595,19 +601,19 @@ function AppBlockedAnimation() {
           setBinOpen(true);
 
           if (!bin || !containerRef.current) return;
-          
+
           // Bulletproof coordinate calculation using real DOM measurements
           const binRect = bin.getBoundingClientRect();
           const containerRect = containerRef.current.getBoundingClientRect();
-          
+
           // The center of the flex container is 0,0 in GSAP transform space
           const containerCenterX = containerRect.width / 2;
           const containerCenterY = containerRect.height / 2;
-          
+
           // The trash bin opening is horizontally centered, and ~26% down from its top edge
           const binOpeningX = (binRect.left - containerRect.left) + (binRect.width / 2);
           const binOpeningY = (binRect.top - containerRect.top) + (binRect.height * 0.26);
-          
+
           const targetX = binOpeningX - containerCenterX;
           const targetY = binOpeningY - containerCenterY;
 
@@ -682,7 +688,7 @@ function AppLimitSpawner({ delayOffset = 0, index = 0 }: { delayOffset?: number;
   const cardRef = useRef<HTMLDivElement>(null);
   const [currentApp, setCurrentApp] = useState({ id: 'Platform=Facebook, Color=Original.png', used: 30 });
   const [pos, setPos] = useState({ top: 40, right: 10 });
-  
+
   useEffect(() => {
     const apps = [
       { id: 'Platform=Facebook, Color=Original.png', used: 30 },
@@ -693,7 +699,7 @@ function AppLimitSpawner({ delayOffset = 0, index = 0 }: { delayOffset?: number;
       { id: 'Platform=Reddit, Color=Original.png', used: 15 },
     ];
 
-    let ctx = gsap.context(() => {});
+    let ctx = gsap.context(() => { });
     let cycleTimeout: NodeJS.Timeout;
 
     const cycle = () => {
@@ -701,19 +707,19 @@ function AppLimitSpawner({ delayOffset = 0, index = 0 }: { delayOffset?: number;
       const halfSize = Math.floor(apps.length / 2);
       const offset = index === 0 ? 0 : halfSize;
       const randomApp = apps[offset + Math.floor(Math.random() * halfSize)];
-      
+
       // Separate vertical zones to prevent overlapping
       // Zone 0: top 15% to 35%
       // Zone 1: top 55% to 70%
-      const top = index === 0 ? 15 + Math.random() * 20 : 55 + Math.random() * 15; 
+      const top = index === 0 ? 15 + Math.random() * 20 : 55 + Math.random() * 15;
       const right = 2 + Math.random() * 20; // Keep closer to the right edge
-      
+
       setCurrentApp(randomApp);
       setPos({ top, right });
 
       ctx.add(() => {
         // Pop in
-        gsap.fromTo(cardRef.current, 
+        gsap.fromTo(cardRef.current,
           { opacity: 0, scale: 0.8, y: 30 },
           { opacity: 1, scale: 1, y: 0, duration: 0.7, ease: 'back.out(1.4)' }
         );
@@ -741,7 +747,7 @@ function AppLimitSpawner({ delayOffset = 0, index = 0 }: { delayOffset?: number;
   }, [delayOffset, index]);
 
   return (
-    <div 
+    <div
       ref={cardRef}
       className="pointer-events-auto absolute w-[380px] rounded-3xl border border-white/5 bg-[#0d0d12]/95 backdrop-blur-2xl p-5 shadow-[0_50px_100px_rgba(0,0,0,0.95)] opacity-0"
       style={{ top: `${pos.top}%`, right: `${pos.right}%`, willChange: 'transform, opacity' }}
@@ -760,9 +766,9 @@ function AppLimitSpawner({ delayOffset = 0, index = 0 }: { delayOffset?: number;
       {/* Progress Bar */}
       <div className="mb-3.5">
         <div className="h-1 w-full bg-elevate-paper/10 rounded-full overflow-hidden">
-          <div 
-            className="h-full bg-red-500 rounded-full shadow-[0_0_8px_rgba(239,68,68,0.5)]" 
-            style={{ width: `${(currentApp.used / 30) * 100}%` }} 
+          <div
+            className="h-full bg-red-500 rounded-full shadow-[0_0_8px_rgba(239,68,68,0.5)]"
+            style={{ width: `${(currentApp.used / 30) * 100}%` }}
           />
         </div>
         <div className="flex justify-between mt-1">
@@ -799,7 +805,7 @@ function ReelsScrolledAnimation() {
     const swipe = () => {
       currentCount++;
       setCount(currentCount);
-      
+
       // Animate track up by one screen height (680px)
       if (trackRef.current) {
         gsap.to(trackRef.current, {
@@ -837,13 +843,13 @@ function ReelsScrolledAnimation() {
 
   return (
     <div className="absolute inset-0 pointer-events-none flex items-center justify-end pr-[10%] lg:pr-[15%]" style={{ zIndex: 15 }}>
-      
+
       {/* Mobile Phone Mockup */}
       <div className="relative mt-20 w-[330px] h-[680px] rounded-[3.5rem] border-[10px] border-[#0d0d12] bg-[#050508] shadow-[0_60px_120px_rgba(0,0,0,1)] overflow-hidden">
-        
+
         {/* Dynamic Island / Notch */}
         <div className="absolute top-2 left-1/2 -translate-x-1/2 w-[90px] h-[26px] bg-[#0d0d12] rounded-full z-30 shadow-sm" />
-        
+
         {/* Top Counter Overlay */}
         <div className="absolute top-12 left-0 w-full flex justify-center z-30">
           <div className="flex flex-col items-center justify-center bg-black/60 backdrop-blur-xl rounded-lg px-3 py-1.5 border border-white/5 shadow-2xl">
@@ -856,10 +862,10 @@ function ReelsScrolledAnimation() {
         <div ref={trackRef} className="absolute inset-x-0 top-0 flex flex-col will-change-transform z-10">
           {reels.map((grad: string, i: number) => (
             <div key={i} className={`w-full h-[680px] shrink-0 relative ${grad}`}>
-              
+
               {/* Fake UI Overlay for each reel */}
               <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/80" />
-              
+
               {/* Fake Caption */}
               <div className="absolute bottom-6 left-4 space-y-3 z-20">
                 <div className="flex items-center gap-2">
@@ -869,7 +875,7 @@ function ReelsScrolledAnimation() {
                 <div className="w-48 h-2 rounded-full bg-white/30" />
                 <div className="w-32 h-2 rounded-full bg-white/30" />
               </div>
-              
+
               {/* Fake Side Icons */}
               <div className="absolute bottom-12 right-3 flex flex-col gap-6 items-center z-20">
                 <div className="flex flex-col items-center gap-1">
@@ -897,7 +903,7 @@ function ReelsScrolledAnimation() {
 
 function NsfwDetoxAnimation() {
   const screenRef = useRef<HTMLDivElement>(null);
-  
+
   useEffect(() => {
     let ctx = gsap.context(() => {
       const tl = gsap.timeline({ repeat: -1 });
@@ -911,15 +917,15 @@ function NsfwDetoxAnimation() {
 
       tl.to('.nsfw-incognito', { opacity: 1, scale: 1, duration: 0.4, delay: 0.5, ease: 'back.out(1.5)' });
       tl.to('.nsfw-search-text', { width: '100%', duration: 1, delay: 0.5, ease: 'steps(10)' });
-      
+
       // Delay before block
       tl.to('.nsfw-search-text', { opacity: 1, duration: 0.3 });
 
       // BAM! Blocked
       tl.set('.nsfw-block', { display: 'flex' });
       tl.to('.nsfw-block', { opacity: 1, duration: 0.01 });
-      tl.fromTo('.nsfw-block-content', 
-        { scale: 0.8, opacity: 0 }, 
+      tl.fromTo('.nsfw-block-content',
+        { scale: 0.8, opacity: 0 },
         { scale: 1, opacity: 1, duration: 0.3, ease: 'back.out(2)' }
       );
 
@@ -930,27 +936,27 @@ function NsfwDetoxAnimation() {
       tl.set('.nsfw-block', { opacity: 0, display: 'none' });
       tl.set('.nsfw-browser', { opacity: 0, zIndex: 0, display: 'none' });
       tl.set('.nsfw-reels', { opacity: 1, zIndex: 10, display: 'block' });
-      
+
       // Hold normal reel
       tl.to('.nsfw-reels-container', { y: 0, duration: 2.5 });
-      
+
       // Swipe to next reel (suggestive silhouette)
       tl.to('.nsfw-reels-container', { y: -560, duration: 0.6, ease: 'power2.inOut' });
-      
+
       // Hold silhouette for a short moment so the user sees it before it's blocked
       tl.to('.nsfw-reels-container', { y: -560, duration: 0.8 });
-      
+
       // BAM! Blocked again
       tl.set('.nsfw-block', { display: 'flex' });
       tl.to('.nsfw-block', { opacity: 1, duration: 0.01 });
-      tl.fromTo('.nsfw-block-content', 
-        { scale: 0.8, opacity: 0 }, 
+      tl.fromTo('.nsfw-block-content',
+        { scale: 0.8, opacity: 0 },
         { scale: 1, opacity: 1, duration: 0.3, ease: 'back.out(2)' }
       );
-      
+
       // Hold block screen
       tl.to('.nsfw-block-content', { opacity: 1, duration: 2 });
-      
+
       // Reset for next loop
       tl.set('.nsfw-block', { opacity: 0, display: 'none' });
       tl.set('.nsfw-reels-container', { y: 0 });
@@ -964,7 +970,7 @@ function NsfwDetoxAnimation() {
     <div className="absolute inset-0 pointer-events-none flex items-center justify-end pr-[10%] lg:pr-[15%]" style={{ zIndex: 15 }}>
       {/* Mobile Phone Mockup */}
       <div className="relative mt-20 w-[330px] h-[680px] rounded-[3.5rem] border-[10px] border-[#0d0d12] bg-[#050508] shadow-[0_60px_120px_rgba(0,0,0,1)] overflow-hidden" ref={screenRef}>
-        
+
         {/* Dynamic Island / Notch */}
         <div className="absolute top-2 left-1/2 -translate-x-1/2 w-[90px] h-[26px] bg-[#0d0d12] rounded-full z-30 shadow-sm" />
 
@@ -977,7 +983,7 @@ function NsfwDetoxAnimation() {
             <div className="w-6 h-6 rounded-full bg-white/10" />
             <div className="nsfw-incognito flex items-center gap-1 px-3 py-1 bg-gray-800 rounded-full border border-gray-600">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-gray-300">
-                <path d="M22 17.5L22 12C22 8 18 6 12 6C6 6 2 8 2 12V17.5M15 21.5C17.5 21.5 20 19.5 20 17.5C20 15.5 17.5 13.5 15 13.5C12.5 13.5 10 15.5 10 17.5C10 19.5 12.5 21.5 15 21.5ZM4 17.5C4 19.5 6.5 21.5 9 21.5C11.5 21.5 14 19.5 14 17.5C14 15.5 11.5 13.5 9 13.5C6.5 13.5 4 15.5 4 17.5Z"/>
+                <path d="M22 17.5L22 12C22 8 18 6 12 6C6 6 2 8 2 12V17.5M15 21.5C17.5 21.5 20 19.5 20 17.5C20 15.5 17.5 13.5 15 13.5C12.5 13.5 10 15.5 10 17.5C10 19.5 12.5 21.5 15 21.5ZM4 17.5C4 19.5 6.5 21.5 9 21.5C11.5 21.5 14 19.5 14 17.5C14 15.5 11.5 13.5 9 13.5C6.5 13.5 4 15.5 4 17.5Z" />
               </svg>
               <span className="text-[10px] text-gray-300 font-medium">Incognito</span>
             </div>
@@ -987,7 +993,7 @@ function NsfwDetoxAnimation() {
           {/* Search Bar */}
           <div className="w-full h-12 bg-[#1e1e1e] rounded-xl flex items-center px-4 overflow-hidden shadow-inner">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-gray-500 mr-2 shrink-0">
-              <circle cx="11" cy="11" r="8"/><path d="M21 21L16.65 16.65"/>
+              <circle cx="11" cy="11" r="8" /><path d="M21 21L16.65 16.65" />
             </svg>
             <div className="nsfw-search-text overflow-hidden whitespace-nowrap">
               <span className="text-white text-sm font-medium tracking-wide">bad videos</span>
@@ -995,7 +1001,7 @@ function NsfwDetoxAnimation() {
             {/* Blinking cursor */}
             <div className="w-[2px] h-4 bg-blue-500 animate-pulse ml-0.5" />
           </div>
-          
+
           {/* Fake content skeleton */}
           <div className="mt-8 flex flex-col gap-4 opacity-30">
             <div className="w-3/4 h-6 rounded-md bg-white/10" />
@@ -1010,30 +1016,30 @@ function NsfwDetoxAnimation() {
            ========================================= */}
         <div className="nsfw-reels absolute inset-0 opacity-0 overflow-hidden bg-black">
           <div className="nsfw-reels-container flex flex-col w-full absolute top-0 left-0">
-            
+
             {/* Reel 1: Normal Content */}
             <div className="w-full h-[560px] shrink-0 relative bg-gradient-to-br from-blue-600 to-indigo-900 flex items-center justify-center">
-               <span className="text-white/20 font-bold text-2xl tracking-widest uppercase">Tech Video</span>
-               <div className="absolute bottom-12 right-3 flex flex-col gap-4 items-center">
-                  <div className="w-8 h-8 rounded-full bg-white/20" />
-                  <div className="w-8 h-8 rounded-full bg-white/20" />
-                  <div className="w-8 h-8 rounded-full bg-white/20" />
-               </div>
+              <span className="text-white/20 font-bold text-2xl tracking-widest uppercase">Tech Video</span>
+              <div className="absolute bottom-12 right-3 flex flex-col gap-4 items-center">
+                <div className="w-8 h-8 rounded-full bg-white/20" />
+                <div className="w-8 h-8 rounded-full bg-white/20" />
+                <div className="w-8 h-8 rounded-full bg-white/20" />
+              </div>
             </div>
 
             {/* Reel 2: Suggestive Silhouette */}
             <div className="w-full h-[560px] shrink-0 relative bg-gradient-to-b from-rose-900 via-pink-800 to-black overflow-hidden">
-               <img 
-                 src={import.meta.env.BASE_URL + "nsfw-silhouette.png"} 
-                 alt="Silhouette" 
-                 className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[220px] h-auto drop-shadow-[0_0_20px_rgba(255,50,100,0.8)]" 
-               />
-               <div className="absolute inset-0 bg-black/20" />
-               <div className="absolute bottom-12 right-3 flex flex-col gap-4 items-center">
-                  <div className="w-8 h-8 rounded-full bg-white/20" />
-                  <div className="w-8 h-8 rounded-full bg-white/20" />
-                  <div className="w-8 h-8 rounded-full bg-white/20" />
-               </div>
+              <img
+                src={import.meta.env.BASE_URL + "nsfw-silhouette.png"}
+                alt="Silhouette"
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[220px] h-auto drop-shadow-[0_0_20px_rgba(255,50,100,0.8)]"
+              />
+              <div className="absolute inset-0 bg-black/20" />
+              <div className="absolute bottom-12 right-3 flex flex-col gap-4 items-center">
+                <div className="w-8 h-8 rounded-full bg-white/20" />
+                <div className="w-8 h-8 rounded-full bg-white/20" />
+                <div className="w-8 h-8 rounded-full bg-white/20" />
+              </div>
             </div>
 
           </div>
@@ -1047,12 +1053,12 @@ function NsfwDetoxAnimation() {
             {/* Shield / Warning Icon */}
             <div className="w-16 h-16 rounded-full bg-red-500/20 flex items-center justify-center mb-6">
               <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                <line x1="12" y1="8" x2="12" y2="12"/>
-                <line x1="12" y1="16" x2="12.01" y2="16"/>
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                <line x1="12" y1="8" x2="12" y2="12" />
+                <line x1="12" y1="16" x2="12.01" y2="16" />
               </svg>
             </div>
-            
+
             <h3 className="text-red-500 font-black text-xl uppercase tracking-widest mb-2">Content Blocked</h3>
             <p className="text-white/70 text-sm leading-relaxed px-4">
               AI NSFW guard is active.
@@ -1082,9 +1088,9 @@ function WorkoutPlanningAnimation() {
       const tl = gsap.timeline({ repeat: -1 });
 
       // INITIAL SETUP
-      tl.set('.wo-screen-b', { x: 350, display: 'none' }); 
-      tl.set('.wo-screen-c', { y: 750, display: 'none' }); 
-      tl.set('.wo-added-item', { display: 'none', opacity: 0, height: 0, margin: 0 }); 
+      tl.set('.wo-screen-b', { x: 350, display: 'none' });
+      tl.set('.wo-screen-c', { y: 750, display: 'none' });
+      tl.set('.wo-added-item', { display: 'none', opacity: 0, height: 0, margin: 0 });
       tl.set('.wo-timer-min', { innerHTML: '44m' });
       tl.set('.wo-timer-sec', { innerHTML: '58s' });
       tl.set('.wo-b-timer', { innerHTML: '44m58s' });
@@ -1109,7 +1115,7 @@ function WorkoutPlanningAnimation() {
       tl.to({}, { duration: 1 });
       tl.to('.wo-c-scroll', { y: -50, duration: 1, ease: 'power2.inOut' });
       tl.to({}, { duration: 0.5 });
-      
+
       tl.to('.wo-c-ex1', { scale: 0.95, duration: 0.1 });
       tl.to('.wo-c-ex1', { scale: 1, backgroundColor: '#18181b', duration: 0.1 });
 
@@ -1149,7 +1155,7 @@ function WorkoutPlanningAnimation() {
 
       tl.to({}, { duration: 0.5 }); // Wait before clicking
       tl.set('.wo-b-timer', { innerHTML: '45m03s' });
-      
+
       // Click DONE button
       tl.to('.wo-real-btn-done', { scale: 0.95, duration: 0.1 });
       tl.to('.wo-real-btn-done', { scale: 1, backgroundColor: '#15803d', duration: 0.2 });
@@ -1159,7 +1165,7 @@ function WorkoutPlanningAnimation() {
       tl.to('.wo-set-1-active', { opacity: 0, duration: 0.2, display: 'none' }, "-=0.2");
       tl.set('.wo-set-1-title', { innerHTML: 'Set 1 <span class="ml-1 text-white opacity-70">Done</span>' });
       tl.to('.wo-set-1', { borderColor: 'transparent', duration: 0.3 }, "-=0.1");
-      
+
       tl.to('.wo-set-2', { borderColor: '#eab308', duration: 0.3 }, "-=0.3");
       tl.set('.wo-set-2-active', { display: 'inline' });
       tl.to('.wo-set-2-active', { opacity: 1, duration: 0.2 }, "-=0.1");
@@ -1200,7 +1206,7 @@ function WorkoutPlanningAnimation() {
   return (
     <div className="absolute inset-0 pointer-events-none flex items-center justify-end pr-[10%] lg:pr-[15%]" style={{ zIndex: 15 }}>
       {/* Mobile Phone Mockup */}
-      <div 
+      <div
         ref={containerRef}
         className="relative mt-20 w-[330px] h-[680px] rounded-[3.5rem] border-[10px] border-[#0d0d12] bg-[#050505] shadow-[0_60px_120px_rgba(0,0,0,1)] overflow-hidden"
       >
@@ -1208,17 +1214,17 @@ function WorkoutPlanningAnimation() {
 
         {/* SCALE WRAPPER */}
         <div className="absolute inset-0 z-10" style={{ width: '125%', height: '125%', transform: 'scale(0.8)', transformOrigin: 'top left' }}>
-          
+
           {/* =========================================
               SCREEN A: WORKOUT OVERVIEW
               ========================================= */}
           <div className="absolute inset-0 pt-16 flex flex-col overflow-hidden bg-[#050505]">
             <div className="px-5 flex items-center justify-between mb-5 shrink-0">
               <div className="flex items-center gap-3">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5"><line x1="19" y1="12" x2="5" y2="12" /><polyline points="12 19 5 12 12 5" /></svg>
                 <h1 className="text-white font-bold text-xl">Workout</h1>
               </div>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#a1a1aa" strokeWidth="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#a1a1aa" strokeWidth="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" /><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" /></svg>
             </div>
 
             <div className="px-5 overflow-y-auto no-scrollbar pb-32 flex-1">
@@ -1241,7 +1247,7 @@ function WorkoutPlanningAnimation() {
               <div className="flex items-center justify-between mb-5">
                 <h3 className="text-white font-bold text-base">Exercises</h3>
                 <div className="bg-[#141517] w-8 h-8 rounded-full flex items-center justify-center">
-                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3"><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
                 </div>
               </div>
 
@@ -1250,11 +1256,11 @@ function WorkoutPlanningAnimation() {
                   <span className="text-[#71717a] text-[11px] font-bold">Selected exercise</span>
                   <h4 className="text-white font-bold text-lg leading-tight mb-1">Pull Ups</h4>
                   <p className="text-[#a1a1aa] text-xs mb-4">Back · 3 sets</p>
-                  
+
                   <div className="flex items-center gap-2 mb-4">
                     <span className="text-[#22c55e] bg-[#052e16] px-2.5 py-1 rounded-full text-[10px] font-bold">Hypertrophy + Manual</span>
                   </div>
-                  
+
                   <div className="flex gap-1.5 mb-4">
                     <div className="h-1 flex-1 bg-[#22c55e] rounded-full" />
                     <div className="h-1 flex-1 bg-[#22c55e] rounded-full" />
@@ -1296,7 +1302,7 @@ function WorkoutPlanningAnimation() {
               SCREEN B: EXERCISE DETAIL (ACTIVE UI)
               ========================================= */}
           <div className="wo-screen-b absolute inset-0 bg-[#0a0a0c] z-30 flex flex-col overflow-hidden">
-            
+
             <div className="px-5 pt-16 flex items-center justify-between mb-5 shrink-0 bg-[#0a0a0c] z-10 pb-2">
               <div className="bg-[#eab308] text-black font-bold px-5 py-2 rounded-full text-xs shadow-sm">Pause</div>
               <div className="wo-b-timer text-[#22c55e] font-black text-xl tracking-tighter">44m58s</div>
@@ -1305,7 +1311,7 @@ function WorkoutPlanningAnimation() {
 
             <div className="overflow-hidden flex-1 relative">
               <div className="wo-b-inner-scroll px-5 flex flex-col pb-48">
-                
+
                 <div className="flex items-start justify-between mb-5">
                   <div>
                     <h2 className="text-white font-black text-2xl tracking-tight leading-tight">Pull Ups</h2>
@@ -1315,12 +1321,12 @@ function WorkoutPlanningAnimation() {
                     </div>
                   </div>
                   <div className="wo-close-btn p-2">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
                   </div>
                 </div>
 
                 <div className="w-full h-48 bg-white rounded-[1.5rem] mb-8 flex items-center justify-center overflow-hidden p-4 shadow-lg border-2 border-[#eab308]">
-                   <ImageWithSkeleton className="w-full h-full object-contain mix-blend-multiply" src={import.meta.env.BASE_URL + "pull-up.gif"} alt="Exercise" />
+                  <ImageWithSkeleton className="w-full h-full object-contain mix-blend-multiply" src={import.meta.env.BASE_URL + "pull-up.gif"} alt="Exercise" />
                 </div>
 
                 <div className="flex items-start justify-between mb-4">
@@ -1330,7 +1336,7 @@ function WorkoutPlanningAnimation() {
                     <p className="text-[#a1a1aa] text-xs leading-relaxed">Finish, skip, or send the highlighted set to later before moving on.</p>
                   </div>
                   <div className="shrink-0 mt-1">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" /></svg>
                   </div>
                 </div>
 
@@ -1383,34 +1389,34 @@ function WorkoutPlanningAnimation() {
               SCREEN C: ADD EXERCISE OVERLAY
               ========================================= */}
           <div className="wo-screen-c absolute inset-0 bg-[#050505] z-40 flex flex-col pt-16 overflow-hidden">
-            
+
             <div className="px-5 flex items-center justify-between mb-5 shrink-0">
               <h1 className="text-white font-bold text-xl">Add exercise</h1>
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
             </div>
-            
+
             <div className="px-5 flex-1 overflow-hidden relative">
               <div className="wo-c-scroll absolute top-0 left-5 right-5 flex flex-col gap-6 pb-24">
-                
+
                 <div className="w-full bg-[#111113] rounded-2xl p-4 border border-[#18181b]">
                   <span className="text-[#71717a] text-[15px]">Search exercises...</span>
                 </div>
 
                 <div className="flex items-center justify-between bg-[#111113] rounded-2xl p-1.5 border border-[#18181b]">
                   <div className="flex-1 bg-[#22c55e] rounded-xl py-2.5 flex flex-col items-center justify-center gap-1.5 shadow-sm">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="2"><rect x="3" y="3" width="7" height="7" /><rect x="14" y="3" width="7" height="7" /><rect x="14" y="14" width="7" height="7" /><rect x="3" y="14" width="7" height="7" /></svg>
                     <span className="text-black text-[10px] font-bold">All</span>
                   </div>
                   <div className="flex-1 py-2.5 flex flex-col items-center justify-center gap-1.5">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#a1a1aa" strokeWidth="2"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#a1a1aa" strokeWidth="2"><path d="M12 2v20" /><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" /></svg>
                     <span className="text-[#a1a1aa] text-[10px] font-bold">Muscle</span>
                   </div>
                   <div className="flex-1 py-2.5 flex flex-col items-center justify-center gap-1.5">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#a1a1aa" strokeWidth="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#a1a1aa" strokeWidth="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12" /></svg>
                     <span className="text-[#a1a1aa] text-[10px] font-bold">Exercise</span>
                   </div>
                   <div className="flex-1 py-2.5 flex flex-col items-center justify-center gap-1.5">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#a1a1aa" strokeWidth="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#a1a1aa" strokeWidth="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z" /><line x1="7" y1="7" x2="7.01" y2="7" /></svg>
                     <span className="text-[#a1a1aa] text-[10px] font-bold">Tags</span>
                   </div>
                 </div>
@@ -1429,36 +1435,36 @@ function WorkoutPlanningAnimation() {
                   </div>
 
                   <div className="flex flex-col gap-3">
-                     
-                     <div className="wo-c-ex1 flex items-center gap-4 bg-[#111113] p-3 rounded-2xl border border-white/5">
-                       <div className="w-[72px] h-[72px] bg-white rounded-xl flex items-center justify-center overflow-hidden p-1.5 shrink-0">
-                          <ImageWithSkeleton src={import.meta.env.BASE_URL + "pull-up.gif"} className="w-full h-full object-contain mix-blend-multiply" alt="Pull Ups" />
-                       </div>
-                       <div className="flex-1">
-                          <h3 className="text-white font-bold text-[15px] mb-1">Pull Ups</h3>
-                          <p className="text-[#71717a] text-xs">Back · Compound</p>
-                       </div>
-                     </div>
 
-                     <div className="flex items-center gap-4 bg-[#111113] p-3 rounded-2xl border border-white/5">
-                       <div className="w-[72px] h-[72px] bg-white rounded-xl flex items-center justify-center overflow-hidden p-1.5 shrink-0">
-                          <ImageWithSkeleton src={import.meta.env.BASE_URL + "dumbbell-bench-press.gif"} className="w-full h-full object-contain mix-blend-multiply" alt="Bench Press" />
-                       </div>
-                       <div className="flex-1">
-                          <h3 className="text-white font-bold text-[15px] mb-1">Bench Press</h3>
-                          <p className="text-[#71717a] text-xs">Pectorals · Compound</p>
-                       </div>
-                     </div>
+                    <div className="wo-c-ex1 flex items-center gap-4 bg-[#111113] p-3 rounded-2xl border border-white/5">
+                      <div className="w-[72px] h-[72px] bg-white rounded-xl flex items-center justify-center overflow-hidden p-1.5 shrink-0">
+                        <ImageWithSkeleton src={import.meta.env.BASE_URL + "pull-up.gif"} className="w-full h-full object-contain mix-blend-multiply" alt="Pull Ups" />
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="text-white font-bold text-[15px] mb-1">Pull Ups</h3>
+                        <p className="text-[#71717a] text-xs">Back · Compound</p>
+                      </div>
+                    </div>
 
-                     <div className="flex items-center gap-4 bg-[#111113] p-3 rounded-2xl border border-white/5">
-                       <div className="w-[72px] h-[72px] bg-white rounded-xl flex items-center justify-center overflow-hidden p-1.5 shrink-0">
-                          <ImageWithSkeleton src={import.meta.env.BASE_URL + "push-up.gif"} className="w-full h-full object-contain mix-blend-multiply" alt="Push Ups" />
-                       </div>
-                       <div className="flex-1">
-                          <h3 className="text-white font-bold text-[15px] mb-1">Push Ups</h3>
-                          <p className="text-[#71717a] text-xs">Chest · Compound</p>
-                       </div>
-                     </div>
+                    <div className="flex items-center gap-4 bg-[#111113] p-3 rounded-2xl border border-white/5">
+                      <div className="w-[72px] h-[72px] bg-white rounded-xl flex items-center justify-center overflow-hidden p-1.5 shrink-0">
+                        <ImageWithSkeleton src={import.meta.env.BASE_URL + "dumbbell-bench-press.gif"} className="w-full h-full object-contain mix-blend-multiply" alt="Bench Press" />
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="text-white font-bold text-[15px] mb-1">Bench Press</h3>
+                        <p className="text-[#71717a] text-xs">Pectorals · Compound</p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-4 bg-[#111113] p-3 rounded-2xl border border-white/5">
+                      <div className="w-[72px] h-[72px] bg-white rounded-xl flex items-center justify-center overflow-hidden p-1.5 shrink-0">
+                        <ImageWithSkeleton src={import.meta.env.BASE_URL + "push-up.gif"} className="w-full h-full object-contain mix-blend-multiply" alt="Push Ups" />
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="text-white font-bold text-[15px] mb-1">Push Ups</h3>
+                        <p className="text-[#71717a] text-xs">Chest · Compound</p>
+                      </div>
+                    </div>
 
                   </div>
                 </div>
@@ -1466,7 +1472,7 @@ function WorkoutPlanningAnimation() {
               </div>
             </div>
           </div>
-        
+
         </div>
       </div>
     </div>
@@ -1481,11 +1487,11 @@ function PhysicalAnalyticsAnimation() {
   useEffect(() => {
     let ctx = gsap.context(() => {
       const tl = gsap.timeline({ repeat: -1 });
-      
+
       // Init states
       tl.set('.pa-screen-b', { x: 350, display: 'none' });
       tl.set('.pa-screen-c', { y: 750, display: 'none' });
-      
+
       // Screen A -> Screen B (Click Monthly analysis)
       tl.to({}, { duration: 1.5 });
       tl.to('.pa-btn-monthly', { scale: 0.95, duration: 0.1 });
@@ -1495,11 +1501,11 @@ function PhysicalAnalyticsAnimation() {
 
       // Screen B view
       tl.to({}, { duration: 1.5 });
-      
+
       // Scroll down in Screen B to see the heatmap
       tl.to('.pa-b-scroll', { y: -250, duration: 1.2, ease: 'power2.inOut' });
       tl.to({}, { duration: 0.5 });
-      
+
       // Click heatmap to open Screen C
       tl.to('.pa-heatmap-card', { scale: 0.97, duration: 0.1 });
       tl.to('.pa-heatmap-card', { scale: 1, duration: 0.1 });
@@ -1508,7 +1514,7 @@ function PhysicalAnalyticsAnimation() {
 
       // Screen C view (Detailed Heatmap)
       tl.to({}, { duration: 2.5 });
-      
+
       // Close Screen C
       tl.to('.pa-c-close', { scale: 0.8, duration: 0.1 });
       tl.to('.pa-c-close', { scale: 1, duration: 0.1 });
@@ -1518,13 +1524,13 @@ function PhysicalAnalyticsAnimation() {
       // Reset scroll in Screen B
       tl.to('.pa-b-scroll', { y: 0, duration: 0.8, ease: 'power3.inOut' });
       tl.to({}, { duration: 0.5 });
-      
+
       // Close Screen B
       tl.to('.pa-b-close', { scale: 0.8, duration: 0.1 });
       tl.to('.pa-b-close', { scale: 1, duration: 0.1 });
       tl.to('.pa-screen-b', { x: 350, duration: 0.4, ease: 'power3.in' });
       tl.set('.pa-screen-b', { display: 'none' });
-      
+
     }, containerRef);
     return () => ctx.revert();
   }, []);
@@ -1532,7 +1538,7 @@ function PhysicalAnalyticsAnimation() {
   return (
     <div className="absolute inset-0 pointer-events-none flex items-center justify-end pr-[10%] lg:pr-[15%]" style={{ zIndex: 15 }}>
       {/* Mobile Phone Mockup - REMOVED font-sans */}
-      <div 
+      <div
         ref={containerRef}
         className="relative mt-20 w-[330px] h-[680px] rounded-[3.5rem] border-[10px] border-[#0d0d12] bg-[#050505] shadow-[0_60px_120px_rgba(0,0,0,1)] overflow-hidden"
       >
@@ -1540,61 +1546,61 @@ function PhysicalAnalyticsAnimation() {
 
         {/* SCALE WRAPPER */}
         <div className="absolute inset-0 z-10" style={{ width: '125%', height: '125%', transform: 'scale(0.8)', transformOrigin: 'top left' }}>
-          
+
           {/* =========================================
               SCREEN A: DASHBOARD
               ========================================= */}
           <div className="absolute inset-0 pt-10 flex flex-col bg-[#050505] overflow-hidden text-white">
             <div className="px-5 overflow-y-auto no-scrollbar pb-24 flex-1">
-              
-              <div className="relative w-full h-[380px] bg-[#0a0a0c] rounded-[2rem] border border-white/5 overflow-hidden mb-6 mt-4 flex flex-col justify-end p-5">
-                 
-                 <div className="absolute inset-0 w-full h-full opacity-100 flex items-center justify-center p-4 pt-12 pb-0">
-                    <ImageWithSkeleton src={import.meta.env.BASE_URL + "muscular-system.svg"} className="w-full h-full object-contain object-bottom" alt="Muscular System" />
-                 </div>
-                 <div className="absolute top-4 right-4 drop-shadow-lg">
-                   <ElevateMedal size={40} color="#F59E0B" rank="I" />
-                 </div>
 
-                 <div className="relative z-10 w-full">
-                   <div className="flex items-center gap-2 mb-2"><span className="text-white font-black text-sm drop-shadow-md">Current Streak</span><span className="text-white font-bold text-[11px]">- 1 days</span></div>
-                   <div className="flex items-center gap-2 mb-4"><span className="text-white font-black text-sm drop-shadow-md">Longest Streak</span><span className="text-white font-bold text-[11px]">- 10 days</span></div>
-                   
-                   <div className="flex justify-between items-end mb-2">
-                      <div>
-                        <span className="text-white font-black text-sm drop-shadow-md">Level 1 <span className="font-normal text-white/70">- Beginner</span></span>
-                      </div>
-                      <div className="flex items-center gap-1.5">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" strokeWidth="2.5"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-                        <span className="text-[#f59e0b] font-bold text-[11px]">1%</span>
-                      </div>
-                   </div>
-                   
-                   <span className="text-[#f59e0b] text-[10px] font-bold block mb-2 drop-shadow-md">Bronze I</span>
-                   
-                   <div className="w-full bg-white/10 h-1.5 rounded-full overflow-hidden mb-2">
-                       <div className="bg-[#f59e0b] h-full w-[5%] rounded-full shadow-[0_0_10px_#f59e0b]"></div>
-                   </div>
-                   <div className="text-right text-[9px] text-white/50 font-bold">325 XP</div>
-                 </div>
-                 
-                 <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#050505] to-transparent pointer-events-none"></div>
+              <div className="relative w-full h-[380px] bg-[#0a0a0c] rounded-[2rem] border border-white/5 overflow-hidden mb-6 mt-4 flex flex-col justify-end p-5">
+
+                <div className="absolute inset-0 w-full h-full opacity-100 flex items-center justify-center p-4 pt-12 pb-0">
+                  <ImageWithSkeleton src={import.meta.env.BASE_URL + "muscular-system.svg"} className="w-full h-full object-contain object-bottom" alt="Muscular System" />
+                </div>
+                <div className="absolute top-4 right-4 drop-shadow-lg">
+                  <ElevateMedal size={40} color="#F59E0B" rank="I" />
+                </div>
+
+                <div className="relative z-10 w-full">
+                  <div className="flex items-center gap-2 mb-2"><span className="text-white font-black text-sm drop-shadow-md">Current Streak</span><span className="text-white font-bold text-[11px]">- 1 days</span></div>
+                  <div className="flex items-center gap-2 mb-4"><span className="text-white font-black text-sm drop-shadow-md">Longest Streak</span><span className="text-white font-bold text-[11px]">- 10 days</span></div>
+
+                  <div className="flex justify-between items-end mb-2">
+                    <div>
+                      <span className="text-white font-black text-sm drop-shadow-md">Level 1 <span className="font-normal text-white/70">- Beginner</span></span>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" strokeWidth="2.5"><circle cx="12" cy="12" r="10" /><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" /><line x1="12" y1="17" x2="12.01" y2="17" /></svg>
+                      <span className="text-[#f59e0b] font-bold text-[11px]">1%</span>
+                    </div>
+                  </div>
+
+                  <span className="text-[#f59e0b] text-[10px] font-bold block mb-2 drop-shadow-md">Bronze I</span>
+
+                  <div className="w-full bg-white/10 h-1.5 rounded-full overflow-hidden mb-2">
+                    <div className="bg-[#f59e0b] h-full w-[5%] rounded-full shadow-[0_0_10px_#f59e0b]"></div>
+                  </div>
+                  <div className="text-right text-[9px] text-white/50 font-bold">325 XP</div>
+                </div>
+
+                <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#050505] to-transparent pointer-events-none"></div>
               </div>
 
               <div className="flex flex-col gap-3">
-                 <div className="w-full py-3.5 bg-[#22c55e] rounded-xl flex items-center justify-center font-black text-black text-[13px] shadow-lg">Workout planner</div>
-                 <div className="pa-btn-monthly w-full py-3.5 bg-[#f59e0b] rounded-xl flex items-center justify-center font-black text-black text-[13px] shadow-lg cursor-pointer">Monthly analysis</div>
-                 <div className="w-full py-3.5 bg-[#1e1b4b] rounded-xl flex items-center justify-center font-black text-[#4ade80] text-[13px] shadow-lg gap-2">
-                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-                   Exercise browser
-                 </div>
+                <div className="w-full py-3.5 bg-[#22c55e] rounded-xl flex items-center justify-center font-black text-black text-[13px] shadow-lg">Workout planner</div>
+                <div className="pa-btn-monthly w-full py-3.5 bg-[#f59e0b] rounded-xl flex items-center justify-center font-black text-black text-[13px] shadow-lg cursor-pointer">Monthly analysis</div>
+                <div className="w-full py-3.5 bg-[#1e1b4b] rounded-xl flex items-center justify-center font-black text-[#4ade80] text-[13px] shadow-lg gap-2">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
+                  Exercise browser
+                </div>
               </div>
             </div>
 
             <div className="absolute bottom-0 left-0 right-0 h-16 bg-black flex justify-around items-center border-t border-white/5 z-20">
-               <div className="opacity-50"><svg width="20" height="20" viewBox="0 0 24 24" fill="white"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></svg></div>
-               <div className="opacity-50"><svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div>
-               <div className="opacity-100"><svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+              <div className="opacity-50"><svg width="20" height="20" viewBox="0 0 24 24" fill="white"><circle cx="12" cy="12" r="10" /><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" /><path d="M2 12h20" /></svg></div>
+              <div className="opacity-50"><svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /></svg></div>
+              <div className="opacity-100"><svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg></div>
             </div>
           </div>
 
@@ -1603,109 +1609,109 @@ function PhysicalAnalyticsAnimation() {
               ========================================= */}
           <div className="pa-screen-b absolute inset-0 bg-[#050505] flex flex-col pt-12 overflow-hidden z-30">
             <div className="px-5 flex items-center gap-3 mb-5 shrink-0">
-               <div className="pa-b-close p-1 cursor-pointer">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-               </div>
-               <h1 className="text-white font-bold text-[17px]">Physical Analytics</h1>
+              <div className="pa-b-close p-1 cursor-pointer">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5"><line x1="19" y1="12" x2="5" y2="12" /><polyline points="12 19 5 12 12 5" /></svg>
+              </div>
+              <h1 className="text-white font-bold text-[17px]">Physical Analytics</h1>
             </div>
 
             <div className="overflow-hidden flex-1 relative">
               <div className="pa-b-scroll px-5 flex flex-col pb-24">
-                 
-                 {/* Composition Card */}
-                 <div className="bg-[#0a0a0c] rounded-3xl p-5 border border-white/5 mb-4 shadow-xl">
-                    <span className="text-[#22c55e] font-black text-[11px] block mb-1">June 2026</span>
-                    <h2 className="text-white font-black text-xl tracking-tight leading-tight mb-1">Anatomical Composition</h2>
-                    <span className="text-[#a1a1aa] text-[11px] block mb-6">BMI 23.4 - Normal</span>
-                    
-                    <div className="flex gap-4">
-                       <div className="w-1/2 flex items-center justify-center p-2">
-                          <ImageWithSkeleton src={import.meta.env.BASE_URL + "muscular-system.svg"} className="w-full h-full object-contain opacity-90" alt="Anatomy" />
-                       </div>
-                       <div className="w-1/2 flex flex-col gap-4">
-                          <div>
-                             <span className="text-[#a1a1aa] font-bold text-[9px] block mb-0.5">Height</span>
-                             <span className="text-white font-black text-lg">179</span>
-                          </div>
-                          <div>
-                             <span className="text-[#a1a1aa] font-bold text-[9px] block mb-0.5">Weight</span>
-                             <span className="text-white font-black text-lg">75</span>
-                          </div>
-                          <div>
-                             <span className="text-[#a1a1aa] font-bold text-[9px] block mb-0.5">Goal bodyweight</span>
-                             <span className="text-white font-black text-lg">40</span>
-                          </div>
-                          <div className="flex flex-wrap gap-1.5 mt-1">
-                             <span className="border border-[#22c55e] text-[#22c55e] font-bold text-[9px] px-2 py-0.5 rounded-full bg-[#052e16]">Cut</span>
-                             <span className="text-white font-bold text-[9px] px-2 py-0.5">Maintain</span>
-                             <span className="text-white font-bold text-[9px] px-2 py-0.5">Fat loss</span>
-                             <span className="text-white font-bold text-[9px] px-2 py-0.5">Gain</span>
-                          </div>
-                       </div>
-                    </div>
 
-                    <div className="flex items-center justify-between mt-8 mb-4">
-                       <h3 className="text-white font-black text-[15px]">Body Targets</h3>
-                       <span className="text-[#22c55e] font-bold text-[10px]">Formulas</span>
-                    </div>
+                {/* Composition Card */}
+                <div className="bg-[#0a0a0c] rounded-3xl p-5 border border-white/5 mb-4 shadow-xl">
+                  <span className="text-[#22c55e] font-black text-[11px] block mb-1">June 2026</span>
+                  <h2 className="text-white font-black text-xl tracking-tight leading-tight mb-1">Anatomical Composition</h2>
+                  <span className="text-[#a1a1aa] text-[11px] block mb-6">BMI 23.4 - Normal</span>
 
-                    <div className="grid grid-cols-2 gap-2">
-                       <div className="col-span-2 bg-[#111113] border border-white/5 rounded-[1rem] p-3">
-                          <span className="text-[#a1a1aa] font-bold text-[9px] block mb-1">Calories</span>
-                          <span className="text-[#22c55e] font-black text-lg">1800 kcal</span>
-                       </div>
-                       <div className="bg-[#111113] border border-white/5 rounded-[1rem] p-3">
-                          <span className="text-[#a1a1aa] font-bold text-[9px] block mb-1">Protein</span>
-                          <span className="text-[#0ea5e9] font-black text-base">143g</span>
-                       </div>
-                       <div className="bg-[#111113] border border-white/5 rounded-[1rem] p-3">
-                          <span className="text-[#a1a1aa] font-bold text-[9px] block mb-1">Fat</span>
-                          <span className="text-[#eab308] font-black text-base">45g</span>
-                       </div>
-                       <div className="bg-[#111113] border border-white/5 rounded-[1rem] p-3">
-                          <span className="text-[#a1a1aa] font-bold text-[9px] block mb-1">Carbs</span>
-                          <span className="text-[#3b82f6] font-black text-base">206g</span>
-                       </div>
-                       <div className="bg-[#111113] border border-white/5 rounded-[1rem] p-3">
-                          <span className="text-[#a1a1aa] font-bold text-[9px] block mb-1">Fiber</span>
-                          <span className="text-[#22c55e] font-black text-base">25g</span>
-                       </div>
-                       <div className="bg-[#111113] border border-white/5 rounded-[1rem] p-3">
-                          <span className="text-[#a1a1aa] font-bold text-[9px] block mb-1">Water</span>
-                          <span className="text-[#0ea5e9] font-black text-base">3.5L+</span>
-                       </div>
-                       <div className="bg-[#111113] border border-white/5 rounded-[1rem] p-3">
-                          <span className="text-[#a1a1aa] font-bold text-[9px] block mb-1">Loss</span>
-                          <span className="text-[#ef4444] font-black text-base">0.5kg/wk</span>
-                       </div>
+                  <div className="flex gap-4">
+                    <div className="w-1/2 flex items-center justify-center p-2">
+                      <ImageWithSkeleton src={import.meta.env.BASE_URL + "muscular-system.svg"} className="w-full h-full object-contain opacity-90" alt="Anatomy" />
                     </div>
-                 </div>
+                    <div className="w-1/2 flex flex-col gap-4">
+                      <div>
+                        <span className="text-[#a1a1aa] font-bold text-[9px] block mb-0.5">Height</span>
+                        <span className="text-white font-black text-lg">179</span>
+                      </div>
+                      <div>
+                        <span className="text-[#a1a1aa] font-bold text-[9px] block mb-0.5">Weight</span>
+                        <span className="text-white font-black text-lg">75</span>
+                      </div>
+                      <div>
+                        <span className="text-[#a1a1aa] font-bold text-[9px] block mb-0.5">Goal bodyweight</span>
+                        <span className="text-white font-black text-lg">40</span>
+                      </div>
+                      <div className="flex flex-wrap gap-1.5 mt-1">
+                        <span className="border border-[#22c55e] text-[#22c55e] font-bold text-[9px] px-2 py-0.5 rounded-full bg-[#052e16]">Cut</span>
+                        <span className="text-white font-bold text-[9px] px-2 py-0.5">Maintain</span>
+                        <span className="text-white font-bold text-[9px] px-2 py-0.5">Fat loss</span>
+                        <span className="text-white font-bold text-[9px] px-2 py-0.5">Gain</span>
+                      </div>
+                    </div>
+                  </div>
 
-                 {/* Heatmap Card */}
-                 <div className="pa-heatmap-card bg-[#0a0a0c] rounded-3xl p-5 border border-white/5 shadow-xl cursor-pointer">
-                    <div className="flex items-center justify-between mb-4">
-                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5"><polyline points="15 18 9 12 15 6"/></svg>
-                       <div className="text-center">
-                         <h3 className="text-white font-black text-[15px] leading-tight mb-1">Heaviest weight this month</h3>
-                         <span className="text-[#22c55e] font-bold text-xs block">June 2026</span>
-                       </div>
-                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                  <div className="flex items-center justify-between mt-8 mb-4">
+                    <h3 className="text-white font-black text-[15px]">Body Targets</h3>
+                    <span className="text-[#22c55e] font-bold text-[10px]">Formulas</span>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-2">
+                    <div className="col-span-2 bg-[#111113] border border-white/5 rounded-[1rem] p-3">
+                      <span className="text-[#a1a1aa] font-bold text-[9px] block mb-1">Calories</span>
+                      <span className="text-[#22c55e] font-black text-lg">1800 kcal</span>
                     </div>
-                    
-                    {/* Mini Grid */}
-                    <div className="mt-6 flex gap-3 opacity-80">
-                       <div className="flex-1 grid grid-cols-10 gap-0.5">
-                          {Array.from({length: 60}).map((_, i) => (
-                             <div key={i} className={`aspect-square ${Math.random() > 0.8 ? 'bg-[#ef4444]' : Math.random() > 0.85 ? 'bg-[#3b82f6]' : Math.random() > 0.7 ? 'bg-white/30' : 'bg-[#18181b]'}`}></div>
-                          ))}
-                       </div>
-                       <div className="flex-1 grid grid-cols-10 gap-0.5">
-                          {Array.from({length: 60}).map((_, i) => (
-                             <div key={i} className={`aspect-square ${Math.random() > 0.8 ? 'bg-[#ef4444]' : Math.random() > 0.85 ? 'bg-[#3b82f6]' : Math.random() > 0.7 ? 'bg-white/30' : 'bg-[#18181b]'}`}></div>
-                          ))}
-                       </div>
+                    <div className="bg-[#111113] border border-white/5 rounded-[1rem] p-3">
+                      <span className="text-[#a1a1aa] font-bold text-[9px] block mb-1">Protein</span>
+                      <span className="text-[#0ea5e9] font-black text-base">143g</span>
                     </div>
-                 </div>
+                    <div className="bg-[#111113] border border-white/5 rounded-[1rem] p-3">
+                      <span className="text-[#a1a1aa] font-bold text-[9px] block mb-1">Fat</span>
+                      <span className="text-[#eab308] font-black text-base">45g</span>
+                    </div>
+                    <div className="bg-[#111113] border border-white/5 rounded-[1rem] p-3">
+                      <span className="text-[#a1a1aa] font-bold text-[9px] block mb-1">Carbs</span>
+                      <span className="text-[#3b82f6] font-black text-base">206g</span>
+                    </div>
+                    <div className="bg-[#111113] border border-white/5 rounded-[1rem] p-3">
+                      <span className="text-[#a1a1aa] font-bold text-[9px] block mb-1">Fiber</span>
+                      <span className="text-[#22c55e] font-black text-base">25g</span>
+                    </div>
+                    <div className="bg-[#111113] border border-white/5 rounded-[1rem] p-3">
+                      <span className="text-[#a1a1aa] font-bold text-[9px] block mb-1">Water</span>
+                      <span className="text-[#0ea5e9] font-black text-base">3.5L+</span>
+                    </div>
+                    <div className="bg-[#111113] border border-white/5 rounded-[1rem] p-3">
+                      <span className="text-[#a1a1aa] font-bold text-[9px] block mb-1">Loss</span>
+                      <span className="text-[#ef4444] font-black text-base">0.5kg/wk</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Heatmap Card */}
+                <div className="pa-heatmap-card bg-[#0a0a0c] rounded-3xl p-5 border border-white/5 shadow-xl cursor-pointer">
+                  <div className="flex items-center justify-between mb-4">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5"><polyline points="15 18 9 12 15 6" /></svg>
+                    <div className="text-center">
+                      <h3 className="text-white font-black text-[15px] leading-tight mb-1">Heaviest weight this month</h3>
+                      <span className="text-[#22c55e] font-bold text-xs block">June 2026</span>
+                    </div>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5"><polyline points="9 18 15 12 9 6" /></svg>
+                  </div>
+
+                  {/* Mini Grid */}
+                  <div className="mt-6 flex gap-3 opacity-80">
+                    <div className="flex-1 grid grid-cols-10 gap-0.5">
+                      {Array.from({ length: 60 }).map((_, i) => (
+                        <div key={i} className={`aspect-square ${Math.random() > 0.8 ? 'bg-[#ef4444]' : Math.random() > 0.85 ? 'bg-[#3b82f6]' : Math.random() > 0.7 ? 'bg-white/30' : 'bg-[#18181b]'}`}></div>
+                      ))}
+                    </div>
+                    <div className="flex-1 grid grid-cols-10 gap-0.5">
+                      {Array.from({ length: 60 }).map((_, i) => (
+                        <div key={i} className={`aspect-square ${Math.random() > 0.8 ? 'bg-[#ef4444]' : Math.random() > 0.85 ? 'bg-[#3b82f6]' : Math.random() > 0.7 ? 'bg-white/30' : 'bg-[#18181b]'}`}></div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
 
               </div>
             </div>
@@ -1715,133 +1721,168 @@ function PhysicalAnalyticsAnimation() {
               SCREEN C: DETAILED HEATMAP
               ========================================= */}
           <div className="pa-screen-c absolute inset-0 bg-[#050505] flex flex-col pt-12 overflow-hidden z-40">
-             <div className="px-5 flex items-start justify-between mb-8 shrink-0">
-               <div>
-                  <h2 className="text-white font-black text-lg leading-tight mb-1">Heaviest weight this month</h2>
-                  <span className="text-[#22c55e] font-bold text-[13px]">June 2026</span>
-               </div>
-               <div className="pa-c-close p-1.5 bg-[#18181b] rounded-full shrink-0 cursor-pointer mt-1">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-               </div>
-             </div>
+            <div className="px-5 flex items-start justify-between mb-8 shrink-0">
+              <div>
+                <h2 className="text-white font-black text-lg leading-tight mb-1">Heaviest weight this month</h2>
+                <span className="text-[#22c55e] font-bold text-[13px]">June 2026</span>
+              </div>
+              <div className="pa-c-close p-1.5 bg-[#18181b] rounded-full shrink-0 cursor-pointer mt-1">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
+              </div>
+            </div>
 
-             <div className="px-3 flex-1 overflow-hidden flex flex-col pb-8">
-                
-                {/* Top labels (Muscles) */}
-                <div className="flex pl-6 mb-1 mr-1">
-                   {['Feet', 'Neck', 'Hands', 'Forearms', 'Waist/Abs', 'Shoulders', 'Hips', 'Chest', 'Calves', 'Thighs', 'Arms', 'Back'].map(muscle => (
-                      <div className="flex-1 flex justify-center items-end h-16" key={muscle}>
-                         <span className="text-white/60 text-[8px] transform -rotate-90 origin-bottom-left whitespace-nowrap mb-1 block w-2 leading-none">{muscle}</span>
-                      </div>
-                   ))}
+            <div className="px-3 flex-1 overflow-hidden flex flex-col pb-8">
+
+              {/* Top labels (Muscles) */}
+              <div className="flex pl-6 mb-1 mr-1">
+                {['Feet', 'Neck', 'Hands', 'Forearms', 'Waist/Abs', 'Shoulders', 'Hips', 'Chest', 'Calves', 'Thighs', 'Arms', 'Back'].map(muscle => (
+                  <div className="flex-1 flex justify-center items-end h-16" key={muscle}>
+                    <span className="text-white/60 text-[8px] transform -rotate-90 origin-bottom-left whitespace-nowrap mb-1 block w-2 leading-none">{muscle}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div className="flex flex-1 min-h-0">
+                {/* Left labels (Dates 1-30) */}
+                <div className="w-6 flex flex-col justify-between items-end pr-2 py-0.5">
+                  {Array.from({ length: 20 }).map((_, i) => (
+                    <span className="text-white/60 text-[7px] leading-none" key={i}>{i + 1}</span>
+                  ))}
                 </div>
 
-                <div className="flex flex-1 min-h-0">
-                   {/* Left labels (Dates 1-30) */}
-                   <div className="w-6 flex flex-col justify-between items-end pr-2 py-0.5">
-                      {Array.from({length: 20}).map((_, i) => (
-                         <span className="text-white/60 text-[7px] leading-none" key={i}>{i + 1}</span>
-                      ))}
-                   </div>
-                   
-                   {/* Grid area (12 cols, 20 rows) */}
-                   <div className="flex-1 bg-[#0a0a0c] border border-white/5 grid grid-cols-12 gap-[1px] p-[1px] h-full" style={{ gridTemplateRows: 'repeat(20, minmax(0, 1fr))' }}>
-                      {Array.from({length: 240}).map((_, i) => (
-                         <div key={i} className={`w-full h-full ${Math.random() > 0.92 ? 'bg-[#ef4444]' : Math.random() > 0.94 ? 'bg-[#3b82f6]' : Math.random() > 0.88 ? 'bg-[#fca5a5]' : 'bg-[#18181b]'}`}></div>
-                      ))}
-                   </div>
+                {/* Grid area (12 cols, 20 rows) */}
+                <div className="flex-1 bg-[#0a0a0c] border border-white/5 grid grid-cols-12 gap-[1px] p-[1px] h-full" style={{ gridTemplateRows: 'repeat(20, minmax(0, 1fr))' }}>
+                  {Array.from({ length: 240 }).map((_, i) => (
+                    <div key={i} className={`w-full h-full ${Math.random() > 0.92 ? 'bg-[#ef4444]' : Math.random() > 0.94 ? 'bg-[#3b82f6]' : Math.random() > 0.88 ? 'bg-[#fca5a5]' : 'bg-[#18181b]'}`}></div>
+                  ))}
                 </div>
-             </div>
+              </div>
+            </div>
           </div>
-        
+
         </div>
       </div>
     </div>
   );
 }
 
-function HorizontalFeatures() {
+function FeatureVideoGrid() {
+  const [activeFeature, setActiveFeature] = useState<number | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const trackRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const container = containerRef.current;
-    const track = trackRef.current;
-    if (!container || !track) return;
+  const videoUrls = [
+    "https://videos.pexels.com/video-files/6980614/6980614-uhd_2560_1440_30fps.mp4",
+    "https://videos.pexels.com/video-files/4754085/4754085-uhd_2560_1440_25fps.mp4",
+    "https://videos.pexels.com/video-files/3571264/3571264-uhd_2560_1440_25fps.mp4",
+    "https://videos.pexels.com/video-files/4761395/4761395-uhd_2560_1440_25fps.mp4",
+    "https://videos.pexels.com/video-files/5319980/5319980-hd_1920_1080_25fps.mp4",
+    "https://videos.pexels.com/video-files/4753910/4753910-uhd_2560_1440_25fps.mp4"
+  ];
 
-    const totalWidth = track.scrollWidth - window.innerWidth;
+  const toggleFeature = (index: number) => {
+    // Record current state of all feature cards
+    const state = Flip.getState('.feature-card');
 
-    const ctx = gsap.context(() => {
-      gsap.to(track, {
-        x: -totalWidth,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: container,
-          start: 'top top',
-          end: () => `+=${totalWidth}`,
-          scrub: 1,
-          pin: true,
-          anticipatePin: 1,
-          snap: {
-            snapTo: 1 / (features.length - 1),
-            duration: { min: 0.2, max: 0.6 },
-            ease: "power2.inOut"
-          }
-        },
+    setActiveFeature(activeFeature === index ? null : index);
+
+    // Request animation frame to let React render the class change, then animate
+    requestAnimationFrame(() => {
+      Flip.from(state, {
+        duration: 0.7,
+        ease: 'power3.inOut',
+        absolute: true, // Handle absolute positioning during flip
+        zIndex: 50,
       });
     });
-
-    return () => ctx.revert();
-  }, []);
+  };
 
   return (
-    <div ref={containerRef} className="relative overflow-hidden bg-elevate-black gsap-snap-section" id="story">
-      <div ref={trackRef} className="flex" style={{ width: `${features.length * 100}vw` }}>
-        {features.map((feat, i) => (
-          <div
-            key={feat.num}
-            className="relative flex h-screen w-screen flex-col justify-between px-8 py-16 md:px-16 lg:px-24"
-            style={{ borderRight: '1px solid rgba(253,252,250,0.06)' }}
-          >
-            {/* APP BLOCKED EXPLOSION */}
-            {feat.num === '01' && <AppBlockedAnimation />}
-            {/* APP LIMIT NOTIFICATION */}
-            {feat.num === '02' && <AppLimitNotification />}
-            {/* REELS SCROLLED */}
-            {feat.num === '03' && <ReelsScrolledAnimation />}
-            {/* NSFW DETOX */}
-            {feat.num === '04' && <NsfwDetoxAnimation />}
-            
-            {/* WORKOUT PLANNING */}
-            {feat.num === '05' && <WorkoutPlanningAnimation />}
-            {/* PHYSICAL ANALYTICS */}
-            {/* PHYSICAL ANALYTICS */}
-            {feat.num === '06' && <PhysicalAnalyticsAnimation />}
-            
-            {/* Empty spacer to maintain vertical centering with justify-between */}
-            <div className="relative z-10" />
+    <div ref={containerRef} className="relative w-full bg-elevate-black py-20 px-6 md:px-12 lg:px-20 min-h-screen flex flex-col justify-center" id="story">
+      {/* Background click to close */}
+      <div
+        className={`fixed inset-0 z-40 bg-black/80 transition-opacity duration-500 cursor-pointer ${activeFeature !== null ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
+        onClick={() => toggleFeature(activeFeature!)}
+        data-cursor="close"
+      />
 
-            {/* Center: title */}
-            <div className="relative z-10">
-              <span className="block mb-2 select-none text-[15vw] md:text-[10vw] font-black leading-none text-elevate-paper/[0.08]">{feat.num}</span>
-              <h3 className="text-[10vw] font-black leading-none tracking-tight text-elevate-paper md:text-[7vw]">
-                {feat.title}
-              </h3>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10 relative z-10 w-full h-full max-w-[1400px] mx-auto">
+        {features.map((feat, i) => {
+          const isActive = activeFeature === i;
+          return (
+            <div
+              key={feat.num}
+              className={`feature-card group relative flex flex-col justify-end overflow-hidden bg-elevate-black border border-white/10 rounded-2xl cursor-pointer ${isActive
+                ? 'fixed inset-4 md:inset-10 lg:inset-20 z-50 rounded-[40px]'
+                : 'relative w-full aspect-[4/5] z-10'
+                }`}
+              onClick={() => toggleFeature(i)}
+              data-cursor={isActive ? 'close' : 'view'}
+              style={{
+                transition: 'border-color 0.4s ease',
+              }}
+              onMouseMove={(e) => {
+                if (isActive) return;
+                // Hover tilt parallax
+                const rect = e.currentTarget.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                gsap.to(e.currentTarget.querySelector('.feature-video'), {
+                  x: x * -0.05,
+                  y: y * -0.05,
+                  scale: 1.05,
+                  duration: 0.5,
+                  ease: 'power2.out',
+                });
+              }}
+              onMouseLeave={(e) => {
+                if (isActive) return;
+                gsap.to(e.currentTarget.querySelector('.feature-video'), {
+                  x: 0,
+                  y: 0,
+                  scale: 1.0,
+                  duration: 0.7,
+                  ease: 'power3.out',
+                });
+              }}
+            >
+              {/* Video Background */}
+              <video
+                src={videoUrls[i]}
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="feature-video absolute inset-0 w-full h-full object-cover opacity-40 transition-opacity duration-700 group-hover:opacity-70"
+                style={{ willChange: 'transform' }}
+              />
+
+              {/* Overlay Gradient */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent pointer-events-none" />
+
+              {/* Content */}
+              <div className="relative z-10 p-6 md:p-10 flex flex-col justify-end h-full w-full pointer-events-none">
+                <div className="flex items-center justify-between mb-4 border-b border-white/20 pb-4">
+                  <span className="text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase text-elevate-orange font-['Space_Mono',monospace]">
+                    [ {feat.num} ]
+                  </span>
+                  {isActive && (
+                    <span className="text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase text-white/50 font-['Space_Mono',monospace]">
+                      [ ESC ]
+                    </span>
+                  )}
+                </div>
+
+                <h3 className={`font-black leading-[0.9] tracking-tight text-white mb-4 transition-all duration-700 ${isActive ? 'text-[40px] md:text-[80px]' : 'text-[32px] md:text-[42px]'}`}>
+                  {feat.title}
+                </h3>
+
+                <p className={`font-semibold text-white/70 transition-all duration-700 max-w-2xl ${isActive ? 'text-lg md:text-xl opacity-100 translate-y-0' : 'text-sm opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0'}`}>
+                  {feat.desc}
+                </p>
+              </div>
             </div>
-
-            {/* Bottom: desc + orange line */}
-            <div className="relative z-10">
-              <div className="mb-6 h-px w-16 bg-elevate-orange" />
-              <p className="max-w-sm text-base leading-relaxed text-elevate-paper/45 md:text-lg">{feat.desc}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {/* Scroll hint */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-3 text-xs font-semibold tracking-[0.2em] text-elevate-paper/30 uppercase">
-        <span>Scroll</span>
-        <span className="text-elevate-orange">→</span>
+          );
+        })}
       </div>
     </div>
   );
@@ -1872,8 +1913,8 @@ function HoverFloodItem({ text, index, exercises }: { text: string; index: numbe
           </span>
           <div className="hidden flex-col items-end md:flex">
             {exercises.map((ex, i) => (
-              <span 
-                key={i} 
+              <span
+                key={i}
                 className="translate-x-4 text-[11px] font-semibold uppercase tracking-[0.1em] text-[#0C0B0B]/80 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100"
                 style={{ transitionDelay: `${i * 30}ms` }}
               >
@@ -1914,11 +1955,36 @@ function useReveal<T extends HTMLElement>(options?: IntersectionObserverInit) {
 /* ══════════════════════════════════════════════════════════
    REVEAL WRAPPER
 ══════════════════════════════════════════════════════════ */
-function Reveal({ children, className = '', direction = 'up', delay = 0 }: {
+function Reveal({ children, className = '', direction = 'up', delay = 0, stagger = false }: {
   children: React.ReactNode; className?: string;
-  direction?: 'up' | 'left' | 'right' | 'scale' | 'fade'; delay?: number;
+  direction?: 'up' | 'left' | 'right' | 'scale' | 'fade'; delay?: number; stagger?: boolean;
 }) {
   const { ref, revealed } = useReveal<HTMLDivElement>();
+
+  useEffect(() => {
+    if (stagger && revealed && ref.current) {
+      gsap.fromTo(ref.current.querySelectorAll('.stagger-target'),
+        { y: 40, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.8,
+          stagger: 0.15,
+          ease: 'power3.out',
+          delay: delay / 1000
+        }
+      );
+    }
+  }, [revealed, stagger, delay]);
+
+  if (stagger) {
+    return (
+      <div ref={ref} className={className}>
+        {children}
+      </div>
+    );
+  }
+
   const dirClasses = {
     up: revealed ? 'translate-y-0 opacity-100' : 'translate-y-16 opacity-0',
     left: revealed ? 'translate-x-0 opacity-100' : '-translate-x-24 opacity-0',
@@ -1953,7 +2019,7 @@ function VelocityMarquee() {
       const scrollY = window.scrollY;
       velocityRef.current = scrollY - lastScrollY.current;
       lastScrollY.current = scrollY;
-      
+
       const v = 1.2 + Math.abs(velocityRef.current) * 0.5;
       xRef1.current -= v;
       xRef2.current += v;
@@ -1962,7 +2028,7 @@ function VelocityMarquee() {
         if (xRef1.current < -trackRef1.current.scrollWidth / 2) xRef1.current = 0;
         gsap.set(trackRef1.current, { x: xRef1.current });
       }
-      
+
       if (trackRef2.current) {
         if (xRef2.current > 0) xRef2.current = -trackRef2.current.scrollWidth / 2;
         gsap.set(trackRef2.current, { x: xRef2.current });
@@ -2047,8 +2113,9 @@ function JumboAccordion() {
                 {item.title}
               </h3>
             </div>
-            <span className="flex-shrink-0 text-2xl font-light text-elevate-paper/30 transition-transform duration-300"
-              style={{ transform: open === i ? 'rotate(45deg)' : 'rotate(0)' }}>+</span>
+            <div className="flex-shrink-0 text-[10px] font-bold tracking-[0.2em] text-elevate-paper/40 font-['Space_Mono',monospace]">
+              [ <span className="inline-block transition-transform duration-300 origin-center text-sm" style={{ transform: open === i ? 'rotate(45deg)' : 'rotate(0)' }}>+</span> ]
+            </div>
           </div>
           <div ref={(el) => { contentRefs.current[i] = el; }} className="overflow-hidden" style={{ height: 0, opacity: 0 }}>
             <p className="pb-8 max-w-2xl text-base leading-relaxed text-elevate-paper/40 md:text-lg">{item.desc}</p>
@@ -2067,6 +2134,7 @@ const detoxStats = [
     value: '894',
     color: '#FF6200',
     desc: '',
+    videoSrc: 'https://videos.pexels.com/video-files/3571264/3571264-uhd_2560_1440_25fps.mp4' // scrolling/gym proxy
   },
   {
     id: 2,
@@ -2075,6 +2143,7 @@ const detoxStats = [
     value: '2',
     color: '#FFD700',
     desc: 'Neck + Biceps',
+    videoSrc: 'https://videos.pexels.com/video-files/4753910/4753910-uhd_2560_1440_25fps.mp4' // weights/muscles
   },
   {
     id: 3,
@@ -2083,6 +2152,7 @@ const detoxStats = [
     value: '75',
     color: '#1ED760',
     desc: '',
+    videoSrc: 'https://videos.pexels.com/video-files/5319980/5319980-hd_1920_1080_25fps.mp4' // running streak
   },
 ];
 
@@ -2118,22 +2188,36 @@ function InteractiveDetox() {
       </div>
 
       {/* ── Right side: Truth reveal ── */}
-      <div className="relative flex min-h-[300px] w-full flex-col justify-center items-end text-right p-8 transition-all duration-500 md:min-h-0 md:w-[45%] md:p-12 lg:p-16">
+      <div className="relative flex min-h-[300px] w-full flex-col justify-center items-end text-right p-8 transition-all duration-500 md:min-h-0 md:w-[45%] md:p-12 lg:p-16 overflow-hidden">
+        {/* Background Videos */}
+        {detoxStats.map((stat, i) => (
+          <video
+            key={`video-${stat.id}`}
+            src={stat.videoSrc}
+            autoPlay
+            muted
+            loop
+            playsInline
+            className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ${activeIdx === i ? 'opacity-30' : 'opacity-0'
+              }`}
+          />
+        ))}
+        {/* Gradient Overlay for text readability */}
+        <div className="absolute inset-0 bg-gradient-to-l from-elevate-black via-elevate-black/80 to-transparent pointer-events-none" />
         {detoxStats.map((stat, i) => {
           const isActive = activeIdx === i;
           return (
             <div
               key={stat.id}
-              className={`absolute inset-0 flex flex-col justify-center items-end text-right p-8 pb-20 transition-all duration-500 md:p-12 md:pb-28 lg:p-16 lg:pb-36 ${
-                isActive
-                  ? 'pointer-events-auto translate-y-0 opacity-100 z-10'
-                  : 'pointer-events-none translate-y-8 opacity-0 z-0'
-              }`}
+              className={`absolute inset-0 flex flex-col justify-center items-end text-right p-8 pb-20 transition-all duration-500 md:p-12 md:pb-28 lg:p-16 lg:pb-36 ${isActive
+                ? 'pointer-events-auto translate-y-0 opacity-100 z-10'
+                : 'pointer-events-none translate-y-8 opacity-0 z-0'
+                }`}
             >
               <p className="pt-4 mb-12 text-xs font-semibold uppercase tracking-[0.25em] text-elevate-paper/40 md:mb-20 lg:mb-28">
                 {stat.title}
               </p>
-              
+
               {/* Only render RollingNumber when active so it re-animates on switch */}
               <div className="mb-6 flex w-full justify-end h-[100px] items-center gap-4 md:h-[150px] md:gap-6 lg:h-[180px]">
                 {isActive && (
@@ -2168,18 +2252,18 @@ function InteractiveDetox() {
 /* ══════════════════════════════════════════════════════════
    APP
 ══════════════════════════════════════════════════════════ */
-function ScrollRevealBlock({ paragraphs }: { paragraphs: {text: string, className: string}[] }) {
+function ScrollRevealBlock({ paragraphs }: { paragraphs: { text: string, className: string }[] }) {
   const containerRef = useRef<HTMLDivElement>(null);
-  
+
   useEffect(() => {
     const ctx = gsap.context(() => {
       const chars = gsap.utils.toArray('.reveal-char', containerRef.current);
       gsap.fromTo(chars,
         { opacity: 0.05 },
-        { 
-          opacity: 1, 
+        {
+          opacity: 1,
           duration: 0.1,
-          stagger: 5 / chars.length, 
+          stagger: 5 / chars.length,
           ease: 'none',
           scrollTrigger: {
             trigger: containerRef.current,
@@ -2210,15 +2294,205 @@ function ScrollRevealBlock({ paragraphs }: { paragraphs: {text: string, classNam
   );
 }
 
+function FocusMeter() {
+  const meterRef = useRef<HTMLDivElement>(null);
+  const orbRef = useRef<HTMLDivElement>(null);
+  const glowRef = useRef<HTMLDivElement>(null);
+
+  const handleMove = (event: React.MouseEvent<HTMLDivElement>) => {
+    const meter = meterRef.current;
+    if (!meter) return;
+    const rect = meter.getBoundingClientRect();
+    const x = (event.clientX - rect.left) / rect.width - 0.5;
+    const y = (event.clientY - rect.top) / rect.height - 0.5;
+    gsap.to(meter, { rotationY: x * 13, rotationX: -y * 13, duration: 0.45, ease: 'power3.out' });
+    gsap.to(orbRef.current, { x: x * 28, y: y * 28, duration: 0.35, ease: 'power3.out' });
+    gsap.to(glowRef.current, { x: x * 38, y: y * 38, duration: 0.55, ease: 'power3.out' });
+  };
+
+  const reset = () => {
+    gsap.to(meterRef.current, { rotationY: 0, rotationX: 0, duration: 0.7, ease: 'elastic.out(1, 0.5)' });
+    gsap.to([orbRef.current, glowRef.current], { x: 0, y: 0, duration: 0.7, ease: 'elastic.out(1, 0.5)' });
+  };
+
+  return (
+    <div className="pointer-events-auto absolute bottom-[9%] right-[7%] hidden w-[360px] [perspective:1000px] xl:block">
+      <div
+        ref={meterRef}
+        onMouseMove={handleMove}
+        onMouseLeave={reset}
+        className="group relative aspect-square rounded-full border border-elevate-paper/15 bg-elevate-paper/[0.025] p-7 shadow-[0_30px_80px_rgba(0,0,0,.45)] backdrop-blur-sm"
+        style={{ transformStyle: 'preserve-3d' }}
+      >
+        <div ref={glowRef} className="pointer-events-none absolute inset-[18%] rounded-full bg-elevate-orange/20 blur-[45px]" />
+        <div className="absolute inset-3 rounded-full border border-dashed border-elevate-paper/20 animate-[spin_18s_linear_infinite]" />
+        <div className="absolute inset-7 rounded-full border border-elevate-orange/25" />
+        <svg className="absolute inset-7 h-[calc(100%-3.5rem)] w-[calc(100%-3.5rem)] -rotate-90" viewBox="0 0 100 100" aria-hidden="true">
+          <circle cx="50" cy="50" r="43" fill="none" stroke="rgba(253,252,250,.09)" strokeWidth="3" />
+          <circle cx="50" cy="50" r="43" fill="none" stroke="#FF6200" strokeWidth="3" strokeLinecap="round" strokeDasharray="270" strokeDashoffset="49" className="transition-all duration-500 group-hover:stroke-dashoffset-[30]" />
+        </svg>
+
+        <div className="relative flex h-full flex-col items-center justify-center text-center [transform:translateZ(25px)]">
+          <p className="mb-2 text-[10px] font-bold tracking-[0.28em] text-elevate-paper/45 uppercase">Focus score</p>
+          <div className="flex items-start leading-none">
+            <span className="text-[104px] font-black tracking-[-0.08em] text-elevate-paper">82</span>
+            <span className="mt-3 text-sm font-bold text-elevate-orange">/100</span>
+          </div>
+          <span className="mt-1 inline-flex items-center gap-2 rounded-full border border-elevate-orange/30 bg-elevate-orange/10 px-3 py-1 text-[10px] font-bold tracking-[0.15em] text-elevate-orange uppercase">
+            <span className="h-1.5 w-1.5 rounded-full bg-elevate-orange animate-pulse" /> In the zone
+          </span>
+        </div>
+
+        <div ref={orbRef} className="absolute bottom-8 left-1/2 flex -translate-x-1/2 items-center gap-4 rounded-full border border-elevate-paper/10 bg-elevate-black/70 px-4 py-2 backdrop-blur-md [transform:translateZ(42px)]">
+          <span className="text-center"><b className="block text-sm text-elevate-paper">0</b><small className="text-[8px] tracking-wider text-elevate-paper/45 uppercase">distractions</small></span>
+          <span className="h-6 w-px bg-elevate-paper/15" />
+          <span className="text-center"><b className="block text-sm text-elevate-paper">4d</b><small className="text-[8px] tracking-wider text-elevate-paper/45 uppercase">streak</small></span>
+          <span className="h-6 w-px bg-elevate-paper/15" />
+          <span className="text-center"><b className="block text-sm text-elevate-paper">45m</b><small className="text-[8px] tracking-wider text-elevate-paper/45 uppercase">deep work</small></span>
+        </div>
+      </div>
+      <p className="mt-4 text-center text-[10px] font-bold tracking-[0.22em] text-elevate-paper/35 uppercase">Move to calibrate</p>
+    </div>
+  );
+}
+
+/* ══════════════════════════════════════════════════════════
+   VIDEO SHOWCASE — Cinematic reel (Lama Lama style)
+══════════════════════════════════════════════════════════ */
+const videoClips = [
+  {
+    label: "FOCUS.",
+    sub: "Your mind is the first muscle to train.",
+    tag: "Mental Performance",
+  },
+  {
+    label: "LIFT.",
+    sub: "Every rep rewires who you are.",
+    tag: "Strength",
+  },
+  {
+    label: "RUN.",
+    sub: "The road doesn't care about your excuses.",
+    tag: "Endurance",
+  },
+  {
+    label: "TRAIN.",
+    sub: "No shortcuts. No compromises. All in.",
+    tag: "Discipline",
+  },
+  {
+    label: "ELEVATE.",
+    sub: "Rise above the noise. Rise above yourself.",
+    tag: "Growth",
+  }
+];
+
+function VideoShowcase() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    // Force play immediately
+    video.play().catch(() => { });
+
+    // Re-play whenever the document becomes visible again (tab switch back)
+    const onVisible = () => {
+      if (!document.hidden && video.paused) {
+        video.play().catch(() => { });
+      }
+    };
+    document.addEventListener('visibilitychange', onVisible);
+
+    // Re-play if it somehow ends (belt-and-suspenders alongside loop attr)
+    const onEnded = () => { video.currentTime = 0; video.play().catch(() => { }); };
+    video.addEventListener('ended', onEnded);
+
+    return () => {
+      document.removeEventListener('visibilitychange', onVisible);
+      video.removeEventListener('ended', onEnded);
+    };
+  }, []);
+
+  return (
+    <div className="relative w-full overflow-hidden bg-black" style={{ height: '100svh', minHeight: 600 }}>
+      {/* Video layer */}
+      <video
+        ref={videoRef}
+        src="/onboarding-bg.mp4"
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="auto"
+        className="absolute inset-0 w-full h-full object-cover"
+      />
+
+      {/* Cinematic gradient overlays */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-black/40 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent pointer-events-none" />
+
+      {/* Content overlay */}
+      <div className="absolute inset-0 flex flex-col justify-end px-6 pt-24 md:px-12 lg:px-20 pb-20 md:pb-24">
+        
+        {/* Hero tagline - bottom left */}
+        <div>
+          <h1
+            style={{ fontFamily: "'LamaSans', sans-serif", fontWeight: 900, wordSpacing: '0.12em' }}
+            className="text-[clamp(20px,2.8vw,62px)] xl:text-[clamp(31px,3.9vw,62px)] leading-[1.05] tracking-[-0.02em] text-white uppercase font-black whitespace-nowrap"
+          >
+            The only app that tracks your reps
+            <br />
+            blocks your distractions
+            <br />
+            and demands your best.
+          </h1>
+        </div>
+
+        {/* Bottom-right descriptor */}
+        <div className="absolute right-6 bottom-24 md:right-12 lg:right-20 max-w-[280px] lg:max-w-[380px] xl:max-w-[420px] hidden md:block">
+          <p
+            style={{ fontFamily: "'NeueHaasGrotesk', sans-serif", fontWeight: 400 }}
+            className="text-[13px] lg:text-[15px] leading-[1.6] tracking-wide text-white/60"
+          >
+            Thinking about the gym burns zero calories.{' '}
+            <br />
+            Doomscrolling doesn't build focus. Elevate cuts{' '}
+            <br />
+            out the fluff so you can train hard and keep{' '}
+            <br />
+            your head clear.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  );
+}
+
+/* ══════════════════════════════════════════════════════════
+   BRACKET LABEL — [ Section Name ]
+══════════════════════════════════════════════════════════ */
+function BracketLabel({ text, className = '' }: { text: string; className?: string }) {
+  return (
+    <span className={`lama-bracket ${className}`}>
+      [ {text} ]
+    </span>
+  );
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   APP
+══════════════════════════════════════════════════════════ */
 export default function App() {
-  const heroRef = useRef<HTMLElement>(null);
+  const heroRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Hero text stagger reveal
-      gsap.from('.hero-word', { opacity: 0, y: 40, duration: 1.2, stagger: 0.15, ease: 'power3.out', delay: 0.3 });
-      gsap.from('.hero-nav', { opacity: 0, y: -20, duration: 1, ease: 'power2.out' });
-      gsap.from('.hero-sub', { opacity: 0, y: 20, duration: 1.2, delay: 0.8, ease: 'power2.out' });
+      // Hero nav fade in
+      gsap.from('.hero-nav', { opacity: 0, y: -20, duration: 1, ease: 'power2.out', delay: 0.3 });
     }, heroRef);
 
     // Global context for page-level scroll triggers
@@ -2229,7 +2503,7 @@ export default function App() {
           start: "top bottom",
           end: "top top",
           snap: {
-            snapTo: [0, 1], // Snaps to either fully off-screen (0) or perfectly snapped to top (1)
+            snapTo: [0, 1],
             duration: { min: 0.2, max: 0.5 },
             ease: "power2.inOut"
           }
@@ -2244,139 +2518,164 @@ export default function App() {
   }, []);
 
   return (
-    <div className="relative font-display bg-elevate-black">
-
+    <div className="relative font-sans bg-elevate-black">
+      <AsciiCursor />
 
       {/* ══════════════════════════════════════════
-          HERO — Dark Editorial
+          HERO — Video Showcase
       ══════════════════════════════════════════ */}
-      <section
-        ref={heroRef}
-        className="relative flex h-svh min-h-[700px] w-full flex-col bg-elevate-black text-elevate-paper gsap-snap-section"
-      >
-        {/* Nav */}
-        <header className="hero-nav flex w-full items-center justify-between px-6 py-6 md:px-12 lg:px-20">
-          <AnimatedLogo 
-            href="#" 
-            className="flex items-center gap-2 transition-opacity hover:opacity-50"
-            starClassName="size-4 text-elevate-orange"
-            textClassName="text-sm font-bold tracking-widest text-elevate-paper"
+      <div ref={heroRef} className="relative h-svh min-h-[700px] w-full gsap-snap-section">
+        {/* Floating Header */}
+        <header className="hero-nav absolute top-0 left-0 right-0 z-50 flex w-full items-center justify-between px-6 py-5 md:px-12 lg:px-20 border-b border-white/10 text-white">
+          <AnimatedLogo
+            href="#"
+            className="flex items-center gap-3 transition-opacity hover:opacity-50"
+            starClassName="size-6 text-elevate-orange"
+            textClassName="text-xl font-bold tracking-widest text-white"
             ariaLabel="Elevate home"
           />
-          <nav className="hidden items-center gap-10 md:flex">
-            <Link to="/privacy_policy" className="text-xs font-semibold tracking-[0.2em] uppercase text-elevate-paper/40 transition-colors hover:text-elevate-paper">
+          <nav className="hidden items-center justify-center gap-8 md:flex text-white flex-1 px-8">
+            <Link to="/about" className="text-[10px] font-semibold tracking-[0.2em] uppercase transition-colors hover:text-elevate-orange">
+              About us
+            </Link>
+            <Link to="/privacy_policy" className="text-[10px] font-semibold tracking-[0.2em] uppercase transition-colors hover:text-elevate-orange">
               Privacy Policy
             </Link>
-            <Link to="/terms" className="text-xs font-semibold tracking-[0.2em] uppercase text-elevate-paper/40 transition-colors hover:text-elevate-paper">
+            <Link to="/terms" className="text-[10px] font-semibold tracking-[0.2em] uppercase transition-colors hover:text-elevate-orange">
               Terms &amp; Conditions
             </Link>
+            <Link to="/contact" className="text-[10px] font-semibold tracking-[0.2em] uppercase transition-colors hover:text-elevate-orange">
+              Contact us
+            </Link>
           </nav>
-          <a href="#focus"
-            className="rounded-full border border-elevate-paper/20 px-5 py-2.5 text-xs font-bold tracking-wider uppercase text-elevate-paper transition-all hover:bg-elevate-paper hover:text-elevate-black">
-            Download
-          </a>
+          <MagneticWrapper>
+            <a
+              href="#focus"
+              className="bg-white text-black px-6 py-3 text-[10px] font-bold tracking-[0.2em] uppercase transition-all hover:bg-white/80"
+            >
+              Download
+            </a>
+          </MagneticWrapper>
         </header>
 
-        {/* Hero content */}
-        <div className="flex flex-1 flex-col items-start justify-end px-6 pb-16 md:px-12 lg:px-20 lg:pb-28">
-
-          {/* Massive headline */}
-          <h2 className="flex flex-col gap-0 text-[68px] font-black leading-[0.88] tracking-[-0.03em] md:text-[110px] lg:text-[150px] xl:text-[190px]">
-            <span className="hero-word block text-elevate-paper">Focus</span>
-            <span className="hero-word block" style={{ color: 'transparent', WebkitTextStroke: '2px rgba(253,252,250,0.8)' }}>
-              <MeshWord words={heroWords} />
-            </span>
-            <span className="hero-word block text-elevate-paper">Train</span>
-            <span className="hero-word block" style={{ color: 'transparent', WebkitTextStroke: '2px rgba(253,252,250,0.8)' }}>smarter.</span>
-          </h2>
-          
-          <p className="hero-sub mt-6 md:mt-10 max-w-2xl text-sm md:text-base font-['Space_Mono',monospace] font-bold uppercase tracking-widest text-elevate-orange">
-            "The lion will achieve everything he sets his sights on or he will perish in the pursuit of it."
-          </p>
+        {/* Video Reel */}
+        <div className="absolute inset-0">
+          <VideoShowcase />
         </div>
-      </section>
+      </div>
 
 
+      <DisciplineSlideshow />
 
-      {/* Orange separator */}
-      <div className="h-1 w-full bg-elevate-orange" />
+      {/* ── ASCII Dot Contour Separator ── */}
+      <div className="relative z-10 -mt-[220px]">
+        <AsciiContourDivider fill="#0C0B0B" height={220} />
+      </div>
 
       {/* ══════════════════════════════════════════
-          FEATURES — Horizontal Scroll
+          FEATURES header
       ══════════════════════════════════════════ */}
-      <HorizontalFeatures />
+      <div className="bg-elevate-black px-6 pt-14 pb-0 md:px-12 lg:px-20">
+        <div className="flex items-center justify-between border-t border-b border-elevate-paper/[0.07] py-4">
+          <BracketLabel text="App Features" />
+          <div className="hidden md:flex items-center gap-3">
+            <span className="bg-elevate-paper text-elevate-black px-4 py-1.5 text-xs font-bold uppercase tracking-widest">Focus</span>
+            <span className="bg-elevate-paper text-elevate-black px-4 py-1.5 text-xs font-bold uppercase tracking-widest">Train</span>
+            <span className="bg-elevate-paper text-elevate-black px-4 py-1.5 text-xs font-bold uppercase tracking-widest">Detox</span>
+            <span className="bg-elevate-paper text-elevate-black px-4 py-1.5 text-xs font-bold uppercase tracking-widest">Analytics</span>
+          </div>
+          <span className="text-[10px] font-semibold tracking-[0.3em] text-elevate-paper uppercase">06 modules</span>
+        </div>
+        <div className="pt-10 pb-6">
+          <p className="text-[clamp(26px,4vw,52px)] font-black leading-[1.05] tracking-tight text-elevate-paper max-w-2xl">
+            Six tools to dominate<br />your mind and build your body.
+          </p>
+        </div>
+      </div>
 
-      {/* Orange separator */}
-      <div className="h-1 w-full bg-elevate-orange" />
+      {/* ══════════════════════════════════════════
+          FEATURES — Interactive Video Grid (FLIP)
+      ══════════════════════════════════════════ */}
+      <FeatureVideoGrid />
+
+      {/* ── Editorial separator ── */}
+      <div className="-mb-1 z-10 relative">
+        <ContourDivider fill="#0C0B0B" direction="up" />
+      </div>
 
       {/* ══════════════════════════════════════════
           DIGITAL DETOX STATS
       ══════════════════════════════════════════ */}
-      <section className="bg-elevate-black px-6 pt-12 pb-6 md:px-12 md:pb-8 lg:px-20 lg:pt-20 lg:pb-10 gsap-snap-section min-h-svh flex flex-col justify-center">
+      <section className="bg-elevate-black px-6 pt-16 pb-6 md:px-12 md:pb-8 lg:px-20 lg:pt-24 lg:pb-10 gsap-snap-section min-h-svh flex flex-col justify-center">
         <div className="mx-auto max-w-7xl w-full">
           <Reveal direction="up">
-            <p className="mb-4 text-xs font-semibold tracking-[0.3em] text-elevate-orange uppercase">Digital Detox</p>
+            <div className="flex items-center justify-between border-t border-elevate-paper/[0.07] pt-4 pb-6 mb-8">
+              <BracketLabel text="Digital Detox" />
+              <span className="text-[10px] font-semibold tracking-[0.3em] text-elevate-paper/20 uppercase">Data</span>
+            </div>
           </Reveal>
-          <Reveal direction="up" delay={80}>
+          <Reveal stagger delay={80}>
             <h2 className="mb-8 max-w-3xl text-4xl font-black leading-[1.0] tracking-tight text-elevate-paper md:text-5xl lg:text-6xl lg:mb-12">
-              The numbers don't lie.<br />Face them daily.
+              <span className="block overflow-hidden"><span className="block stagger-target">The numbers don't lie.</span></span>
+              <span className="block overflow-hidden"><span className="block stagger-target">Face them daily.</span></span>
             </h2>
           </Reveal>
-
           <InteractiveDetox />
-
           <Reveal direction="up" delay={300}>
-            <div className="mt-6 flex flex-col items-start gap-4 bg-elevate-paper/[0.02] p-5 sm:flex-row sm:items-center sm:justify-between md:mt-8 lg:p-6">
+            <div className="mt-6 flex flex-col items-start gap-4 border-t border-elevate-paper/[0.07] pt-6 sm:flex-row sm:items-center sm:justify-between md:mt-8">
               <p className="max-w-lg text-base font-semibold leading-relaxed text-elevate-paper/35">
                 <span className="text-elevate-paper">Confronting data creates change.</span> Elevate surfaces the uncomfortable truth so you can make a better decision tomorrow.
               </p>
-              <a href="#focus"
-                className="inline-flex shrink-0 items-center gap-2 rounded-full border border-elevate-paper/20 px-6 py-3 text-sm font-semibold text-elevate-paper transition-all hover:bg-elevate-paper hover:text-elevate-black">
-                Start your detox →
-              </a>
+              <MagneticWrapper>
+                <a href="#focus" className="inline-flex shrink-0 items-center gap-3 border border-elevate-paper/20 px-6 py-3 text-sm font-semibold text-elevate-paper transition-all hover:bg-elevate-paper hover:text-elevate-black">
+                  Start your detox →
+                </a>
+              </MagneticWrapper>
             </div>
           </Reveal>
         </div>
       </section>
 
-      {/* Orange separator */}
-      <div className="h-1 w-full bg-elevate-orange" />
+      {/* ── Editorial separator ── */}
+      <div className="h-px w-full bg-elevate-paper/[0.07]" />
+
       {/* ══════════════════════════════════════════
-          KINETIC QUOTE
+          KINETIC QUOTE / MANIFESTO
       ══════════════════════════════════════════ */}
-      <section className="bg-elevate-black px-6 py-12 md:px-12 lg:px-20 lg:py-20 gsap-snap-section min-h-svh flex flex-col justify-center">
+      <section className="bg-elevate-black px-6 py-16 md:px-12 lg:px-20 lg:py-24 gsap-snap-section min-h-svh flex flex-col justify-center">
         <div className="mx-auto max-w-6xl w-full">
+          <div className="flex items-center justify-between border-t border-elevate-paper/[0.07] pt-4 pb-10 mb-4">
+            <BracketLabel text="Manifesto" />
+            <div className="flex items-center gap-2">
+              <SpinningStar className="size-3 text-elevate-orange" />
+              <span className="text-[10px] font-semibold tracking-[0.3em] text-elevate-paper/20 uppercase">Philosophy</span>
+            </div>
+          </div>
           <ScrollRevealBlock paragraphs={[
-            {
-              text: "The only enemy you face is your uncontrolled mind, not people, not failure, not even fear. Just you on autopilot. Because when the mind runs wild, it turns shadows into monsters and doubts into truths. You start fighting things that don’t exist conversations that never happened, futures that haven't arrived.",
-              className: "text-[16px] font-['Special_Elite',_monospace] leading-[1.4] tracking-wide text-elevate-paper md:text-[20px] lg:text-[24px]"
-            },
-            {
-              text: "An untrained mind is a brilliant liar. It mimics your voice, wears your thoughts, and convinces you to stay small.",
-              className: "text-[16px] font-['Special_Elite',_monospace] leading-[1.4] tracking-wide text-elevate-paper/80 md:text-[20px] lg:text-[24px]"
-            },
-            {
-              text: "But when you take control, real control, everything shifts. You stop reacting you start choosing. You stop panicking you start planning. The world doesn’t get easier you get stronger.",
-              className: "text-[16px] font-['Special_Elite',_monospace] leading-[1.4] tracking-wide text-elevate-paper/80 md:text-[20px] lg:text-[24px]"
-            },
-            {
-              text: "Train the mind, or it trains you. That’s not self-help that’s strategy.",
-              className: "text-[16px] font-['Special_Elite',_monospace] font-bold leading-[1.4] tracking-wide text-elevate-primary md:text-[20px] lg:text-[24px]"
-            }
+            { text: "The only enemy you face is your uncontrolled mind, not people, not failure, not even fear. Just you on autopilot. Because when the mind runs wild, it turns shadows into monsters and doubts into truths. You start fighting things that don't exist conversations that never happened, futures that haven't arrived.", className: "text-[16px] font-['Special_Elite',_monospace] leading-[1.4] tracking-wide text-elevate-paper md:text-[20px] lg:text-[24px]" },
+            { text: "An untrained mind is a brilliant liar. It mimics your voice, wears your thoughts, and convinces you to stay small.", className: "text-[16px] font-['Special_Elite',_monospace] leading-[1.4] tracking-wide text-elevate-paper/80 md:text-[20px] lg:text-[24px]" },
+            { text: "But when you take control, real control, everything shifts. You stop reacting you start choosing. You stop panicking you start planning. The world doesn't get easier you get stronger.", className: "text-[16px] font-['Special_Elite',_monospace] leading-[1.4] tracking-wide text-elevate-paper/80 md:text-[20px] lg:text-[24px]" },
+            { text: "Train the mind, or it trains you. That's not self-help that's strategy.", className: "text-[16px] font-['Special_Elite',_monospace] font-bold leading-[1.4] tracking-wide text-elevate-primary md:text-[20px] lg:text-[24px]" }
           ]} />
         </div>
       </section>
 
-      {/* Orange separator */}
-      <div className="h-1 w-full bg-elevate-orange" />
+      {/* ── Editorial separator ── */}
+      <div className="h-px w-full bg-elevate-paper/[0.07]" />
+
       {/* ══════════════════════════════════════════
           WORKOUT TEMPLATES — Hover Flood
       ══════════════════════════════════════════ */}
       <section className="bg-elevate-black px-6 py-8 md:px-12 lg:px-20 lg:py-10 gsap-snap-section min-h-svh flex flex-col justify-center">
-        <div className="mx-auto max-w-6xl">
-          <Reveal direction="up" className="mb-8 flex items-center gap-3">
-            <SpinningStar className="size-4 text-elevate-orange" />
-            <p className="text-xs font-semibold tracking-[0.3em] text-elevate-orange uppercase">Workout Templates</p>
+        <div className="mx-auto max-w-6xl w-full">
+          <Reveal direction="up">
+            <div className="flex items-center justify-between border-t border-elevate-paper/[0.07] pt-4 pb-8 mb-2">
+              <BracketLabel text="Training" />
+              <div className="flex items-center gap-3">
+                <SpinningStar className="size-3 text-elevate-orange" />
+                <span className="text-[10px] font-semibold tracking-[0.3em] text-elevate-paper/20 uppercase">Workout Templates</span>
+              </div>
+            </div>
           </Reveal>
           <div className="flex flex-col md:flex-row md:gap-8 lg:gap-12">
             <div className="flex-1 flex flex-col">
@@ -2384,7 +2683,6 @@ export default function App() {
                 <HoverFloodItem key={template.name} text={template.name} index={i} exercises={template.exercises} />
               ))}
             </div>
-            {/* Vertical Separator */}
             <div className="hidden md:block w-[1px] bg-elevate-paper/10" />
             <div className="flex-1 flex flex-col">
               {workoutTemplates.slice(3, 6).map((template, i) => (
@@ -2395,16 +2693,20 @@ export default function App() {
         </div>
       </section>
 
-      {/* Orange separator */}
-      <div className="h-1 w-full bg-elevate-orange" />
+      {/* ── Editorial separator ── */}
+      <div className="h-px w-full bg-elevate-paper/[0.07]" />
 
       {/* ══════════════════════════════════════════
-          MANIFESTO
+          DOWNLOAD CTA
       ══════════════════════════════════════════ */}
       <section id="focus" className="relative overflow-hidden bg-elevate-black px-6 py-28 md:px-12 lg:px-20 lg:py-44 gsap-snap-section min-h-svh flex flex-col justify-center">
         <div className="mx-auto w-full max-w-7xl flex flex-col md:flex-row items-center justify-between gap-12 lg:gap-20">
-          {/* Left: Text */}
           <div className="flex-1 flex flex-col items-start -translate-y-6 md:-translate-y-12">
+            <Reveal direction="up" className="w-full mb-8">
+              <div className="border-t border-elevate-paper/[0.07] pt-4 pb-0 pr-4 md:pr-12">
+                <BracketLabel text="Download" />
+              </div>
+            </Reveal>
             <h2 className="flex flex-col text-[48px] font-black leading-[1.0] tracking-tight text-elevate-paper md:text-[80px] lg:text-[100px]">
               <Reveal direction="left" className="flex flex-wrap gap-x-3 md:gap-x-5">Cut the</Reveal>
               <Reveal direction="left" delay={100} className="flex flex-wrap gap-x-3 md:gap-x-5">
@@ -2414,37 +2716,24 @@ export default function App() {
               <Reveal direction="left" delay={300} className="flex flex-wrap gap-x-3 text-[#B30000] md:gap-x-5">Journey.</Reveal>
             </h2>
             <Reveal direction="fade" delay={400} className="mt-10 md:mt-14">
-              <Link to="/download"
-                className="group inline-flex items-center gap-3 rounded-full bg-elevate-orange px-8 py-3.5 text-sm font-bold uppercase tracking-wider text-white transition-all hover:bg-elevate-orange-light hover:shadow-lg md:px-10 md:py-4">
+              <Link to="/download" className="group inline-flex items-center gap-3 border border-elevate-orange bg-elevate-orange px-8 py-3.5 text-sm font-bold uppercase tracking-wider text-white transition-all hover:bg-transparent hover:text-elevate-orange md:px-10 md:py-4">
                 Download alpha
                 <span className="inline-block transition-transform group-hover:translate-x-1">→</span>
               </Link>
             </Reveal>
           </div>
-
-          {/* Right: Phone Mockup */}
           <Reveal direction="up" delay={200} className="flex-shrink-0 -translate-y-8 md:-translate-y-16">
             <div className="relative w-[260px] md:w-[310px] lg:w-[360px]">
-              {/* Phone shell */}
               <div className="relative rounded-[40px] border-[8px] border-elevate-paper/10 bg-[#111] shadow-[0_35px_60px_-15px_rgba(0,0,0,0.9)] overflow-hidden" style={{ aspectRatio: '9/19.5' }}>
-                {/* Notch */}
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-6 bg-[#111] rounded-b-2xl z-10" />
-                {/* Screen: GIF */}
-                <ImageWithSkeleton
-                  src={import.meta.env.BASE_URL + "intro.gif"}
-                  alt="Elevate App Intro"
-                  className="w-full h-full object-cover"
-                />
-                {/* Continue with Google button overlay */}
-                <div className="absolute bottom-0 left-0 right-0 px-4 pb-5 pt-10 z-20"
-                  style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.85) 60%, transparent)' }}>
+                <ImageWithSkeleton src={import.meta.env.BASE_URL + "intro.gif"} alt="Elevate App Intro" className="w-full h-full object-cover" />
+                <div className="absolute bottom-0 left-0 right-0 px-4 pb-5 pt-10 z-20" style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.85) 60%, transparent)' }}>
                   <button className="w-full flex items-center justify-center gap-2 rounded-full border border-white bg-black px-4 py-2.5 text-[11px] font-semibold text-white tracking-wide">
-                    {/* Google Icon */}
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" className="w-4 h-4 shrink-0">
-                      <path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 12.955 4 4 12.955 4 24s8.955 20 20 20 20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z"/>
-                      <path fill="#FF3D00" d="M6.306 14.691l6.571 4.819C14.655 15.108 18.961 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 16.318 4 9.656 8.337 6.306 14.691z"/>
-                      <path fill="#4CAF50" d="M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238A11.91 11.91 0 0 1 24 36c-5.202 0-9.619-3.317-11.283-7.946l-6.522 5.025C9.505 39.556 16.227 44 24 44z"/>
-                      <path fill="#1976D2" d="M43.611 20.083H42V20H24v8h11.303a12.04 12.04 0 0 1-4.087 5.571l.003-.002 6.19 5.238C36.971 39.205 44 34 44 24c0-1.341-.138-2.65-.389-3.917z"/>
+                      <path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 12.955 4 4 12.955 4 24s8.955 20 20 20 20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z" />
+                      <path fill="#FF3D00" d="M6.306 14.691l6.571 4.819C14.655 15.108 18.961 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 16.318 4 9.656 8.337 6.306 14.691z" />
+                      <path fill="#4CAF50" d="M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238A11.91 11.91 0 0 1 24 36c-5.202 0-9.619-3.317-11.283-7.946l-6.522 5.025C9.505 39.556 16.227 44 24 44z" />
+                      <path fill="#1976D2" d="M43.611 20.083H42V20H24v8h11.303a12.04 12.04 0 0 1-4.087 5.571l.003-.002 6.19 5.238C36.971 39.205 44 34 44 24c0-1.341-.138-2.65-.389-3.917z" />
                     </svg>
                     Continue with Google
                   </button>
@@ -2453,7 +2742,6 @@ export default function App() {
             </div>
           </Reveal>
         </div>
-
       </section>
 
       {/* ══════════════════════════════════════════
@@ -2461,13 +2749,18 @@ export default function App() {
       ══════════════════════════════════════════ */}
       <section className="relative overflow-hidden bg-elevate-orange px-6 py-28 text-white md:px-12 lg:px-20 lg:py-44 gsap-snap-section min-h-svh flex flex-col justify-center">
         <div className="relative mx-auto max-w-5xl text-center">
-          <Reveal direction="up" className="mb-8 flex items-center justify-center gap-3">
-            <SpinningStar className="size-5" />
-            <p className="text-xs font-semibold tracking-[0.25em] uppercase">About us</p>
+          <Reveal direction="up" className="mb-8">
+            <div className="inline-flex items-center gap-4 border-b border-white/20 pb-4 px-2">
+              <SpinningStar className="size-4" />
+              <BracketLabel text="About us" className="text-white/60" />
+              <SpinningStar className="size-4" />
+            </div>
           </Reveal>
-          <Reveal direction="up" delay={100}>
+          <Reveal stagger delay={100}>
             <h2 className="mb-16 text-[56px] font-black leading-[0.95] tracking-tight md:text-[90px] lg:text-[120px]">
-              NICE TO<br />TRAIN<br />WITH YOU
+              <span className="block overflow-hidden"><span className="block stagger-target">NICE TO</span></span>
+              <span className="block overflow-hidden"><span className="block stagger-target">TRAIN</span></span>
+              <span className="block overflow-hidden"><span className="block stagger-target">WITH YOU</span></span>
             </h2>
           </Reveal>
           <Reveal direction="up" delay={200}>
@@ -2476,42 +2769,33 @@ export default function App() {
             </p>
           </Reveal>
           <Reveal direction="up" delay={300}>
-            <Link to="/joinourjourney"
-              className="mt-14 inline-block text-sm font-bold uppercase tracking-wider underline underline-offset-4 transition-opacity hover:opacity-60">
-              Work with us
+            <Link to="/joinourjourney" className="mt-14 inline-flex items-center gap-2 text-sm font-bold uppercase tracking-wider border-b border-white/40 pb-1 transition-opacity hover:opacity-60">
+              Work with us →
             </Link>
           </Reveal>
         </div>
       </section>
 
-
-
       {/* ══════════════════════════════════════════
           FOOTER
       ══════════════════════════════════════════ */}
       <div className="w-full shrink-0">
-        <div className="h-1 w-full bg-elevate-orange" />
+        <div className="h-px w-full bg-elevate-orange" />
         <VelocityMarquee />
-        <div className="h-1 w-full bg-elevate-orange" />
+        <div className="h-px w-full bg-elevate-orange" />
       </div>
       <footer className="bg-elevate-black px-6 py-14 text-elevate-paper md:px-12 lg:px-20 gsap-snap-section">
-        <div className="flex w-full flex-col items-start justify-between gap-10 md:flex-row md:items-center">
+        <div className="border-t border-elevate-paper/[0.07] pt-10 flex w-full flex-col items-start justify-between gap-10 md:flex-row md:items-center">
           <div className="flex flex-col items-start gap-3">
-            <AnimatedLogo 
-              href="#" 
-              className="flex items-center gap-3 transition-opacity hover:opacity-50"
-              starClassName="size-6 text-elevate-orange"
-              textClassName="text-3xl font-black tracking-tight"
-              ariaLabel="Elevate home"
-            />
+            <AnimatedLogo href="#" className="flex items-center gap-3 transition-opacity hover:opacity-50" starClassName="size-6 text-elevate-orange" textClassName="text-3xl font-black tracking-tight" ariaLabel="Elevate home" />
           </div>
           <div className="flex flex-wrap items-center justify-center gap-6 md:gap-8">
-            <Link to="/privacy_policy" className="text-xs font-semibold tracking-[0.15em] uppercase text-elevate-paper/30 transition-colors hover:text-elevate-paper">Privacy</Link>
-            <Link to="/terms" className="text-xs font-semibold tracking-[0.15em] uppercase text-elevate-paper/30 transition-colors hover:text-elevate-paper">Terms</Link>
-            <Link to="/joinourjourney" className="text-xs font-semibold tracking-[0.15em] uppercase text-elevate-paper/30 transition-colors hover:text-elevate-paper">Join Us</Link>
+            <Link to="/privacy_policy" className="text-[10px] font-semibold tracking-[0.15em] uppercase text-elevate-paper/30 transition-colors hover:text-elevate-paper">Privacy</Link>
+            <Link to="/terms" className="text-[10px] font-semibold tracking-[0.15em] uppercase text-elevate-paper/30 transition-colors hover:text-elevate-paper">Terms</Link>
+            <Link to="/joinourjourney" className="text-[10px] font-semibold tracking-[0.15em] uppercase text-elevate-paper/30 transition-colors hover:text-elevate-paper">Join Us</Link>
           </div>
           <div className="flex flex-col items-start gap-4 md:items-end">
-            <p className="text-xs text-elevate-paper/20">© 2026 Elevate. All rights reserved.</p>
+            <p className="text-[10px] text-elevate-paper/20">© 2026 Elevate. All rights reserved.</p>
             <div className="flex items-center gap-6">
               <a href="https://www.linkedin.com/in/brihit-nath-7114623a6/" target="_blank" rel="noreferrer" className="text-[10px] font-bold tracking-[0.15em] uppercase text-elevate-paper/30 transition-colors hover:text-elevate-paper">Brihit Nath</a>
               <a href="https://www.instagram.com/the.duskdynamics/" target="_blank" rel="noreferrer" className="text-[10px] font-bold tracking-[0.15em] uppercase text-elevate-paper/30 transition-colors hover:text-elevate-paper">Duskdynamics</a>
