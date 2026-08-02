@@ -1,4 +1,4 @@
-import{c as e}from"./sparkles-CF4V0XYu.js";/**
+import{c as e}from"./sparkles-BgndtG7L.js";/**
  * @license lucide-react v0.468.0 - ISC
  *
  * This source code is licensed under the ISC license.
