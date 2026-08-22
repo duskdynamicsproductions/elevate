@@ -1,4 +1,4 @@
-import{c as i}from"./createLucideIcon-Bxg00lYp.js";import{r as L,j as F}from"./index-CoRVx-ng.js";/**
+import{c as i}from"./FloatingNav-B-bhmf3W.js";import{r as L,j as F}from"./index-DsoEW3pw.js";/**
  * @license lucide-react v0.468.0 - ISC
  *
  * This source code is licensed under the ISC license.
