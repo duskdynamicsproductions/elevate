@@ -1,4 +1,4 @@
-import{r as i,j as e}from"./index-CfCGgY4p.js";import{c as m,F as p,m as l,A as h,V as u}from"./VelocityMarquee-D2d2ZeNR.js";import{M as g}from"./MainFooter-m3lkjDs1.js";/**
+import{r as i,j as e}from"./index-Cgc1g51u.js";import{c as m,F as p,m as l,A as h,V as u}from"./VelocityMarquee--IgOkXGw.js";import{M as g}from"./MainFooter-BKKIk68-.js";/**
  * @license lucide-react v0.468.0 - ISC
  *
  * This source code is licensed under the ISC license.
