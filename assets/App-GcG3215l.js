@@ -1,4 +1,4 @@
-import{r as x,j as e,g as H,S as V,u as $t,L as Re}from"./index-DHNUsVWs.js";import{m as D,A as Qe,F as Tt,V as Et,a as At}from"./VelocityMarquee-0UGTzzQi.js";/*!
+import{r as x,j as e,g as H,S as V,u as $t,L as Re}from"./index-C9qV7ND4.js";import{m as D,A as Qe,F as Tt,V as Et,a as At}from"./VelocityMarquee-DPzSwl6o.js";/*!
  * matrix 3.15.0
  * https://gsap.com
  *
